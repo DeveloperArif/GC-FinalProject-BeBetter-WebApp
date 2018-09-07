@@ -65,6 +65,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- Google Natural Language API  -->
+		
+		<dependency>
+		  <groupId>com.google.cloud</groupId>
+		  <artifactId>google-cloud-language</artifactId>
+		  <version>1.43.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

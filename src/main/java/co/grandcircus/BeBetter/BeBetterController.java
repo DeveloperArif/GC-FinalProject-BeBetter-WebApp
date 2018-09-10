@@ -83,7 +83,7 @@ public class BeBetterController {
 		
 		List<Task>tasks = taskDao.findAll();
 		mav.addObject("tasks", tasks);
-		
+			
 		mav.addObject("quotes", result);
 		return mav;
 	}
@@ -103,4 +103,12 @@ public class BeBetterController {
 
 		return mav;
 	}*/
+	
+	@RequestMapping ("/user-home/add-task")
+	public ModelAndView addTask(Task task) {
+		ModelAndView mav = new ModelAndView("redirect:/user-home");
+		mav.addObject(task);
+		taskDao.create(task);
+		return mav;
+	}
 }

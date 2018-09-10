@@ -23,23 +23,24 @@
 		<th>Date</th><th>Task</th><th>Action</th>
 	</tr>
 	</thead>
-	
 	<tbody>
-	
-	<c:forEach items ="${tasks }" var = "item" >
-	
-	<tr>
-		<td>${item.date }</td> 
-		<td>${item.task } </td>
-		<%--  <td> <input type ="checkbox" value = "true" ${task.complete ? 'checked' : ' '}> </td> --%>
-		<td>${item.id }</td>
-    	<td><a href="/user-home/${ item.id }/delete">Delete</a></td>
-    
-   	 	<%-- <td><a href="/edit-item/${ item.id }/edit">Edit</a></td>--%>
-		
-	</tr>
-	</c:forEach>
+		<c:forEach items ="${tasks }" var = "item" >
+			<tr>
+			<td>${item.date }</td> 
+			<td>${item.task } </td>
+			<%--  <td> <input type ="checkbox" value = "true" ${task.complete ? 'checked' : ' '}> </td> --%>
+	    	<td><a href="/user-home/${ item.id }/delete">Delete</a></td>
+	   	 	<%-- <td><a href="/edit-item/${ item.id }/edit">Edit</a></td>--%>
+			</tr>
+		</c:forEach>
 	</table>
-			
+		
+		<form action="/user-home/add-task" method="post">
+			<label for="task">Task: <input name="task" required minlength="2"/> </label>
+			<label for="date">Due Date: <input name="date" required minlength="2"/> </label>
+			<p>
+			<button  onclick="return confirm('Are you sure you want to add this task?')" type="submit" class="btn btn-outline-success">Add Task</button>
+			</p>
+		</form>		
 	</body>
 </html>

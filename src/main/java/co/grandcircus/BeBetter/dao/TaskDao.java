@@ -24,9 +24,14 @@ public class TaskDao {
 	public void create(Task task) {
 		em.persist(task);
 	}
-	
+	//delete
 	public void delete(Long id) {
 		Task task = em.getReference(Task.class, id);
 		em.remove(task);
 	}
+//	edit
+//	public Task findById(Long id) {
+//		return em.find(Task.class,  id);
+//	}
+	
 }

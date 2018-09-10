@@ -3,8 +3,11 @@ package co.grandcircus.BeBetter;
 import java.io.IOException;
 import java.util.List;
 
+import javax.persistence.Id;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
@@ -18,6 +21,7 @@ import com.google.cloud.language.v1.Sentiment;
 import co.grandcircus.BeBetter.Entity.Quote;
 import co.grandcircus.BeBetter.Entity.Task;
 import co.grandcircus.BeBetter.dao.TaskDao;
+
 
 @Controller
 public class BeBetterController {
@@ -84,5 +88,19 @@ public class BeBetterController {
 		return mav;
 	}
 	
+	@RequestMapping("/user-home/{id}/delete")
+	public ModelAndView deleteTask(@PathVariable("id") Long id) {
+		taskDao.delete(id);
+		return new ModelAndView("redirect:/user-home");
+	}
 
+	/*@RequestMapping("/user-home/{id}/update")
+	public ModelAndView editTask(Task tasks, Id id) {
+	ModelAndView mav = new ModelAndView("user-home");
+	
+		mav.addObject("tasks", taskDao.findById(Long id));
+		mav.addObject("title", "Edit item");
+
+		return mav;
+	}*/
 }

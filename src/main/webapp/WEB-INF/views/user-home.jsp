@@ -15,33 +15,31 @@
 				<h3>${quotes.content}</h3>
 				<p> ${quotes.title}</p>
 			</div>
-			
 					
 		<h1>Task List</h1>	
-		
-<table>
-<thead>
-<tr>
-	<th>Date</th><th>Task</th><th>Action</th>
-</tr>
-</thead>
-
-<tbody>
-
-<c:forEach items ="${tasks }" var = "item" >
-
-<tr>
-	<td>${item.date }</td> 
-	<td>${item.task } </td>
-	<%--  <td> <input type ="checkbox" value = "true" ${task.complete ? 'checked' : ' '}> </td> 
-	<td> <a href = "/delete">Delete</a></td> --%>
+	<table>
+	<thead>
+	<tr>
+		<th>Date</th><th>Task</th><th>Action</th>
+	</tr>
+	</thead>
 	
-</tr>
-</c:forEach>
-</table>
+	<tbody>
+	
+	<c:forEach items ="${tasks }" var = "item" >
+	
+	<tr>
+		<td>${item.date }</td> 
+		<td>${item.task } </td>
+		<%--  <td> <input type ="checkbox" value = "true" ${task.complete ? 'checked' : ' '}> </td> --%>
+		<td>${item.id }</td>
+    	<td><a href="/user-home/${ item.id }/delete">Delete</a></td>
+    
+   	 	<%-- <td><a href="/edit-item/${ item.id }/edit">Edit</a></td>--%>
 		
-			
-			
+	</tr>
+	</c:forEach>
+	</table>
 			
 	</body>
 </html>

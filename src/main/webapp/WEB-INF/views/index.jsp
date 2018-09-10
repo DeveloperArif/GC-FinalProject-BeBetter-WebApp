@@ -12,6 +12,8 @@
 	
 	<p>Score: ${score} </p>
 	
+	
+	
 <div class="form-group">
 	<div class="col-5"> 
 		<form action="/results">

@@ -20,4 +20,13 @@ public class TaskDao {
 	public List<Task> findAll() {
 		return em.createQuery("FROM Task", Task.class).getResultList();
 	}
+	
+	public void create(Task task) {
+		em.persist(task);
+	}
+	
+	public void delete(Long id) {
+		Task task = em.getReference(Task.class, id);
+		em.remove(task);
+	}
 }

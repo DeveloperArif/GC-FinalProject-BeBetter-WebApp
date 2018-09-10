@@ -1,9 +1,9 @@
 package co.grandcircus.BeBetter;
 
-import com.google.cloud.language.v1.LanguageServiceClient;
-
 import java.io.IOException;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,13 +12,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.Document.Type;
+import com.google.cloud.language.v1.LanguageServiceClient;
+import com.google.cloud.language.v1.Sentiment;
 
 import co.grandcircus.BeBetter.Entity.Quote;
-
-import com.google.cloud.language.v1.Sentiment;
+import co.grandcircus.BeBetter.Entity.Task;
+import co.grandcircus.BeBetter.dao.TaskDao;
 
 @Controller
 public class BeBetterController {
+	
+	@Autowired
+	TaskDao taskDao;
 	
 	
 	@RequestMapping("/")
@@ -72,8 +77,12 @@ public class BeBetterController {
 		
 		Quote result = response[0];
 		
+		List<Task>tasks = taskDao.findAll();
+		mav.addObject("tasks", tasks);
+		
 		mav.addObject("quotes", result);
 		return mav;
 	}
+	
 
 }

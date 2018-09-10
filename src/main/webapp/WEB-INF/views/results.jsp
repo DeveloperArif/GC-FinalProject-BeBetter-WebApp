@@ -7,6 +7,25 @@
 <title>Insert title here</title>
 </head>
 <body>
-<p>Entry: ${entry }</p>
+	<p>Entry: ${entry}</p>
+	
+	<form action="">
+		<p>Slide for new Score: </p>
+		
+		<div class="slidecontainer">
+	  		<input name="newScore"type="range" min="-1" max="1" step=".1" value="${entry}" class="slider" id="myRange">
+		</div>
+		<script> 
+			var slider = document.getElementById("myRange");
+			var output = document.getElementById("demo");
+			output.innerHTML = slider.value; // Display the default slider value
+		
+			// Update the current slider value (each time you drag the slider handle)
+			slider.oninput = function() {
+			    output.innerHTML = this.value;
+			}
+		</script>
+	</form>
+	
 </body>
 </html>

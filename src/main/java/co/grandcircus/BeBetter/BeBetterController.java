@@ -26,31 +26,6 @@ public class BeBetterController {
 	{
 		ModelAndView mav = new ModelAndView("index");
 		
-		// Instantiates a client
-		LanguageServiceClient language;
-		try {
-			language = LanguageServiceClient.create();
-			
-			// The text to analyze
-			String[] texts = {"I love this!", "I hate this!"};
-			for (String text : texts)
-			{
-			  Document doc = Document.newBuilder().setContent(text).setType(Type.PLAIN_TEXT).build();
-			  // Detects the sentiment of the text
-			  Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
-
-			  System.out.printf("Text: \"%s\"%n", text);
-			  System.out.printf(
-			      "Sentiment: score = %s, magnitude = %s%n",
-			      sentiment.getScore(), sentiment.getMagnitude());
-			  mav.addObject("score", sentiment.getScore());
-			}
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		return mav;	
 	}
 	
@@ -81,7 +56,7 @@ public class BeBetterController {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		//mav.addObject("entry", entry);
+		//mav.addObject("newScore", newScore);
 		return mav;
 	}	
 	

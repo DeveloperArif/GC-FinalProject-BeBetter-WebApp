@@ -16,9 +16,6 @@ public class Affirmation {
 	private String affirmation;
 	private String date;
 	
-	@ManyToOne
-	private User user;
-	
 	public Affirmation() {
 		super();
 	}

@@ -31,11 +31,20 @@ public class TaskDao {
 	}
 	
 	//complete
-	public void complete(Long id, Boolean complete) {
+	public void complete(Long id, Boolean complete, String date) {
 		System.out.println("Check " + id + " " + complete);
 		Task task = em.find(Task.class, id);
 		task.setComplete(complete);
+		task.setDate(date);
 	}
+	
+	//update
+	public void setDate(Task task) {
+		em.merge(task);
+	}
+
+	
+	
 //	edit
 //	public Task findById(Long id) {
 //		return em.find(Task.class,  id);

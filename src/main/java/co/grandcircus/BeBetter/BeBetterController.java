@@ -1,13 +1,17 @@
 package co.grandcircus.BeBetter;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Id;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
@@ -21,6 +25,7 @@ import com.google.cloud.language.v1.Sentiment;
 import co.grandcircus.BeBetter.Entity.Quote;
 import co.grandcircus.BeBetter.Entity.Task;
 import co.grandcircus.BeBetter.dao.TaskDao;
+import co.grandcircus.BeBetter.dao.UserDao;
 
 
 @Controller
@@ -28,18 +33,20 @@ public class BeBetterController {
 	
 	@Autowired
 	TaskDao taskDao;
+	@Autowired
+	UserDao userdao;
 	
 	
 	@RequestMapping("/")
-	public ModelAndView index()
+	public ModelAndView index(HttpSession session)
 	{
 		ModelAndView mav = new ModelAndView("index");
-		
+		getCurrentTimeUsingDate(session);
 		return mav;	
 	}
 	//this makes mood api do its thing, converting text entered on index page into a number on results page.
 	@RequestMapping("/results")
-	public ModelAndView results(@RequestParam("entry")String entry)
+	public ModelAndView results(HttpSession session, @RequestParam("entry")String entry)
 	{
 		ModelAndView mav = new ModelAndView("results");
 		// Instantiates a client
@@ -58,7 +65,10 @@ public class BeBetterController {
 				System.out.printf(
 				"Sentiment: score = %s, magnitude = %s%n",
 				sentiment.getScore(), sentiment.getMagnitude());
-				mav.addObject("entry", sentiment.getScore());	
+				mav.addObject("entry", sentiment.getScore());
+				// adds score to the sessions
+				session.setAttribute("score", sentiment.getScore());
+				System.out.println("Session" + session.getAttribute("score"));
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -68,8 +78,8 @@ public class BeBetterController {
 		return mav;
 	}	
 	//makes the quote api do the thing
-	@RequestMapping("/user-home")
-	public ModelAndView showQuote() {
+	@PostMapping("/user-home")
+	public ModelAndView showQuote(HttpSession session) {
 		ModelAndView mav =  new ModelAndView("user-home");
 		
 		RestTemplate restTemplate = new RestTemplate();
@@ -81,9 +91,12 @@ public class BeBetterController {
 		Quote result = response[0];
 		mav.addObject("quotes", result);
 		
-		List<Task>tasks = taskDao.findAll();
+		System.out.println("test for find all");
+		List<Task> tasks = taskDao.findAll();
+		
 		mav.addObject("tasks", tasks);
 		
+		session.getAttribute("score");		
 		return mav;
 	}
 	//delete a task
@@ -112,14 +125,26 @@ public class BeBetterController {
 	}
 	//updating task to complete
 	@RequestMapping ("/user-home/{id}/complete-task")
-	public ModelAndView completeTask(@PathVariable("id") Long id, @RequestParam("complete") Boolean complete) {
+	public ModelAndView completeTask(HttpSession session, 
+			@PathVariable("id") Long id, 
+			@RequestParam("complete") Boolean complete) {
 		ModelAndView mav = new ModelAndView("redirect:/user-home");
 		System.out.println("hello");
-		
-		
-		
 		//sends update to database
-		taskDao.complete(id, complete);
+		String date = (String) session.getAttribute("date");
+		taskDao.complete(id, complete, date);
+		//adds completed date to the database
+		System.out.println("Date is " + date);
 		return mav;
+	}
+	
+	
+	public static void getCurrentTimeUsingDate(HttpSession session) {
+	    Date date = new Date();
+	    String strDateFormat = "MM/dd/yyyy";
+	    DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+	    String formattedDate= dateFormat.format(date);
+	    session.setAttribute("date", formattedDate);
+	    System.out.println("Current time of the day using Date - 12 hour format: " + formattedDate);
 	}
 }

@@ -7,8 +7,6 @@ public class Quote {
 	private String content;
 	private String title;
 	
-	@ManyToOne
-	private User user;
 	
 	public Quote() {}
 

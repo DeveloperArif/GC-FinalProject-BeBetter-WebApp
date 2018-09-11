@@ -1,9 +1,14 @@
 package co.grandcircus.BeBetter.Entity;
 
+import javax.persistence.ManyToOne;
+
 public class Quote {
 
 	private String content;
 	private String title;
+	
+	@ManyToOne
+	private User user;
 	
 	public Quote() {}
 

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +19,9 @@ public class Task {
 	private String date;
 	@Column(name = "complete")
 	private boolean complete;
+	
+	@ManyToOne
+	private User user;
 	
 	public Task() {
 		super();

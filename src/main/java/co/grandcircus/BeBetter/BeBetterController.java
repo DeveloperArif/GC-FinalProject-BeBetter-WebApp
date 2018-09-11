@@ -80,11 +80,12 @@ public class BeBetterController {
 		Quote[] response  = restTemplate.getForObject(url, Quote[].class);
 		
 		Quote result = response[0];
+		mav.addObject("quotes", result);
 		
 		List<Task>tasks = taskDao.findAll();
 		mav.addObject("tasks", tasks);
 			
-		mav.addObject("quotes", result);
+		
 		return mav;
 	}
 	

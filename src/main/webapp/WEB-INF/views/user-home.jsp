@@ -20,16 +20,22 @@
 		<h1>Task List</h1>	
 	<table>
 	<thead>
-	<tr>
-		<th>Date</th><th>Task</th><th>Action</th>
-	</tr>
+		<tr>
+			<th>Completed</th> <th>Date</th> <th>Task</th> <th>Action</th>
+		</tr>
 	</thead>
 	<tbody>
-		<c:forEach items ="${tasks }" var = "item" >
+		<c:forEach items ="${tasks}" var = "item" >
 			<tr>
+			<td> 
+				<form action="/user-home/${ item.id }/complete-task" method="post">
+					<input name="complete" type="checkbox" value="true"> 
+					<button  type="submit" class="btn btn-outline-success">submit</button>
+				</form>
+			</td>
 			<td>${item.date }</td> 
 			<td>${item.task } </td>
-			<%--  <td> <input type ="checkbox" value = "true" ${task.complete ? 'checked' : ' '}> </td> --%>
+			
 	    	<td><a href="/user-home/${ item.id }/delete">Delete</a></td>
 	   	 	<%-- <td><a href="/edit-item/${ item.id }/edit">Edit</a></td>--%>
 			</tr>

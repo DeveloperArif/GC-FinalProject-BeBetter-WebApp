@@ -29,6 +29,13 @@ public class TaskDao {
 		Task task = em.getReference(Task.class, id);
 		em.remove(task);
 	}
+	
+	//complete
+	public void complete(Long id, Boolean complete) {
+		System.out.println("Check " + id + " " + complete);
+		Task task = em.find(Task.class, id);
+		task.setComplete(complete);
+	}
 //	edit
 //	public Task findById(Long id) {
 //		return em.find(Task.class,  id);

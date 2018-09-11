@@ -16,6 +16,7 @@ public class Task {
 	private Long id;
 	private String task;
 	private String date;
+	@Column(name = "complete")
 	private boolean complete;
 	
 	public Task() {

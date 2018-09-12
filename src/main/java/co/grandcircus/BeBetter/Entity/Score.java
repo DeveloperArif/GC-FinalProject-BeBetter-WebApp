@@ -15,14 +15,14 @@ public class Score {
 	private Long id;
 	@ManyToOne
 	private User user;
-	private Double score;
+	private Float score;
 	private String date;
 	
 	public Score() {
 		super();
 	}
 	
-	public Score(Long id, User user, Double score, String date) {
+	public Score(Long id, User user, Float score, String date) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -48,11 +48,11 @@ public class Score {
 		this.user = user;
 	}
 
-	public Double getScore() {
+	public Float getScore() {
 		return score;
 	}
 
-	public void setScore(Double score) {
+	public void setScore(Float score) {
 		this.score = score;
 	}
 

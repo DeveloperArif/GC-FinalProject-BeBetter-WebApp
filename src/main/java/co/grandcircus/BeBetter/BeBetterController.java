@@ -144,19 +144,19 @@ public class BeBetterController {
 	
 	public static void getCurrentTimeUsingDate(HttpSession session) {
 	    Date date = new Date();
-	    String strDateFormat = "MM/dd/yyyy";
+	    String strDateFormat = "yyyy-MM-dd";
 	    DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
 	    String formattedDate= dateFormat.format(date);
 	    session.setAttribute("date", formattedDate);
 	    System.out.println("Current time of the day using Date - 12 hour format: " + formattedDate);
 	}
 	
-	//creating a new score and adding it to the database
+	//getting score from session and adding it to the database
 	@RequestMapping("/user-home/submit-result")
 	public ModelAndView submitResult(HttpSession session) {
 		ModelAndView mav =  new ModelAndView("redirect:/user-home");
 		String date = (String) session.getAttribute("date");
-		Double score =(Double) session.getAttribute("score");
+		Float score =(Float) session.getAttribute("score");
 		Score newScore = new Score(null, null, score, date);
 		scoreDao.create(newScore);
 		return mav;

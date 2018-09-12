@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
@@ -23,7 +22,9 @@ import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.Sentiment;
 
 import co.grandcircus.BeBetter.Entity.Quote;
+import co.grandcircus.BeBetter.Entity.Score;
 import co.grandcircus.BeBetter.Entity.Task;
+import co.grandcircus.BeBetter.dao.ScoreDao;
 import co.grandcircus.BeBetter.dao.TaskDao;
 import co.grandcircus.BeBetter.dao.UserDao;
 
@@ -34,7 +35,9 @@ public class BeBetterController {
 	@Autowired
 	TaskDao taskDao;
 	@Autowired
-	UserDao userdao;
+	UserDao userDao;
+	@Autowired
+	ScoreDao scoreDao;
 	
 	
 	@RequestMapping("/")
@@ -78,7 +81,7 @@ public class BeBetterController {
 		return mav;
 	}	
 	//makes the quote api do the thing
-	@PostMapping("/user-home")
+	@RequestMapping("/user-home")
 	public ModelAndView showQuote(HttpSession session) {
 		ModelAndView mav =  new ModelAndView("user-home");
 		
@@ -146,5 +149,18 @@ public class BeBetterController {
 	    String formattedDate= dateFormat.format(date);
 	    session.setAttribute("date", formattedDate);
 	    System.out.println("Current time of the day using Date - 12 hour format: " + formattedDate);
+	}
+	
+	//creating a new score and adding it to the database
+	@RequestMapping("/user-home/submit-result")
+	public ModelAndView submitResult(HttpSession session) {
+		ModelAndView mav =  new ModelAndView("redirect:/user-home");
+		String date = (String) session.getAttribute("date");
+		Double score =(Double) session.getAttribute("score");
+		Score newScore = new Score(null, null, score, date);
+		scoreDao.create(newScore);
+		return mav;
+		
+		
 	}
 }

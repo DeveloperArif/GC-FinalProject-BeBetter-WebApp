@@ -9,7 +9,7 @@
 <body>
 	<p>Entry: ${entry}</p>
 	
-	<form action="/user-home" method="post">
+	<form action="/user-home/submit-result" method="post">
 		<p>Slide for new Score: </p>
 		
 		<div class="slidecontainer">

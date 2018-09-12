@@ -27,11 +27,6 @@ public class UserDao {
 		em.persist(user);
 	}
 	
-	public void setResults(Double results) {
-		User user = em.find(User.class, results);
-		user.setResults(results);
-	}
-
 	public User findByEmail(String email){
 		//String sql = "SELECT * FROM items WHERE name = ?";
 		return em.createQuery("FROM User WHERE email = :email", 

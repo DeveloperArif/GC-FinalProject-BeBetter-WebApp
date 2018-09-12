@@ -20,10 +20,11 @@ public class User {
 	private String name; 
 	private String email;
 	private String password;
-	private Double results;
 	
 	@OneToMany(mappedBy = "user")
 	List<Task> tasks;
+	@OneToMany(mappedBy = "user")
+	List<Score> scores;
 	
 	public User() {
 		super();
@@ -61,18 +62,25 @@ public class User {
 		this.password = password;
 	}
 
-	public Double getResults() {
-		return results;
+	public List<Score> getScores() {
+		return scores;
 	}
 
-	public void setResults(Double results) {
-		this.results = results;
+	public void setScores(List<Score> scores) {
+		this.scores = scores;
+	}
+
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", results="
-				+ results + "]";
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + "]";
 	}
 	
 	

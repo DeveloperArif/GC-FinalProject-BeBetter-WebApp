@@ -11,6 +11,7 @@
 </head>
 	<body>
 		<h1>User Home Page</h1>
+      <a href="/logout">Logout</a>
 
 			<div>
 				<h3>${quotes.content}</h3>

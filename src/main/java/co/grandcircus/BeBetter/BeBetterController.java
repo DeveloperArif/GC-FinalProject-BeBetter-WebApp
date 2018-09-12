@@ -6,15 +6,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.Document.Type;
@@ -27,6 +31,7 @@ import co.grandcircus.BeBetter.Entity.Task;
 import co.grandcircus.BeBetter.dao.ScoreDao;
 import co.grandcircus.BeBetter.dao.TaskDao;
 import co.grandcircus.BeBetter.dao.UserDao;
+import co.grandcircus.BeBetter.Entity.User;
 
 
 @Controller
@@ -82,7 +87,8 @@ public class BeBetterController {
 	}	
 	//makes the quote api do the thing
 	@RequestMapping("/user-home")
-	public ModelAndView showQuote(HttpSession session) {
+	public ModelAndView showQuote(HttpSession session,
+			@SessionAttribute(name="user") User user) {
 		ModelAndView mav =  new ModelAndView("user-home");
 		
 		RestTemplate restTemplate = new RestTemplate();
@@ -95,9 +101,10 @@ public class BeBetterController {
 		mav.addObject("quotes", result);
 		
 		System.out.println("test for find all");
-		List<Task> tasks = taskDao.findAll();
-		
-		mav.addObject("tasks", tasks);
+		//List<Task> tasks = taskDao.findAll();
+		List<Task> task = taskDao.findByUser(user);
+
+		mav.addObject("tasks", task);
 		
 		session.getAttribute("score");		
 		return mav;
@@ -153,14 +160,85 @@ public class BeBetterController {
 	
 	//getting score from session and adding it to the database
 	@RequestMapping("/user-home/submit-result")
-	public ModelAndView submitResult(HttpSession session) {
+	public ModelAndView submitResult(HttpSession session,
+			@SessionAttribute(name="user") User user) {
+		
 		ModelAndView mav =  new ModelAndView("redirect:/user-home");
+		
 		String date = (String) session.getAttribute("date");
-		Float score =(Float) session.getAttribute("score");
-		Score newScore = new Score(null, null, score, date);
+		Float score = (Float) session.getAttribute("score");
+		
+		Score newScore = new Score(null, user, score, date);
 		scoreDao.create(newScore);
+		
 		return mav;
 		
+	}
+	
+
+	@PostMapping("/register-submit")
+	public ModelAndView submitEditProfile(User user, 
+			HttpSession session, 
+			RedirectAttributes redir,
+			@RequestParam("email") String email, 
+			@RequestParam("password") String password) {
+		// Save the user information to the session.
+		System.out.println(user);
+		try {
+			session.setAttribute("user", user);
+			userDao.create(user);
+		}
+		catch(Exception e) {
+			redir.addFlashAttribute("message", "User with email already exists!");
+		}
+		ModelAndView mav = new ModelAndView("redirect:/user-home");
+		return mav;
+	}
+	
+	@PostMapping("/login-submit")
+	// get the username and password from the form when it's submitted.
+	public ModelAndView submitLoginForm(HttpSession session, 
+			@RequestParam("email") String email, 
+			@RequestParam("password") String password,
+			RedirectAttributes redir) {
+		try { 
+			User user = userDao.findByEmail(email);
+			if (user != null && password.equals(user.getPassword())) {
+				//Match!
+				session.setAttribute("user",  user);
+				return new ModelAndView("redirect:/user-home");
+	
+			}
+			else if(user != null && !password.equals(user.getPassword()))
+			{
+				redir.addFlashAttribute("message", "User doesn't exist!");
+			}
+			else
+			{
+				//No match
+				ModelAndView mav = new ModelAndView("redirect:/");
+				mav.addObject("message", "Wrong email or password.");
+				return mav;
+	
+			}
+		}
+		catch(NoResultException e)
+		{
+			redir.addFlashAttribute("message", "No entity found for query!");
+		}
+		catch(Exception e)
+		{
+			redir.addFlashAttribute("message", "Error has occurred!");
+		}
 		
+		return new ModelAndView("redirect:/");
+	}
+
+	@RequestMapping("/logout")
+	public ModelAndView logout(HttpSession session, RedirectAttributes redir) {
+		
+		session.invalidate();
+		redir.addFlashAttribute("meassage", "Logged out.");
+		return new ModelAndView("redirect:/");
 	}
 }

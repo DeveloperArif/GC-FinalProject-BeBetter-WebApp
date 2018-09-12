@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import co.grandcircus.BeBetter.Entity.Task;
+import co.grandcircus.BeBetter.Entity.User;
 
 @Repository
 @Transactional
@@ -41,6 +42,12 @@ public class TaskDao {
 	//update
 	public void setDate(Task task) {
 		em.merge(task);
+	}
+
+	public List<Task> findByUser(User user) {
+		
+		return em.createQuery("FROM Task WHERE id = :u", Task.class).setParameter("u", user.getId()).getResultList();
+
 	}
 
 	

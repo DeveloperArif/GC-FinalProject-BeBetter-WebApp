@@ -26,6 +26,12 @@
 
 	<dependencies>
 	
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+	
 	<!-- Added for JSP Rendering -->
 		<dependency>
 			<groupId>javax.servlet</groupId>

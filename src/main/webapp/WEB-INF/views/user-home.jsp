@@ -34,8 +34,8 @@
 					<button  type="submit" class="btn btn-outline-success">submit</button>
 				</form>
 			</td>
-			<td>${item.date }</td> 
-			<td>${item.task } </td>
+				<td>${item.date }</td> 
+				<td>${item.task } </td>
 			
 	    	<td><a href="/user-home/${ item.id }/delete">Delete</a></td>
 	   	 	<%-- <td><a href="/edit-item/${ item.id }/edit">Edit</a></td>--%>

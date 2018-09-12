@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -100,11 +101,20 @@ public class BeBetterController {
 		Quote result = response[0];
 		mav.addObject("quotes", result);
 		
-		System.out.println("test for find all");
+		
 		//List<Task> tasks = taskDao.findAll();
-		List<Task> task = taskDao.findByUser(user);
+		List<Task> tasks = taskDao.findByUser(user);
+		System.out.println("test for find all");
+		
+		//remove item from list if complete
+		for(Iterator<Task> temp = tasks.listIterator(); temp.hasNext();){
+		    Task s = temp.next();
+		    if(s.isComplete()){
+		        tasks.remove(s);   
+		    }
+		} 
 
-		mav.addObject("tasks", task);
+		mav.addObject("tasks", tasks);
 		
 		session.getAttribute("score");		
 		return mav;
@@ -127,12 +137,19 @@ public class BeBetterController {
 	}*/
 	//adding a task
 	@RequestMapping ("/user-home/add-task")
-	public ModelAndView addTask(Task task) {
+	public ModelAndView addTask(HttpSession session, Task task, @SessionAttribute(name="user") User user) {
 		ModelAndView mav = new ModelAndView("redirect:/user-home");
+		
+		//gets user info from the sessions and adds to the task
+		task.setUser(user);
 		mav.addObject(task);
+		
+		//then adds the task (with userId) to the database
 		taskDao.create(task);
+		
 		return mav;
 	}
+	
 	//updating task to complete
 	@RequestMapping ("/user-home/{id}/complete-task")
 	public ModelAndView completeTask(HttpSession session, 
@@ -147,7 +164,6 @@ public class BeBetterController {
 		System.out.println("Date is " + date);
 		return mav;
 	}
-	
 	
 	public static void getCurrentTimeUsingDate(HttpSession session) {
 	    Date date = new Date();

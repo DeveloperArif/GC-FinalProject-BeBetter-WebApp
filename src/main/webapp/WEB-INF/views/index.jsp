@@ -45,7 +45,7 @@
 			      </div>
 			      <div style="color: black" class="modal-body">
 						<form action="/login-submit" method="post" autocomplete=off >
-							 <input type="hidden" name="url" value="/">
+							 
 							<div class="input-group mb-3">
 				  				<div class="input-group-prepend">
 				   				 <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
@@ -85,7 +85,6 @@
 					      </div>
 					      <div style="color: black" class="modal-body">
 					        <form action="/register-submit" method="post" autocomplete=off >
-					        		<input type="hidden" name="url" value="/">
 										<div class="input-group mb-3">
 							  				<div class="input-group-prepend">
 							   				 <span class="input-group-text" id="inputGroup-sizing-default">Name</span>

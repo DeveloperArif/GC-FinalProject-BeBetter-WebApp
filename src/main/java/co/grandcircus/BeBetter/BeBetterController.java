@@ -205,11 +205,34 @@ public class BeBetterController {
 		// Save the user information to the session.
 		System.out.println(user);
 		try {
-			session.setAttribute("user", user);
-			userDao.create(user);
+			
+			//checks for user
+			user = userDao.findByEmail(email);
+					
+			if(user != null) {
+				
+				//User with email exists, return to index page
+				ModelAndView mav = new ModelAndView("redirect:/");
+
+				redir.addFlashAttribute("message", "User with email already exists!");
+				
+				return mav;
+			}
+			else
+			{
+				session.setAttribute("user", user);
+				userDao.create(user);
+			}
+			
 		}
 		catch(Exception e) {
+			
+			//User with email exists, return to index page
+			ModelAndView mav = new ModelAndView("redirect:/");
+
 			redir.addFlashAttribute("message", "User with email already exists!");
+			
+			return mav;
 		}
 		ModelAndView mav = new ModelAndView("redirect:/user-home");
 		return mav;
@@ -235,9 +258,11 @@ public class BeBetterController {
 			}
 			else
 			{
-				//No match
+				//No match, return to index page
+				
 				ModelAndView mav = new ModelAndView("redirect:/");
 				mav.addObject("message", "Wrong email or password.");
+				
 				return mav;
 	
 			}
@@ -258,7 +283,7 @@ public class BeBetterController {
 	public ModelAndView logout(HttpSession session, RedirectAttributes redir) {
 		
 		session.invalidate();
-		redir.addFlashAttribute("meassage", "Logged out.");
+		redir.addFlashAttribute("message", "Logged out.");
 		return new ModelAndView("redirect:/");
 	}
 }

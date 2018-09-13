@@ -183,7 +183,7 @@ public class BeBetterController {
 	public ModelAndView submitResult(HttpSession session,
 			@SessionAttribute(name="user") User user) {
 		
-		ModelAndView mav =  new ModelAndView("redirect:/user-home");
+		ModelAndView mav =  new ModelAndView("redirect:/login-reg");
 		
 		String date = (String) session.getAttribute("date");
 		Float score = (Float) session.getAttribute("score");
@@ -195,7 +195,6 @@ public class BeBetterController {
 		
 	}
 	
-
 	@PostMapping("/register-submit")
 	public ModelAndView submitEditProfile(User user, 
 			HttpSession session, 

@@ -17,6 +17,8 @@ public class Task {
 	private Long id;
 	private String task;
 	private String date;
+	@Column(name="due_date")
+	private String dueDate;
 	@Column(name = "complete")
 	private boolean complete;
 	
@@ -27,16 +29,13 @@ public class Task {
 		super();
 	}
 
-	
 	public User getUser() {
 		return user;
 	}
-
-
+	
 	public void setUser(User user) {
 		this.user = user;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -62,6 +61,14 @@ public class Task {
 		this.date = date;
 	}
 
+	public String getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(String dueDate) {
+		this.dueDate = dueDate;
+	}
+
 	public boolean isComplete() {
 		return complete;
 	}
@@ -72,10 +79,6 @@ public class Task {
 
 	@Override
 	public String toString() {
-		return "Task [id=" + id + ", task=" + task + ", date=" + date + ", complete=" + complete + "]";
+		return "Task [id=" + id + ", task=" + task + ", date=" + date + " ,due date=" + dueDate + ", complete=" + complete + "]";
 	}
-	
-	
-	
-	
 }

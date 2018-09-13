@@ -11,6 +11,7 @@ import javax.persistence.NoResultException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -88,8 +89,9 @@ public class BeBetterController {
 	}	
 	//makes the quote api do the thing
 	@RequestMapping("/user-home")
-	public ModelAndView showQuote(HttpSession session,
-			@SessionAttribute(name="user") User user) {
+	public ModelAndView userHome(HttpSession session,
+			@SessionAttribute(name="user") User user,
+			@SessionAttribute(name="date") String date) {
 		ModelAndView mav =  new ModelAndView("user-home");
 		
 		RestTemplate restTemplate = new RestTemplate();
@@ -101,6 +103,9 @@ public class BeBetterController {
 		Quote result = response[0];
 		mav.addObject("quotes", result);
 		
+		//mood tracker tings
+		List<Score> scores = scoreDao.findByUser(user);
+		mav.addObject("moodScore", scores);
 		
 		//List<Task> tasks = taskDao.findAll();
 		List<Task> tasks = taskDao.findByUser(user);
@@ -120,7 +125,7 @@ public class BeBetterController {
 
 		mav.addObject("tasks", tasks);
 		
-		session.getAttribute("score");		
+		//session.getAttribute("score");		
 		return mav;
 	}
 	//delete a task
@@ -141,7 +146,8 @@ public class BeBetterController {
 	}*/
 	//adding a task
 	@RequestMapping ("/user-home/add-task")
-	public ModelAndView addTask(HttpSession session, Task task, @SessionAttribute(name="user") User user) {
+	public ModelAndView addTask(HttpSession session, Task task, 
+			@SessionAttribute(name="user") User user) {
 		ModelAndView mav = new ModelAndView("redirect:/user-home");
 		
 		//gets user info from the sessions and adds to the task
@@ -178,21 +184,146 @@ public class BeBetterController {
 	    System.out.println("Current time of the day using Date - 12 hour format: " + formattedDate);
 	}
 	
-	//getting score from session and adding it to the database
+	//getting score from session and adding it to the database, from result page
 	@RequestMapping("/user-home/submit-result")
 	public ModelAndView submitResult(HttpSession session,
-			@SessionAttribute(name="user") User user) {
+			@RequestParam("newScore") Float newScore)
+	{
+		session.setAttribute("score", newScore);
+	
+		ModelAndView mav = new ModelAndView("redirect:/login-reg");
+		return mav;
 		
-		ModelAndView mav =  new ModelAndView("redirect:/login-reg");
+	}
+	
+	//getting score from session and adding it to the database, from result page
+	@RequestMapping("/login-reg")
+	public ModelAndView signInt() {
 		
-		String date = (String) session.getAttribute("date");
-		Float score = (Float) session.getAttribute("score");
-		
-		Score newScore = new Score(null, user, score, date);
-		scoreDao.create(newScore);
+		ModelAndView mav =  new ModelAndView("/login-reg");
 		
 		return mav;
 		
+	}
+	
+	//new login with score
+	@RequestMapping("/login-score")
+	public ModelAndView loginScore(HttpSession session,
+			User createUser, 
+			@SessionAttribute(name="user") User sessionUser,
+			RedirectAttributes redir,
+			@RequestParam("email") String email, 
+			@RequestParam("password") String password) {
+		
+		ModelAndView mav =  new ModelAndView("/login-score");
+
+		//add user to database
+		try { 
+			User user = userDao.findByEmail(email);
+			if (user != null && password.equals(user.getPassword())) {
+				
+				//Match!
+				session.setAttribute("user",  user);
+				
+				//Create a score for this user
+				String date = (String) session.getAttribute("date");
+				Float score = (Float) session.getAttribute("score");
+				
+				Score newScore = new Score(null, user, score, date);
+				scoreDao.create(newScore);
+				
+				return new ModelAndView("redirect:/user-home");
+			}
+			else if(user != null && !password.equals(user.getPassword()))
+			{
+				redir.addFlashAttribute("message", "User doesn't exist!");
+			}
+			else
+			{
+				//No match, return to index page
+		
+				mav.addObject("message", "Wrong email or password.");		
+				return mav = new ModelAndView("redirect:/login-reg");
+	
+			}
+		}
+		catch(NoResultException e)
+		{
+			redir.addFlashAttribute("message", "No entity found for query!");
+		}
+		catch(Exception e)
+		{
+			redir.addFlashAttribute("message", "Error has occurred!");
+		}
+		
+		return new ModelAndView("redirect:/user-home");
+				
+	}
+	
+	//new reg with score
+	@PostMapping("/register-score")
+	public ModelAndView regScore(User user, 
+			HttpSession session, 
+			RedirectAttributes redir,
+			@RequestParam("email") String email, 
+			@RequestParam("password") String password) {
+		
+		// Save the user information to the session.
+		try {
+			
+			//checks for user
+			user = userDao.findByEmail(email);
+					
+			if(user != null) {
+				
+				//User with email exists, return to index page
+				ModelAndView mav = new ModelAndView("redirect:/login-reg");
+
+				redir.addFlashAttribute("message", "User with email already exists!");
+				
+				return mav;
+			}
+			else
+			{
+				//add user to session and to database
+				session.setAttribute("user", user);
+				userDao.create(user);
+				
+				//Create a score for this user
+				String date = (String) session.getAttribute("date");
+				Float score = (Float) session.getAttribute("score");
+				
+				Score newScore = new Score(null, user, score, date);
+				scoreDao.create(newScore);
+			}
+			
+		}
+		catch(EmptyResultDataAccessException e)
+		{
+			//add user to session and to database
+			session.setAttribute("user", user);
+			userDao.create(user);
+			
+			//Create a score for this user
+			String date = (String) session.getAttribute("date");
+			Float score = (Float) session.getAttribute("score");
+			
+			Score newScore = new Score(null, user, score, date);
+			scoreDao.create(newScore);
+		}
+		catch(Exception e) {
+			
+			e.printStackTrace();
+			//User with email exists, return to index page
+			ModelAndView mav = new ModelAndView("redirect:/login-reg");
+
+			redir.addFlashAttribute("message", "Error or user with email already exists!");
+			
+			return mav;
+		}
+		
+		ModelAndView mav = new ModelAndView("redirect:/user-home");
+		return mav;
 	}
 	
 	@PostMapping("/register-submit")
@@ -201,6 +332,7 @@ public class BeBetterController {
 			RedirectAttributes redir,
 			@RequestParam("email") String email, 
 			@RequestParam("password") String password) {
+		
 		// Save the user information to the session.
 		System.out.println(user);
 		try {
@@ -219,6 +351,7 @@ public class BeBetterController {
 			}
 			else
 			{
+				//add user to session and to database
 				session.setAttribute("user", user);
 				userDao.create(user);
 			}
@@ -229,7 +362,7 @@ public class BeBetterController {
 			//User with email exists, return to index page
 			ModelAndView mav = new ModelAndView("redirect:/");
 
-			redir.addFlashAttribute("message", "User with email already exists!");
+			redir.addFlashAttribute("message", "Error or user with email already exists!");
 			
 			return mav;
 		}

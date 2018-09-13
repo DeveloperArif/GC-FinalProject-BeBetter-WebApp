@@ -107,12 +107,16 @@ public class BeBetterController {
 		System.out.println("test for find all");
 		
 		//remove item from list if complete
-		for(Iterator<Task> temp = tasks.listIterator(); temp.hasNext();){
-		    Task s = temp.next();
-		    if(s.isComplete()){
-		        tasks.remove(s);   
+		
+		Iterator<Task> it = tasks.iterator();
+		while (it.hasNext()) {
+		    Task thisTask = it.next();
+		    if (thisTask.isComplete()) {
+		        it.remove();
 		    }
-		} 
+		}
+		
+		System.out.println(tasks);
 
 		mav.addObject("tasks", tasks);
 		

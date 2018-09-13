@@ -34,10 +34,10 @@
 					<button  type="submit" class="btn btn-outline-success">submit</button>
 				</form>
 			</td>
-				<td>${item.date }</td> 
-				<td>${item.task } </td>
+				<td>${item.date}</td> 
+				<td>${item.task} </td>
 			
-	    	<td><a href="/user-home/${ item.id }/delete">Delete</a></td>
+	    	<td><a href="/user-home/${ item.id }/delete" onclick="return confirm('Are you sure you want to add this task?')">Delete</a></td>
 	   	 	<%-- <td><a href="/edit-item/${ item.id }/edit">Edit</a></td>--%>
 			</tr>
 		</c:forEach>
@@ -47,8 +47,66 @@
 			<label for="task">Task: <input name="task" required minlength="2"/> </label>
 			<label for="date">Due Date: <input name="date" required minlength="2"/> </label>
 			<p>
-			<button  onclick="return confirm('Are you sure you want to add this task?')" type="submit" class="btn btn-outline-success">Add Task</button>
+			<button type="submit" class="btn btn-outline-success">Add Task</button>
 			</p>
 		</form>		
+		
+		
+		
+		<div class="moods">
+			
+          <c:forEach items ="${testing}" var = "days" >
+
+            <div class="day"><span class="hideScore">${days}</span></div>
+
+          </c:forEach>
+
+        </div>
+
+        <script>
+          for(var i = 0; i <= 12; i++)
+          {
+
+            var dayText = document.getElementsByClassName("day");
+
+            var score = document.getElementsByClassName("hideScore");
+
+            var colorThreshold = score[i].innerHTML;
+
+
+            function changeColor(val)
+            {
+              var color = "dodgerblue";
+
+              if (val < -.5) 
+              {
+                color = "darkblue";
+              } 
+              else if (val == 0)
+              {
+                color = "white";
+              }
+              else if (val < .5)
+              {
+                color = "aqua";
+              }
+              else if (val <= 1)
+              {
+                color = "aliceblue";
+              }
+
+              dayText[i].style.backgroundColor = color;
+
+              score[i].style.opacity = 0;		          
+            }
+
+            changeColor(colorThreshold);
+
+          } 
+
+        </script>
+		
+		
+		
 	</body>
 </html>

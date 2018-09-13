@@ -96,7 +96,7 @@ public class BeBetterController {
 		
 		RestTemplate restTemplate = new RestTemplate();
 				
-		String url = "http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1";
+		String url = "https://api.forismatic.com/api/1.0/?method=getQuote&key=457653&format=json&lang=en";
 		
 		Quote[] response  = restTemplate.getForObject(url, Quote[].class);
 		

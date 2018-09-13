@@ -25,6 +25,8 @@ public class User {
 	List<Task> tasks;
 	@OneToMany(mappedBy = "user")
 	List<Score> scores;
+	@OneToMany(mappedBy = "user")
+	List<Quote> quotes;
 	
 	public User() {
 		super();
@@ -76,6 +78,14 @@ public class User {
 
 	public void setTasks(List<Task> tasks) {
 		this.tasks = tasks;
+	}
+	
+	public List<Quote> getQuotes() {
+		return quotes;
+	}
+
+	public void setQuotes(List<Quote> quotes) {
+		this.quotes = quotes;
 	}
 
 	@Override

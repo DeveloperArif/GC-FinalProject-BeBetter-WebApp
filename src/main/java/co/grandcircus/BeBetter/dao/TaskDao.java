@@ -21,7 +21,7 @@ public class TaskDao {
 	public List<Task> findAll() {
 		return em.createQuery("FROM Task", Task.class).getResultList();
 	}
-	
+	//create new task
 	public void create(Task task) {
 		em.persist(task);
 	}
@@ -40,7 +40,7 @@ public class TaskDao {
 	}
 	
 	//update
-	public void setDate(Task task) {
+	public void setDueDate(Task task) {
 		em.merge(task);
 	}
 

@@ -34,7 +34,7 @@
 					<button  type="submit" class="btn btn-outline-success">submit</button>
 				</form>
 			</td>
-				<td>${item.date}</td> 
+				<td>${item.dueDate}</td> 
 				<td>${item.task} </td>
 			
 	    	<td><a href="/user-home/${ item.id }/delete" onclick="return confirm('Are you sure you want to add this task?')">Delete</a></td>
@@ -45,7 +45,7 @@
 		
 		<form action="/user-home/add-task" method="post">
 			<label for="task">Task: <input name="task" required minlength="2"/> </label>
-			<label for="date">Due Date: <input name="date" required minlength="2"/> </label>
+			<label for="dueDate">Due Date: <input name="dueDate" required minlength="2"/> </label>
 			<p>
 			<button type="submit" class="btn btn-outline-success">Add Task</button>
 			</p>

@@ -1,5 +1,6 @@
 package co.grandcircus.BeBetter.Entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,10 +12,12 @@ import javax.persistence.Table;
 @Table(name = "affirmation")
 public class Affirmation {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	
+	@Column(name = "affirmation_id")
 	private Long id;
 	private String affirmation;
 	private String date;
+	@ManyToOne
+	private User user;
 	
 	public Affirmation() {
 		super();
@@ -42,6 +45,14 @@ public class Affirmation {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override

@@ -13,10 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,9 +28,11 @@ import com.google.cloud.language.v1.Document.Type;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.Sentiment;
 
+import co.grandcircus.BeBetter.Entity.Affirmation;
 import co.grandcircus.BeBetter.Entity.Quote;
 import co.grandcircus.BeBetter.Entity.Score;
 import co.grandcircus.BeBetter.Entity.Task;
+import co.grandcircus.BeBetter.dao.AffirmationDao;
 import co.grandcircus.BeBetter.dao.QuoteDao;
 import co.grandcircus.BeBetter.dao.ScoreDao;
 import co.grandcircus.BeBetter.dao.TaskDao;
@@ -53,7 +51,8 @@ public class BeBetterController {
 	ScoreDao scoreDao;
 	@Autowired
 	QuoteDao quoteDao;
-	
+	@Autowired
+	AffirmationDao affirmationDao;
 	
 	@RequestMapping("/")
 	public ModelAndView index(HttpSession session)
@@ -114,16 +113,16 @@ public class BeBetterController {
 		mav.addObject("quotes", result);
 		
 		 System.out.println(result);
+		 
 		//mood tracker tings
 		List<Score> scores = scoreDao.findByUser(user);
 		mav.addObject("moodScore", scores);
 		
-		//List<Task> tasks = taskDao.findAll();
+		
 		List<Task> tasks = taskDao.findByUser(user);
 		System.out.println("test for find all");
 		
 		//remove item from list if complete
-		
 		Iterator<Task> it = tasks.iterator();
 		while (it.hasNext()) {
 		    Task thisTask = it.next();
@@ -131,12 +130,13 @@ public class BeBetterController {
 		        it.remove();
 		    }
 		}
-		
 		System.out.println(tasks);
-
-		mav.addObject("tasks", tasks);
 		
-		//session.getAttribute("score");		
+		Affirmation affirmation = affirmationDao.findLast(user);
+		mav.addObject("affirmation", affirmation);
+		
+		mav.addObject("tasks", tasks);
+				
 		return mav;
 	}
 	//delete a task
@@ -145,17 +145,62 @@ public class BeBetterController {
 		taskDao.delete(id);
 		return new ModelAndView("redirect:/user-home");
 	}
-	//editing a task
-	/*@RequestMapping("/user-home/{id}/update")
-	public ModelAndView editTask(Task tasks, Id id) {
-	ModelAndView mav = new ModelAndView("user-home");
 	
-		mav.addObject("tasks", taskDao.findById(Long id));
-		mav.addObject("title", "Edit item");
-
+	//quote-list page
+	@RequestMapping("/quote-list")
+	public ModelAndView viewQuotes(HttpSession session,
+			@SessionAttribute(name="user") User user) {
+		ModelAndView mav = new ModelAndView("quote-list");
+		List<Quote> quotes = quoteDao.findByUser(user);
+		mav.addObject("quoteResult", quotes);
 		return mav;
-	}*/
-	//adding a task
+	}
+	
+	//add quote to the database
+//	@RequestMapping ("/user-home/add-quote")
+//	public ModelAndView addQuote(HttpSession session, Quote quote, 
+//			@SessionAttribute(name="user") User user) {
+//		ModelAndView mav = new ModelAndView("redirect:/user-home");
+//		
+//		//gets user info from the sessions and adds to the task
+//		quote.setUser(user);
+//		mav.addObject(quote);
+//		
+//		//then adds the quote (with userId) to the database
+//		Quote newQuote = new Quote(null, title, content, user);
+//		
+//		quoteDao.create(newQuote);
+//		return mav;
+//	}
+
+	//adding a affirmation
+		@RequestMapping ("/user-home/add-affirmation")
+		public ModelAndView addAffirmation(HttpSession session, Affirmation affirmation, 
+				@SessionAttribute(name="user") User user) {
+			ModelAndView mav = new ModelAndView("redirect:/user-home");
+			
+			//gets user info from the sessions and adds to the task
+			affirmation.setUser(user);
+			mav.addObject(affirmation);
+			
+			//then adds the task (with userId) to the database
+			affirmationDao.create(affirmation);
+			
+			return mav;
+		}
+		
+//		//List all affirmations
+//		@RequestMapping ("/user-home/affirmation")
+//		public ModelAndView addTask(HttpSession session, Affirmation affirmation, 
+//				@SessionAttribute(name="user") User user) {
+//			ModelAndView mav = new ModelAndView("affirmation");
+//			
+//			List<Affirmation> affirmation1 = affirmationDao.findByUser(user);
+//			mav.addObject("affirmation", affirmation1);
+//			return mav;
+//		}
+
+//adding a task
 	@RequestMapping ("/user-home/add-task")
 	public ModelAndView addTask(HttpSession session, Task task, 
 			@SessionAttribute(name="user") User user) {
@@ -345,37 +390,28 @@ public class BeBetterController {
 		
 		// Save the user information to the session.
 		System.out.println(user);
-		try {
 			
-			//checks for user
-			user = userDao.findByEmail(email);
-					
-			if(user != null) {
+		User newUser = user;
+		//checks for user
+		user = userDao.findByEmail(email);
+		boolean userAlreadyExists = (user != null);
 				
-				//User with email exists, return to index page
-				ModelAndView mav = new ModelAndView("redirect:/");
-
-				redir.addFlashAttribute("message", "User with email already exists!");
-				
-				return mav;
-			}
-			else
-			{
-				//add user to session and to database
-				session.setAttribute("user", user);
-				userDao.create(user);
-			}
-			
-		}
-		catch(Exception e) {
+		if(userAlreadyExists) {
 			
 			//User with email exists, return to index page
 			ModelAndView mav = new ModelAndView("redirect:/");
 
-			redir.addFlashAttribute("message", "Error or user with email already exists!");
+			redir.addFlashAttribute("message", "User with email already exists!");
 			
 			return mav;
 		}
+		else
+		{
+			//add user to session and to database
+			session.setAttribute("user", newUser);
+			userDao.create(newUser);
+		}
+			
 		ModelAndView mav = new ModelAndView("redirect:/user-home");
 		return mav;
 	}

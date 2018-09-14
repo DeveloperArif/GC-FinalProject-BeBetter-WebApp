@@ -15,7 +15,7 @@ public class Quote {
 	private String content;
 	
 	@ManyToOne
-	User user;
+	private User user;
 
 	public Quote() {
 	}

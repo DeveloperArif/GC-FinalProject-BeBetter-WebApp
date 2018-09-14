@@ -23,7 +23,7 @@
 			
 				<td>${item.affirmation} </td>
 			
-	    	<td><a href="/affirmation/${ item.id }/delete" onclick="return confirm('Are you sure you want to add this affirmation?')">Delete</a></td>
+	    	<td><a href="/affirmation/${ item.id }/delete" onclick="return confirm('Are you sure you want to delete this affirmation?')">Delete</a></td>
 	   	 	<%-- <td><a href="/edit-item/${ item.id }/edit">Edit</a></td>--%>
 			</tr>
 		</c:forEach>

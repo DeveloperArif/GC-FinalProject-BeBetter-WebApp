@@ -217,6 +217,13 @@ public class BeBetterController {
 					
 					return mav;
 				}
+				
+				//delete an affirmation
+				@RequestMapping("/affirmation/{id}/delete")
+				public ModelAndView deleteAffirmation(@PathVariable("id") Long id) {
+					affirmationDao.delete(id);
+					return new ModelAndView("redirect:/affirmation");
+				}
 	//adding a task
 	@RequestMapping ("/user-home/add-task")
 	public ModelAndView addTask(HttpSession session, Task task, 

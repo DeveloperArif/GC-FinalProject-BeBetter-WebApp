@@ -15,7 +15,7 @@
 	<div class="sidenav">
       <a href="/user-home">${user.name}</a>
       <a href="/user-home">Home</a>
-      <a href="/addMood">Add Mood</a>
+      <a href="/moodDetails">Add Mood</a>
       <a href="/journal">Journal</a>
       <a href="/taskList">My Tasks</a>
       <a href="/affirmationsList">My Affirmations</a>

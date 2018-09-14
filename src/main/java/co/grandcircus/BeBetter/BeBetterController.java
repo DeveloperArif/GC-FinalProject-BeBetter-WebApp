@@ -3,6 +3,7 @@ package co.grandcircus.BeBetter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -427,4 +428,54 @@ public class BeBetterController {
 		redir.addFlashAttribute("message", "Logged out.");
 		return new ModelAndView("redirect:/");
 	}
+	
+	@RequestMapping("/moodDetails")
+	public ModelAndView moodDetails(HttpSession session)
+	{
+		ModelAndView mav = new ModelAndView("moodDetails");
+		
+		//mood tracker tings
+		/*User user = new User(null, );
+		List<Score> scores = scoreDao.findByUser(user);
+		mav.addObject("moodScore", scores);*/
+		
+		/*List<Score> testing = new ArrayList<Score>();
+
+	    testing.add(new Score(null, null, (float)-0.9, "2018/14/9"));
+	    testing.add(new Score(null, null, (float)-.7, "2018/14/9"));
+	    testing.add(new Score(null, null, (float)-.5, "2018/14/9"));
+	    testing.add(new Score(null, null, (float)-.3, "2018/14/9"));
+	    testing.add(new Score(null, null, (float)-.1, "2018/14/9"));
+	    testing.add(new Score(null, null, (float)0.0, "2018/14/9"));
+	    testing.add(new Score(null, null, (float).1, "2018/14/9"));
+	    testing.add(new Score(null, null, (float).3, "2018/14/9"));
+	    testing.add(new Score(null, null, (float).5, "2018/14/9"));
+	    testing.add(new Score(null, null, (float).7, "2018/14/9"));
+	    testing.add(new Score(null, null, (float).9, "2018/14/9"));
+	    testing.add(new Score(null, null, (float)1.0, "2018/14/9"));*/
+	    
+		List<Double> testing = new ArrayList<Double>();
+
+		testing.add(-.9);
+	    testing.add(-.7);
+	    testing.add(-.5);
+	    testing.add(-.3);
+	    testing.add(-.1);
+	    testing.add(0.0);
+	    testing.add(.1);
+	    testing.add(.3);
+	    testing.add(.5);
+	    testing.add(.7);
+	    testing.add(.9);
+	    testing.add(1.0);
+
+	    
+	    
+		System.out.println(testing);
+	    mav.addObject("testing", testing);
+
+
+		return mav;	
+	}
+	
 }

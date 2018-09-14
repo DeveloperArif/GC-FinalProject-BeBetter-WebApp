@@ -17,9 +17,9 @@
       <a href="/user-home">Home</a>
       <a href="/addMood">Add Mood</a>
       <a href="/journal">Journal</a>
-      <a href="/taskList">My Tasks</a>
+      <a href="/tasklist">My Tasks</a>
       <a href="/affirmationsList">My Affirmations</a>
-      <a href="/quotesList">My Quotes</a>
+      <a href="/quote-list">My Quotes</a>
       <a href="/logout">Logout</a>
       
     </div>
@@ -27,11 +27,13 @@
     <!-- Start of body -->
     <div class="listBody">
     <h1>User Home Page</h1>
+    <form action="/user-home/add-quote" method="post">
 			<div>
 				<h3>${quotes.content}</h3>
 				<p> ${quotes.title}</p>
 			</div>
-					
+		<button type="submit" class="btn btn-outline-success">Save Quote</button>
+	</form>	
 		<h1>Task List</h1>	
 	<table>
 	<thead>

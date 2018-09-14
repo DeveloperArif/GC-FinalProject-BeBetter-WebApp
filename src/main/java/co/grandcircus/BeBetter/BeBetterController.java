@@ -144,16 +144,34 @@ public class BeBetterController {
 		taskDao.delete(id);
 		return new ModelAndView("redirect:/user-home");
 	}
-	//editing a task
-	/*@RequestMapping("/user-home/{id}/update")
-	public ModelAndView editTask(Task tasks, Id id) {
-	ModelAndView mav = new ModelAndView("user-home");
 	
-		mav.addObject("tasks", taskDao.findById(Long id));
-		mav.addObject("title", "Edit item");
-
+	//quote-list page
+	@RequestMapping("/quote-list")
+	public ModelAndView viewQuotes(HttpSession session,
+			@SessionAttribute(name="user") User user) {
+		ModelAndView mav = new ModelAndView("quote-list");
+		List<Quote> quotes = quoteDao.findByUser(user);
+		mav.addObject("quoteResult", quotes);
 		return mav;
-	}*/
+	}
+	
+	//add quote to the database
+//	@RequestMapping ("/user-home/add-quote")
+//	public ModelAndView addQuote(HttpSession session, Quote quote, 
+//			@SessionAttribute(name="user") User user) {
+//		ModelAndView mav = new ModelAndView("redirect:/user-home");
+//		
+//		//gets user info from the sessions and adds to the task
+//		quote.setUser(user);
+//		mav.addObject(quote);
+//		
+//		//then adds the quote (with userId) to the database
+//		Quote newQuote = new Quote(null, title, content, user);
+//		
+//		quoteDao.create(newQuote);
+//		return mav;
+//	}
+	
 	//adding a task
 	@RequestMapping ("/user-home/add-task")
 	public ModelAndView addTask(HttpSession session, Task task, 
@@ -344,37 +362,28 @@ public class BeBetterController {
 		
 		// Save the user information to the session.
 		System.out.println(user);
-		try {
 			
-			//checks for user
-			user = userDao.findByEmail(email);
-					
-			if(user != null) {
+		User newUser = user;
+		//checks for user
+		user = userDao.findByEmail(email);
+		boolean userAlreadyExists = (user != null);
 				
-				//User with email exists, return to index page
-				ModelAndView mav = new ModelAndView("redirect:/");
-
-				redir.addFlashAttribute("message", "User with email already exists!");
-				
-				return mav;
-			}
-			else
-			{
-				//add user to session and to database
-				session.setAttribute("user", user);
-				userDao.create(user);
-			}
-			
-		}
-		catch(Exception e) {
+		if(userAlreadyExists) {
 			
 			//User with email exists, return to index page
 			ModelAndView mav = new ModelAndView("redirect:/");
 
-			redir.addFlashAttribute("message", "Error or user with email already exists!");
+			redir.addFlashAttribute("message", "User with email already exists!");
 			
 			return mav;
 		}
+		else
+		{
+			//add user to session and to database
+			session.setAttribute("user", newUser);
+			userDao.create(newUser);
+		}
+			
 		ModelAndView mav = new ModelAndView("redirect:/user-home");
 		return mav;
 	}

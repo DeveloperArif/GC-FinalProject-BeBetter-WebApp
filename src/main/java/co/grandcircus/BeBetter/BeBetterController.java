@@ -155,26 +155,43 @@ public class BeBetterController {
 				@SessionAttribute(name="user") User user) {
 			ModelAndView mav = new ModelAndView("redirect:/user-home");
 			
-			//gets user info from the sessions and adds to the task
+			//gets user info from the sessions and adds to the affirmation
 			affirmation.setUser(user);
 			mav.addObject(affirmation);
 			
-			//then adds the task (with userId) to the database
+			//then adds the affirmation (with userId) to the database
 			affirmationDao.create(affirmation);
 			
 			return mav;
 		}
 		
-//		//List all affirmations
-//		@RequestMapping ("/user-home/affirmation")
-//		public ModelAndView addTask(HttpSession session, Affirmation affirmation, 
-//				@SessionAttribute(name="user") User user) {
-//			ModelAndView mav = new ModelAndView("affirmation");
-//			
-//			List<Affirmation> affirmation1 = affirmationDao.findByUser(user);
-//			mav.addObject("affirmation", affirmation1);
-//			return mav;
-//		}
+		//List all affirmations
+		@RequestMapping ("/affirmation")
+		public ModelAndView addTask(HttpSession session, Affirmation affirmation,
+				@SessionAttribute(name="user") User user) {
+			ModelAndView mav = new ModelAndView("affirmation");
+			
+			List<Affirmation> allAffirmations = affirmationDao.findByUser(user);
+			
+			mav.addObject("allAffirmations",allAffirmations);
+			return mav;
+		}
+		
+		//adding a affirmation to affirmation jsp
+				@RequestMapping ("/affirmation/add-affirmation")
+				public ModelAndView addAffirmationJsp(HttpSession session, Affirmation affirmation, 
+						@SessionAttribute(name="user") User user) {
+					ModelAndView mav = new ModelAndView("redirect:/affirmation");
+					
+					//gets user info from the sessions and adds to the affirmation
+					affirmation.setUser(user);
+					mav.addObject(affirmation);
+					
+					//then adds the affirmation (with userId) to the database
+					affirmationDao.create(affirmation);
+					
+					return mav;
+				}
 	//adding a task
 	@RequestMapping ("/user-home/add-task")
 	public ModelAndView addTask(HttpSession session, Task task, 

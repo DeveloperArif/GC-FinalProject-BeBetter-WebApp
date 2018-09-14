@@ -18,7 +18,7 @@
       <a href="/addMood">Add Mood</a>
       <a href="/journal">Journal</a>
       <a href="/taskList">My Tasks</a>
-      <a href="/affirmationsList">My Affirmations</a>
+      <a href="/affirmation">My Affirmations</a>
       <a href="/quotesList">My Quotes</a>
       <a href="/logout">Logout</a>
     </div>
@@ -61,7 +61,7 @@
 				<td>${item.dueDate}</td> 
 				<td>${item.task} </td>
 			
-	    	<td><a href="/user-home/${ item.id }/delete" onclick="return confirm('Are you sure you want to add this task?')">Delete</a></td>
+	    	<td><a href="/user-home/${ item.id }/delete" onclick="return confirm('Are you sure you want to delete this task?')">Delete</a></td>
 	   	 	<%-- <td><a href="/edit-item/${ item.id }/edit">Edit</a></td>--%>
 			</tr>
 		</c:forEach>

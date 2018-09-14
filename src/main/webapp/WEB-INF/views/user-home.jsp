@@ -84,10 +84,18 @@
               if (val < -.5) 
               {
                 color = "darkblue";
-              } 
+              }
+              else if (-0.5 < val < 0)
+              {
+                color = "blue";
+              }
               else if (val == 0)
               {
                 color = "white";
+              }
+              else if (0 < val <= .5)
+              {
+                color = "lightblue";
               }
               else if (val < .5)
               {
@@ -100,7 +108,7 @@
 
               dayText[i].style.backgroundColor = color;
 
-              //score[i].style.opacity = 0;		          
+              score[i].style.opacity = 0;		          
             }
 
             changeColor(colorThreshold);

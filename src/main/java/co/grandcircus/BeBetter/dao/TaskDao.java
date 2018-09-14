@@ -45,7 +45,6 @@ public class TaskDao {
 	}
 
 	public List<Task> findByUser(User user) {
-		
 		return em.createQuery("FROM Task WHERE user_user_id = :u", Task.class).setParameter("u", user.getId()).getResultList();
 
 	}

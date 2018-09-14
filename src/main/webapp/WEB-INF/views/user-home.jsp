@@ -21,7 +21,6 @@
       <a href="/affirmationsList">My Affirmations</a>
       <a href="/quotesList">My Quotes</a>
       <a href="/logout">Logout</a>
-      
     </div>
     
     <!-- Start of body -->

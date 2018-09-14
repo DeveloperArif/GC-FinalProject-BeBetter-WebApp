@@ -18,6 +18,17 @@
 				<h3>${quotes.content}</h3>
 				<p> ${quotes.title}</p>
 			</div>
+			
+			<h1>Daily Affirmation</h1>
+				<h2>${affirmation.affirmation }</h2>
+			<div>
+			<form action="/user-home/add-affirmation" method="post">
+				<label for="affirmation">Enter: <input name="affirmation" required minlength="2"/> </label>
+				<p>
+				<button type="submit" class="btn btn-outline-success">Add</button>
+				</p>
+			</form>	
+			</div>
 					
 		<h1>Task List</h1>	
 	<table>

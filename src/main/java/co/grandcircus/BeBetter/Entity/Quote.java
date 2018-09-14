@@ -10,42 +10,60 @@ import javax.persistence.ManyToOne;
 public class Quote {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String quoteText;
-	private String quoteAuthor;
+	private Long id;
+	private String title;
+	private String content;
+	
 	@ManyToOne
-	private User user;
+	User user;
+
 	public Quote() {
-		super();
 	}
-	
-	public Quote(String quoteText, String quoteAuthor) {
-		super();
-		this.quoteText = quoteText;
-		this.quoteAuthor = quoteAuthor;
+
+	public Quote(Long id, String title, String content, User user) {
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.user = user;
 	}
-	
-	public String getQuoteText() {
-		return quoteText;
+
+	public Long getId() {
+		return id;
 	}
-	
-	public void setQuoteText(String quoteText) {
-		this.quoteText = quoteText;
+
+	public void setId(Long id) {
+		this.id = id;
 	}
-	
-	public String getQuoteAuthor() {
-		return quoteAuthor;
+
+	public String getTitle() {
+		return title;
 	}
-	
-	public void setQuoteAuthor(String quoteAuthor) {
-		this.quoteAuthor = quoteAuthor;
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
 	public String toString() {
-		return "Quote [quoteText=" + quoteText + ", quoteAuthor=" + quoteAuthor + ", user=" + user + "]";
+		return "Quote [id=" + id + ", title=" + title + ", content=" + content + ", user=" + user + "]";
 	}
+
 	
 	
 }
-	
-	

@@ -12,6 +12,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +34,7 @@ import com.google.cloud.language.v1.Sentiment;
 import co.grandcircus.BeBetter.Entity.Quote;
 import co.grandcircus.BeBetter.Entity.Score;
 import co.grandcircus.BeBetter.Entity.Task;
+import co.grandcircus.BeBetter.dao.QuoteDao;
 import co.grandcircus.BeBetter.dao.ScoreDao;
 import co.grandcircus.BeBetter.dao.TaskDao;
 import co.grandcircus.BeBetter.dao.UserDao;
@@ -45,6 +50,8 @@ public class BeBetterController {
 	UserDao userDao;
 	@Autowired
 	ScoreDao scoreDao;
+	@Autowired
+	QuoteDao quoteDao;
 	
 	
 	@RequestMapping("/")
@@ -87,7 +94,9 @@ public class BeBetterController {
 		//mav.addObject("newScore", newScore);
 		return mav;
 	}	
-	//makes the quote api do the thing
+	
+	
+	//Quote API call
 	@RequestMapping("/user-home")
 	public ModelAndView userHome(HttpSession session,
 			@SessionAttribute(name="user") User user,
@@ -95,14 +104,15 @@ public class BeBetterController {
 		ModelAndView mav =  new ModelAndView("user-home");
 		
 		RestTemplate restTemplate = new RestTemplate();
-				
-		String url = "https://api.forismatic.com/api/1.0/?method=getQuote&key=457653&format=json&lang=en";
+		
+		String url = "http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1";
 		
 		Quote[] response  = restTemplate.getForObject(url, Quote[].class);
 		
 		Quote result = response[0];
 		mav.addObject("quotes", result);
 		
+		 System.out.println(result);
 		//mood tracker tings
 		List<Score> scores = scoreDao.findByUser(user);
 		mav.addObject("moodScore", scores);
@@ -210,7 +220,6 @@ public class BeBetterController {
 	@RequestMapping("/login-score")
 	public ModelAndView loginScore(HttpSession session,
 			User createUser, 
-			@SessionAttribute(name="user") User sessionUser,
 			RedirectAttributes redir,
 			@RequestParam("email") String email, 
 			@RequestParam("password") String password) {

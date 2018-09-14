@@ -79,6 +79,8 @@
 		  <artifactId>google-cloud-language</artifactId>
 		  <version>1.43.0</version>
 		</dependency>
+		
+		
 	</dependencies>
 
 	<build>

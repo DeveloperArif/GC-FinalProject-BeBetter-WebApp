@@ -15,7 +15,7 @@
 	<div class="sidenav">
       <a href="/user-home">${user.name}</a>
       <a href="/user-home">Home</a>
-      <a href="/addMood">Add Mood</a>
+      <a href="/moodDetails">Add Mood</a>
       <a href="/journal">Journal</a>
       <a href="/taskList">My Tasks</a>
       <a href="/affirmation">My Affirmations</a>
@@ -26,10 +26,14 @@
     <!-- Start of body -->
     <div class="listBody">
     <h1>User Home Page</h1>
+    <form action="/user-home/add-quote" method="post">
 			<div>
 				<h3>${quotes.content}</h3>
 				<p> ${quotes.title}</p>
 			</div>
+		<button type="submit" class="btn btn-outline-success">Save Quote</button>
+	</form>	
+
 			
 			<h1>Daily Affirmation</h1>
 				<h2>${affirmation.affirmation }</h2>
@@ -41,7 +45,7 @@
 				</p>
 			</form>	
 			</div>
-					
+				
 		<h1>Task List</h1>	
 	<table>
 	<thead>

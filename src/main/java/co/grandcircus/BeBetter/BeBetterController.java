@@ -3,6 +3,7 @@ package co.grandcircus.BeBetter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -12,10 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -149,6 +146,33 @@ public class BeBetterController {
 		return new ModelAndView("redirect:/user-home");
 	}
 	
+	//quote-list page
+	@RequestMapping("/quote-list")
+	public ModelAndView viewQuotes(HttpSession session,
+			@SessionAttribute(name="user") User user) {
+		ModelAndView mav = new ModelAndView("quote-list");
+		List<Quote> quotes = quoteDao.findByUser(user);
+		mav.addObject("quoteResult", quotes);
+		return mav;
+	}
+	
+	//add quote to the database
+//	@RequestMapping ("/user-home/add-quote")
+//	public ModelAndView addQuote(HttpSession session, Quote quote, 
+//			@SessionAttribute(name="user") User user) {
+//		ModelAndView mav = new ModelAndView("redirect:/user-home");
+//		
+//		//gets user info from the sessions and adds to the task
+//		quote.setUser(user);
+//		mav.addObject(quote);
+//		
+//		//then adds the quote (with userId) to the database
+//		Quote newQuote = new Quote(null, title, content, user);
+//		
+//		quoteDao.create(newQuote);
+//		return mav;
+//	}
+
 	//adding a affirmation
 		@RequestMapping ("/user-home/add-affirmation")
 		public ModelAndView addAffirmation(HttpSession session, Affirmation affirmation, 
@@ -165,6 +189,7 @@ public class BeBetterController {
 			return mav;
 		}
 		
+
 		//List all affirmations
 		@RequestMapping ("/affirmation")
 		public ModelAndView addTask(HttpSession session, Affirmation affirmation,
@@ -382,37 +407,28 @@ public class BeBetterController {
 		
 		// Save the user information to the session.
 		System.out.println(user);
-		try {
 			
-			//checks for user
-			user = userDao.findByEmail(email);
-					
-			if(user != null) {
+		User newUser = user;
+		//checks for user
+		user = userDao.findByEmail(email);
+		boolean userAlreadyExists = (user != null);
 				
-				//User with email exists, return to index page
-				ModelAndView mav = new ModelAndView("redirect:/");
-
-				redir.addFlashAttribute("message", "User with email already exists!");
-				
-				return mav;
-			}
-			else
-			{
-				//add user to session and to database
-				session.setAttribute("user", user);
-				userDao.create(user);
-			}
-			
-		}
-		catch(Exception e) {
+		if(userAlreadyExists) {
 			
 			//User with email exists, return to index page
 			ModelAndView mav = new ModelAndView("redirect:/");
 
-			redir.addFlashAttribute("message", "Error or user with email already exists!");
+			redir.addFlashAttribute("message", "User with email already exists!");
 			
 			return mav;
 		}
+		else
+		{
+			//add user to session and to database
+			session.setAttribute("user", newUser);
+			userDao.create(newUser);
+		}
+			
 		ModelAndView mav = new ModelAndView("redirect:/user-home");
 		return mav;
 	}
@@ -465,4 +481,54 @@ public class BeBetterController {
 		redir.addFlashAttribute("message", "Logged out.");
 		return new ModelAndView("redirect:/");
 	}
+	
+	@RequestMapping("/moodDetails")
+	public ModelAndView moodDetails(HttpSession session)
+	{
+		ModelAndView mav = new ModelAndView("moodDetails");
+		
+		//mood tracker tings
+		/*User user = new User(null, );
+		List<Score> scores = scoreDao.findByUser(user);
+		mav.addObject("moodScore", scores);*/
+		
+		/*List<Score> testing = new ArrayList<Score>();
+
+	    testing.add(new Score(null, null, (float)-0.9, "2018/14/9"));
+	    testing.add(new Score(null, null, (float)-.7, "2018/14/9"));
+	    testing.add(new Score(null, null, (float)-.5, "2018/14/9"));
+	    testing.add(new Score(null, null, (float)-.3, "2018/14/9"));
+	    testing.add(new Score(null, null, (float)-.1, "2018/14/9"));
+	    testing.add(new Score(null, null, (float)0.0, "2018/14/9"));
+	    testing.add(new Score(null, null, (float).1, "2018/14/9"));
+	    testing.add(new Score(null, null, (float).3, "2018/14/9"));
+	    testing.add(new Score(null, null, (float).5, "2018/14/9"));
+	    testing.add(new Score(null, null, (float).7, "2018/14/9"));
+	    testing.add(new Score(null, null, (float).9, "2018/14/9"));
+	    testing.add(new Score(null, null, (float)1.0, "2018/14/9"));*/
+	    
+		List<Double> testing = new ArrayList<Double>();
+
+		testing.add(-.9);
+	    testing.add(-.7);
+	    testing.add(-.5);
+	    testing.add(-.3);
+	    testing.add(-.1);
+	    testing.add(0.0);
+	    testing.add(.1);
+	    testing.add(.3);
+	    testing.add(.5);
+	    testing.add(.7);
+	    testing.add(.9);
+	    testing.add(1.0);
+
+	    
+	    
+		System.out.println(testing);
+	    mav.addObject("testing", testing);
+
+
+		return mav;	
+	}
+	
 }

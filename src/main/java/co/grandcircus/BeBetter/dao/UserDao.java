@@ -3,6 +3,7 @@ package co.grandcircus.BeBetter.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
@@ -28,8 +29,14 @@ public class UserDao {
 	
 	public User findByEmail(String email){
 		//String sql = "SELECT * FROM items WHERE name = ?";
-		return em.createQuery("FROM User WHERE email = :email", 
-				User.class).setParameter("email", email).getSingleResult();
+		try {
+			// return the user if found
+			return em.createQuery("FROM User WHERE email = :email", 
+					User.class).setParameter("email", email).getSingleResult();
+		} catch (NoResultException e) {
+			// or if not found, return null
+			return null;
+		}
 	}
 	
 	public void update(User user){

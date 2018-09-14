@@ -10,6 +10,15 @@
 </head>
 <body>
 
+<div class="sidenav">
+      <a href="/user-home">${user.name}</a>
+      <a href="/user-home">Home</a>
+      <a href="/moodDetails">Add Mood</a>
+      <a href="/journal">Journal</a>
+      <a href="/taskList">My Tasks</a>
+      <a href="/quotesList">My Quotes</a>
+      <a href="/logout">Logout</a>
+    </div>
 
 <h1>Your Affirmations</h1>
 

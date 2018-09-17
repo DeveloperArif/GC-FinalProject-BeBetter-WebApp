@@ -201,7 +201,7 @@ public class BeBetterController {
 	public ModelAndView addTask(HttpSession session, Affirmation affirmation,
 			@SessionAttribute(name="user") User user) {
 		ModelAndView mav = new ModelAndView("affirmation");
-		
+
 		List<Affirmation> allAffirmations = affirmationDao.findByUser(user);
 		
 		mav.addObject("allAffirmations",allAffirmations);
@@ -224,6 +224,13 @@ public class BeBetterController {
 		return mav;
 	}
 	
+	//delete an affirmation
+	@RequestMapping("/affirmation/{id}/delete")
+	public ModelAndView deleteAffirmation(@PathVariable("id") Long id) {
+		affirmationDao.delete(id);
+		return new ModelAndView("redirect:/affirmation");
+	}
+
 	//adding a task
 	@RequestMapping ("/user-home/add-task")
 	public ModelAndView addTask(HttpSession session, Task task, 

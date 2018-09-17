@@ -371,66 +371,35 @@ public class BeBetterController {
 			@RequestParam("password") String password) {
 		
 		// Save the user information to the session.
-		try {
-			
-			//checks for user
-			user = userDao.findByEmail(email);
+				System.out.println(user);
+				// creates new user so won't turn null after checking against email.
+				User newUser = user;
+				//checks for user
+				user = userDao.findByEmail(email);
+//				boolean userAlreadyExists = (user != null);
+						
+				if(user != null) {
 					
-			if(user != null) {
-				
-				//User with email exists, return to index page
-				ModelAndView mav = new ModelAndView("redirect:/login-reg");
+					//User with email exists, return to index page
+					ModelAndView mav = new ModelAndView("redirect:/");
 
-				redir.addFlashAttribute("message", "User with email already exists!");
-				
+					redir.addFlashAttribute("message", "User with email already exists!");
+					
+					return mav;
+				}
+				else
+				{
+					//add user to session and to database
+					session.setAttribute("user", newUser);
+					userDao.create(newUser);
+				}
+					
+				ModelAndView mav = new ModelAndView("redirect:/user-home");
 				return mav;
-			}
-			else
-			{
-				//add user to session and to database
-				session.setAttribute("user", user);
-				userDao.create(user);
-				
-				//Create a score for this user
-				String date = (String) session.getAttribute("date");
-				int score = (int) session.getAttribute("score");
-				String text = (String) session.getAttribute("text");
-
-				
-				Score newScore = new Score(null, user, score, date, text);
-				scoreDao.create(newScore);
-			}
-			
-		}
-		catch(EmptyResultDataAccessException e)
-		{
-			//add user to session and to database
-			session.setAttribute("user", user);
-			userDao.create(user);
-			
-			//Create a score for this user
-			String date = (String) session.getAttribute("date");
-			int score = (int) session.getAttribute("score");
-			String text = (String) session.getAttribute("text");
-
-			
-			Score newScore = new Score(null, user, score, date, text);
-			scoreDao.create(newScore);
-		}
-		catch(Exception e) {
-			
-			e.printStackTrace();
-			//User with email exists, return to index page
-			ModelAndView mav = new ModelAndView("redirect:/login-reg");
-
-			redir.addFlashAttribute("message", "Error or user with email already exists!");
-			
-			return mav;
 		}
 		
-		ModelAndView mav = new ModelAndView("redirect:/user-home");
-		return mav;
-	}
+		
+	
 	
 	@PostMapping("/register-submit")
 	public ModelAndView submitEditProfile(User user, 

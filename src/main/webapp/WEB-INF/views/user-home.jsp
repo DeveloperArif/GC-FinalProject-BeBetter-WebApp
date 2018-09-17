@@ -79,75 +79,77 @@
 			</p>
 		</form>		
 		
-		 <div class="tracker">
+		  <!-- Begin Mood Tracker -->
+		<div class="tracker">
 	      <div class="head">
 	        <span>Mood Tracker</span>
 	      </div>
 	      
-	      <div class="moods">
-          	<c:forEach items="${testing}" var="days" end="12" >
-	            <div class="day"><span class="hideScore">${days}</span>
-	            	<div class="hoverinfo"><span class="hideThis">i</span>
-					    <p>Mood Score: ${days}</p>
-					</div>
-	            </div>
-					<script>
-			          for(var i = 0; i <= 29; i++)
-			          {
-			
-			            var dayText = document.getElementsByClassName("day");
-			
-			            var score = document.getElementsByClassName("hideScore");
-			            var infoIcon = document.getElementsByClassName("hideThis");
-
-			
-			            var colorThreshold = score[i].innerHTML;
-			
-			
-			            function changeColor(val)
-			            {
-			              var color = "dodgerblue";
-			
-			              if (val < -0.5) 
-			              {
-			                color = "darkblue";
-			              }
-			              else if (-0.5 < val < 0.0)
-			              {
-			                color = "blue";
-			              }
-			              else if (val === 0.0)
-			              {
-			                color = "white";
-			              }
-			              else if (0.0 < val <= 0.5)
-			              {
-			                color = "lightblue";
-			              }
-			              else if (val < 0.5)
-			              {
-			                color = "aqua";
-			              }
-			              else if (val <= 1.0)
-			              {
-			                color = "aliceblue";
-			              }
-			
-			              dayText[i].style.backgroundColor = color;
-			
-			              score[i].style.opacity = 0;
-			              infoIcon[i].style.opacity = 0;
-			            }
-			
-			            changeColor(colorThreshold);
-			
-			          } 
-			
-			        </script>
-	          </c:forEach>
+	       <div class="moods">
+          	<c:forEach items="${moods}" var="scoreVar" end="30" >
+<!-- 	            <a href="#${scoreVar}">  -->
+				
+	            	<div class="scores"><label class="hideScore">${scoreVar.score}</label>
+ 		            	<div class="hoverinfo"><span class="hideThis">iiiiiiiii</span> 
+						    <p>Mood Score: ${scoreVar.score}</p>
+						</div>
+	            	</div>
+            		
+<!-- 	            </a> -->
+						        	
+	      	</c:forEach>
 		  </div>
 	      
         </div> <!-- End of Mood Tracker -->
+	 <script>
+	          for(var i = 0; i <= 29; i++)
+	          {
+	
+	            var moodText = document.getElementsByClassName("scores");
+	
+	            var score = document.getElementsByClassName("hideScore");
+	            var infoIcon = document.getElementsByClassName("hideThis");
+
+	            var colorThreshold = score[i].innerHTML;
+	
+	            function changeColor(val)
+	            {
+	              var color = "red";
+	
+	              if (val <= 20) 
+	              {
+	                color = "black";
+	              }
+	              else if (20 < val && val <= 40)
+	              {
+	                color = "blue";
+	              }
+	              else if (40 < val && val <= 60)
+	              {
+	                color = "green";
+	              }
+	              else if (60 < val && val <= 80)
+	              {
+	                color = "orange";
+	              }
+	              else if (80 < val && val <= 100)
+	              {
+	                color = "yellow";
+	              }
+	              
+	
+	             moodText[i].style.backgroundColor = color;
+	
+	             score[i].style.opacity = 0;
+	             infoIcon[i].style.opacity = 0;
+	            }
+	
+	            changeColor(colorThreshold);
+	
+	          } 
+	
+			</script>
+	 
 
         
 		<!-- End of body -->

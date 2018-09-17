@@ -40,8 +40,8 @@
 }
 
 .scores{
-  height: 55px;
-  width: 55px;
+  height: 45px;
+  width: 45px;
   padding: 4px 4px 4px 4px;
   border-radius: 50%;
   background-color: blueviolet;
@@ -68,19 +68,30 @@
 	height: 0px;
 	width: 0px;
 }
+.hideThis{
+	margin: 0;
+}
 
 .hoverinfo {  
+	position: absolute;
   font-size: 18px;
   color: #929292;
   cursor: pointer;
+  z-index: 100;
 }
+.hoverInfo span{
+	margin:0 auto;
+}
+
 .hoverinfo p {
   display: none;
   color: #000000;
+  z-index: 100;
 }
 .hoverinfo:hover p {
   background-color: rgba(255, 255, 255, 0.7);
   display: block;
+  z-index: 100;
 }
 .sidenav {
   height: 100%;

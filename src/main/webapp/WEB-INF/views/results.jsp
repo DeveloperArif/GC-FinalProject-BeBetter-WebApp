@@ -25,7 +25,7 @@
 		<p>Slide for new Score: </p>
 		
 		<div class="slidecontainer">
-	  		<input name="newScore"type="range" min="-1" max="1" step=".1" value="${entry}" class="slider" id="myRange">
+	  		<input name="newScore"type="range" min="0" max="100" step="1" value="${entry}" class="slider" id="myRange">
 		</div>
 		<script> 
 			var slider = document.getElementById("myRange");

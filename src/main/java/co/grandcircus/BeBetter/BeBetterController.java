@@ -124,7 +124,7 @@ public class BeBetterController {
 		 
 		//mood tracker things
 		List<Score> scores = scoreDao.findByUser(user);
-		mav.addObject("moodScore", scores);
+		mav.addObject("moods", scores);
 		
 		List<Task> tasks = taskDao.findByUser(user);
 		System.out.println("test for find all");
@@ -397,9 +397,6 @@ public class BeBetterController {
 				ModelAndView mav = new ModelAndView("redirect:/user-home");
 				return mav;
 		}
-		
-		
-	
 	
 	@PostMapping("/register-submit")
 	public ModelAndView submitEditProfile(User user, 
@@ -511,26 +508,12 @@ public class BeBetterController {
 	    testing.add(new Score(null, null, (float).9, "2018/14/9"));
 	    testing.add(new Score(null, null, (float)1.0, "2018/14/9"));*/
 	    
-		List<Double> testing = new ArrayList<Double>();
-
-		testing.add(-.9);
-	    testing.add(-.7);
-	    testing.add(-.5);
-	    testing.add(-.3);
-	    testing.add(-.1);
-	    testing.add(0.0);
-	    testing.add(.1);
-	    testing.add(.3);
-	    testing.add(.5);
-	    testing.add(.7);
-	    testing.add(.9);
-	    testing.add(1.0);
-
+		List<Score> moodTracker = scoreDao.findByUser((User)session.getAttribute("user"));
 	    
 	    
-		System.out.println(testing);
-	    mav.addObject("testing", testing);
-	    
+		System.out.println(moodTracker);
+	    mav.addObject("moods", moodTracker);
+	    /*
 	    List<Score> moodList = new ArrayList<Score>();
 
 	    moodList.add(new Score(null, null, (int) 29, "2018/14/9", "Great! Ugh."));
@@ -544,8 +527,10 @@ public class BeBetterController {
 	    moodList.add(new Score(null, null, (int) 100, "2018/14/9", "Great! Ugh."));
 	    moodList.add(new Score(null, null, (int) 89, "2018/14/9", "Great! Ugh."));
 	    moodList.add(new Score(null, null, (int) 99, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 1, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 1, "2018/14/9", "Great! Ugh."));*/
 	    
+		List<Score> moodList = scoreDao.findByUser((User)session.getAttribute("user"));
+		
 	    mav.addObject("moodList", moodList);
 
 

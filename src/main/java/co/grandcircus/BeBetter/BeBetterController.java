@@ -32,12 +32,12 @@ import co.grandcircus.BeBetter.Entity.Affirmation;
 import co.grandcircus.BeBetter.Entity.Quote;
 import co.grandcircus.BeBetter.Entity.Score;
 import co.grandcircus.BeBetter.Entity.Task;
+import co.grandcircus.BeBetter.Entity.User;
 import co.grandcircus.BeBetter.dao.AffirmationDao;
 import co.grandcircus.BeBetter.dao.QuoteDao;
 import co.grandcircus.BeBetter.dao.ScoreDao;
 import co.grandcircus.BeBetter.dao.TaskDao;
 import co.grandcircus.BeBetter.dao.UserDao;
-import co.grandcircus.BeBetter.Entity.User;
 
 
 @Controller
@@ -440,7 +440,7 @@ public class BeBetterController {
 			@RequestParam("password") String password) {
 		
 		// Save the user information to the session.
-		System.out.println(user);
+		System.out.println(user);					
 		// creates new user so won't turn null after checking against email.
 		User newUser = user;
 		//checks for user
@@ -448,7 +448,7 @@ public class BeBetterController {
 //		boolean userAlreadyExists = (user != null);
 				
 		if(user != null) {
-			
+
 			//User with email exists, return to index page
 			ModelAndView mav = new ModelAndView("redirect:/");
 
@@ -516,6 +516,50 @@ public class BeBetterController {
 		return new ModelAndView("redirect:/");
 	}
 	
+	@RequestMapping("/tasklist")
+	public ModelAndView showTaskList(HttpSession session,
+			@SessionAttribute(name="user") User user) {
+		ModelAndView mav = new ModelAndView("tasklist");
+		List<Task>tasks = taskDao.findByUser(user);
+		mav.addObject("task", tasks);
+		return mav; 		
+	}
+	
+	//updating task to complete
+		@RequestMapping ("/tasklist/{id}/complete-task")
+		public ModelAndView updatingTaskToComplete(HttpSession session, 
+				@PathVariable("id") Long id, 
+				@RequestParam("complete") Boolean complete) {
+			ModelAndView mav = new ModelAndView("redirect:/tasklist");
+			//sends update to database
+			String date = (String) session.getAttribute("date");
+			taskDao.complete(id, complete, date);
+			//adds completed date to the database
+			System.out.println("Date is " + date);
+			return mav;
+}
+		//delete a task
+		@RequestMapping("/tasklist/{id}/delete")
+		public ModelAndView deletingTask(@PathVariable("id") Long id) {
+			taskDao.delete(id);
+			return new ModelAndView("redirect:/tasklist");
+}
+		//adding a task
+		@RequestMapping ("/tasklist/add-task")
+		public ModelAndView addingTask(HttpSession session, Task task, 
+				@SessionAttribute(name="user") User user) {
+			ModelAndView mav = new ModelAndView("redirect:/tasklist");
+			
+			//gets user info from the sessions and adds to the task
+			task.setUser(user);
+			mav.addObject(task);
+			
+			//then adds the task (with userId) to the database
+			taskDao.create(task);
+			
+			return mav;
+		}
+		
 	//Detailed list of submitted entries 
 	@RequestMapping("/moodDetails")
 	public ModelAndView moodDetails(HttpSession session)

@@ -34,11 +34,15 @@ public class AffirmationDao {
 		return em.createQuery("FROM Affirmation WHERE user_user_id = :u", 
 				Affirmation.class).setParameter("u", user.getId()).getResultList();
 	}
-	public Affirmation findLast(User user) {
-		// TODO Auto-generated method stub
-		List<Affirmation> affirmationList= em.createQuery("FROM Affirmation WHERE user_user_id = :u ORDER BY id DESC", 
-				Affirmation.class).setParameter("u", user.getId()).getResultList();
-		return affirmationList.get(0);
+	public String findLast(User user) {
+		
+		List<Affirmation> newAff = em.createQuery("FROM Affirmation WHERE user_user_id = :u ORDER BY affirmation_id DESC", 
+					Affirmation.class).setParameter("u", user.getId()).getResultList();
+		// the "?" question mark is the ternary operator as an if statement
+		// this will ask, if it's empty then return empty string and if not then show last affirmation
+		return (newAff.isEmpty() ? "": newAff.get(0).getAffirmation());
+		
+	
 	}
 
 }

@@ -11,8 +11,8 @@ public class Quote {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String title;
-	private String content;
+	private String quote;
+	private String author;
 	
 	@ManyToOne
 	private User user;
@@ -20,10 +20,10 @@ public class Quote {
 	public Quote() {
 	}
 
-	public Quote(Long id, String title, String content, User user) {
+	public Quote(Long id, String quote, String author, User user) {
 		this.id = id;
-		this.title = title;
-		this.content = content;
+		this.quote = quote;
+		this.author = author;
 		this.user = user;
 	}
 
@@ -35,20 +35,20 @@ public class Quote {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getQuote() {
+		return quote;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setQuote(String quote) {
+		this.quote = quote;
 	}
 
-	public String getContent() {
-		return content;
+	public String getAuthor() {
+		return author;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 	public User getUser() {
@@ -61,8 +61,10 @@ public class Quote {
 
 	@Override
 	public String toString() {
-		return "Quote [id=" + id + ", title=" + title + ", content=" + content + ", user=" + user + "]";
+		return "Quote [id=" + id + ", quote=" + quote + ", author=" + author + ", user=" + user + "]";
 	}
+
+	
 
 	
 	

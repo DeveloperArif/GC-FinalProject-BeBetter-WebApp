@@ -106,19 +106,18 @@ public class BeBetterController {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
-		String url = "http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1";
+		String url = "https://talaikis.com/api/quotes/random";
 		
-		Quote[] response  = restTemplate.getForObject(url, Quote[].class);
+		Quote response  = restTemplate.getForObject(url, Quote.class);
 		
-		Quote result = response[0];
+		Quote result = response;
 		mav.addObject("quotes", result);
 		
-		 System.out.println(result);
+		System.out.println(result);
 		 
-		//mood tracker tings
+		//mood tracker things
 		List<Score> scores = scoreDao.findByUser(user);
 		mav.addObject("moodScore", scores);
-		
 		
 		List<Task> tasks = taskDao.findByUser(user);
 		System.out.println("test for find all");
@@ -131,15 +130,21 @@ public class BeBetterController {
 		        it.remove();
 		    }
 		}
+			
+		mav.addObject("tasks", tasks);
 		System.out.println(tasks);
 		
 		//Affirmation affirmation = affirmationDao.findLast(user);
 		//mav.addObject("affirmation", affirmation);
+
+		// this runs the Dao to find the last affirmation written/ if there in not one it returns empty string
+		String lastAff = affirmationDao.findLast(user);
+		System.out.println("lastAff Dao runs");
+		mav.addObject("affirmation", lastAff);
 		
-		mav.addObject("tasks", tasks);
-				
 		return mav;
 	}
+	
 	//delete a task
 	@RequestMapping("/user-home/{id}/delete")
 	public ModelAndView deleteTask(@PathVariable("id") Long id) {
@@ -158,21 +163,25 @@ public class BeBetterController {
 	}
 	
 	//add quote to the database
-//	@RequestMapping ("/user-home/add-quote")
-//	public ModelAndView addQuote(HttpSession session, Quote quote, 
-//			@SessionAttribute(name="user") User user) {
-//		ModelAndView mav = new ModelAndView("redirect:/user-home");
-//		
-//		//gets user info from the sessions and adds to the task
-//		quote.setUser(user);
-//		mav.addObject(quote);
-//		
-//		//then adds the quote (with userId) to the database
-//		Quote newQuote = new Quote(null, title, content, user);
-//		
-//		quoteDao.create(newQuote);
-//		return mav;
-//	}
+	@RequestMapping ("/user-home/add-quote")
+	public ModelAndView addQuote(HttpSession session, 
+			@RequestParam("quote") String quote, @RequestParam("author") String author,
+			@SessionAttribute(name="user") User user) {
+		ModelAndView mav = new ModelAndView("redirect:/user-home");
+	
+		//then adds the quote (with userId) to the database
+		Quote newQuote = new Quote(null, quote, author, user);
+		
+		quoteDao.create(newQuote);
+		return mav;
+	}
+	
+	//delete quote from the quote-list page
+	@RequestMapping("/quote-list/{id}/delete")
+	public ModelAndView deleteQuote(@PathVariable("id") Long id) {
+		quoteDao.delete(id);
+		return new ModelAndView("redirect:/quote-list");
+	}
 
 	//adding a affirmation
 		@RequestMapping ("/user-home/add-affirmation")
@@ -180,28 +189,53 @@ public class BeBetterController {
 				@SessionAttribute(name="user") User user) {
 			ModelAndView mav = new ModelAndView("redirect:/user-home");
 			
-			//gets user info from the sessions and adds to the task
+			//gets user info from the sessions and adds to the affirmation
 			affirmation.setUser(user);
 			mav.addObject(affirmation);
 			
-			//then adds the task (with userId) to the database
+			//then adds the affirmation (with userId) to the database
 			affirmationDao.create(affirmation);
 			
 			return mav;
 		}
 		
-//		//List all affirmations
-//		@RequestMapping ("/user-home/affirmation")
-//		public ModelAndView addTask(HttpSession session, Affirmation affirmation, 
-//				@SessionAttribute(name="user") User user) {
-//			ModelAndView mav = new ModelAndView("affirmation");
-//			
-//			List<Affirmation> affirmation1 = affirmationDao.findByUser(user);
-//			mav.addObject("affirmation", affirmation1);
-//			return mav;
-//		}
 
-//adding a task
+	//List all affirmations
+	@RequestMapping ("/affirmation")
+	public ModelAndView addTask(HttpSession session, Affirmation affirmation,
+			@SessionAttribute(name="user") User user) {
+		ModelAndView mav = new ModelAndView("affirmation");
+
+		List<Affirmation> allAffirmations = affirmationDao.findByUser(user);
+		
+		mav.addObject("allAffirmations",allAffirmations);
+		return mav;
+	}
+		
+	//adding a affirmation to affirmation jsp
+	@RequestMapping ("/affirmation/add-affirmation")
+	public ModelAndView addAffirmationJsp(HttpSession session, Affirmation affirmation, 
+			@SessionAttribute(name="user") User user) {
+		ModelAndView mav = new ModelAndView("redirect:/affirmation");
+		
+		//gets user info from the sessions and adds to the affirmation
+		affirmation.setUser(user);
+		mav.addObject(affirmation);
+		
+		//then adds the affirmation (with userId) to the database
+		affirmationDao.create(affirmation);
+		
+		return mav;
+	}
+	
+	//delete an affirmation
+	@RequestMapping("/affirmation/{id}/delete")
+	public ModelAndView deleteAffirmation(@PathVariable("id") Long id) {
+		affirmationDao.delete(id);
+		return new ModelAndView("redirect:/affirmation");
+	}
+
+	//adding a task
 	@RequestMapping ("/user-home/add-task")
 	public ModelAndView addTask(HttpSession session, Task task, 
 			@SessionAttribute(name="user") User user) {
@@ -232,6 +266,7 @@ public class BeBetterController {
 		return mav;
 	}
 	
+	//pulls the date from the url and saves it to the session for use at any later need
 	public static void getCurrentTimeUsingDate(HttpSession session) {
 	    Date date = new Date();
 	    String strDateFormat = "yyyy-MM-dd";
@@ -263,7 +298,6 @@ public class BeBetterController {
 		ModelAndView mav =  new ModelAndView("/login-reg");
 		
 		return mav;
-		
 	}
 	
 	//new login with score
@@ -400,13 +434,13 @@ public class BeBetterController {
 		
 		// Save the user information to the session.
 		System.out.println(user);
-			
+		// creates new user so won't turn null after checking against email.
 		User newUser = user;
 		//checks for user
 		user = userDao.findByEmail(email);
-		boolean userAlreadyExists = (user != null);
+//		boolean userAlreadyExists = (user != null);
 				
-		if(userAlreadyExists) {
+		if(user != null) {
 			
 			//User with email exists, return to index page
 			ModelAndView mav = new ModelAndView("redirect:/");

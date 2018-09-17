@@ -15,12 +15,11 @@
 	<div class="sidenav">
       <a href="/user-home">${user.name}</a>
       <a href="/user-home">Home</a>
-      <a href="/addMood">Add Mood</a>
+      <a href="/moodDetails">Add Mood</a>
       <a href="/journal">Journal</a>
-      <a href="/affirmationsList">My Affirmations</a>
-      <a href="/quote-list">My Quotes</a>
+      <a href="/tasklist">My Tasks</a>
+      <a href="/affirmation">My Affirmations</a>
       <a href="/logout">Logout</a>
-      
     </div>
     
     <!-- Start of body -->
@@ -29,12 +28,12 @@
 		
 	<table>
 		<tbody>
-		<c:forEach items ="${quoteResults}" var = "quote" >
+		<c:forEach items ="${quoteResult}" var = "quote" >
 			<tr>
-				<td>${quote.content}</td> 
-				<td>${quote.title} </td>
+				<td>${quote.quote}</td> 
+				<td>${quote.author} </td>
 			
-	    	<td><a href="/user-home/${ quote.id }/delete" onclick="return confirm('Are you sure you want to delete this quote?')">Delete</a></td>
+	    	<td><a href="/quote-list/${ quote.id }/delete" onclick="return confirm('Are you sure you want to delete this quote?')">Delete</a></td>
 
 			</tr>
 		</c:forEach>

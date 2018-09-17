@@ -136,35 +136,35 @@
 			            {
 			              var color = "dodgerblue";
 			
-			              if (val < -0.5) 
+			              if (val < 25) 
 			              {
 			                color = "#00095B";
 			              }
-			              else if (-0.5 < val < 0.0)
-			              {
-			                color = "#00098C";
-			              }
-			              else if (val === 0.0)
+			              else if (25 < val <= 50)
 			              {
 			                color = "#4B80FC";
 			              }
-			              else if (0.0 < val <= 0.5)
+			              else if (val === 50)
 			              {
-			                color = "#89F5FF";
+			                color = "#4B80FC";
 			              }
-			              else if (val < 0.5)
+			              else if (50 < val <= 75)
 			              {
-			                color = "#A0FFFD";
+			                color = "#4da6ff";
 			              }
-			              else if (val <= 1.0)
+			              else if (val < 100)
 			              {
-			                color = "#7db9e8";
+			                color = "#4da9ff";
+			              }
+			              else if (val === 100)
+			              {
+			                color = "#4da9ff";
 			              }
 			
 			              moodText[i].style.backgroundColor = color;
 			
 			            }
-			
+			            
 			            changeColor(colorThreshold);
 			
 			          } 

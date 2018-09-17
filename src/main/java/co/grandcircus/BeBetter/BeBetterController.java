@@ -85,9 +85,16 @@ public class BeBetterController {
 				mav.addObject("entry", sentiment.getScore());
 				// adds score and text to the sessions
 				session.setAttribute("text", entry);
-				session.setAttribute("score", sentiment.getScore());
-				System.out.println("Session" + session.getAttribute("score"));
-					
+				
+				//Puts score into a range from 0 to 100
+				Double OldRange = (double) (1 - (-1));
+				Double	NewRange = (double) (100 - 0);
+				Double	NewValue = (((sentiment.getScore() - (-1)) * NewRange) / OldRange) + 0;
+				int roundedScore = (int) Math.floor(NewValue);
+				
+				session.setAttribute("score", roundedScore);
+				//System.out.println("Session" + session.getAttribute("score"));
+				//System.out.println(roundedScore);	
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -184,8 +191,8 @@ public class BeBetterController {
 	}
 
 	//adding a affirmation
-		@RequestMapping ("/user-home/add-affirmation")
-		public ModelAndView addAffirmation(HttpSession session, Affirmation affirmation, 
+	@RequestMapping ("/user-home/add-affirmation")
+	public ModelAndView addAffirmation(HttpSession session, Affirmation affirmation, 
 				@SessionAttribute(name="user") User user) {
 			ModelAndView mav = new ModelAndView("redirect:/user-home");
 			
@@ -320,7 +327,7 @@ public class BeBetterController {
 				
 				//Create a score for this user
 				String date = (String) session.getAttribute("date");
-				Float score = (Float) session.getAttribute("score");
+				int score = (int) session.getAttribute("score");
 				String text = (String) session.getAttribute("text");
 
 				
@@ -386,7 +393,7 @@ public class BeBetterController {
 				
 				//Create a score for this user
 				String date = (String) session.getAttribute("date");
-				Float score = (Float) session.getAttribute("score");
+				int score = (int) session.getAttribute("score");
 				String text = (String) session.getAttribute("text");
 
 				
@@ -403,7 +410,7 @@ public class BeBetterController {
 			
 			//Create a score for this user
 			String date = (String) session.getAttribute("date");
-			Float score = (Float) session.getAttribute("score");
+			int score = (int) session.getAttribute("score");
 			String text = (String) session.getAttribute("text");
 
 			
@@ -557,18 +564,18 @@ public class BeBetterController {
 	    
 	    List<Score> moodList = new ArrayList<Score>();
 
-	    moodList.add(new Score(null, null, (float)-0.9, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (float)-.7, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (float)-.5, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (float)-.3, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (float)-.1, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (float)0.0, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (float).1, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (float).3, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (float).5, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (float).7, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (float).9, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (float)1.0, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 29, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 47, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 55, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 93, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 31, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 0, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 71, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 93, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 100, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 89, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 99, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 1, "2018/14/9", "Great! Ugh."));
 	    
 	    mav.addObject("moodList", moodList);
 
@@ -603,10 +610,16 @@ public class BeBetterController {
 			sentiment.getScore(), sentiment.getMagnitude());
 			mav.addObject("entry", sentiment.getScore());
 			
+			//Puts score into a range from 0 to 100
+			Double OldRange = (double) (1 - (-1));
+			Double	NewRange = (double) (100 - 0);
+			Double	NewValue = (((sentiment.getScore() - (-1)) * NewRange) / OldRange) + 0;
+			int roundedScore = (int) Math.floor(NewValue);
+						
 			// grabs user information and creates a new score
 			String date = (String) session.getAttribute("date");
 			
-			Score newScore = new Score(null, (User) session.getAttribute("user"), sentiment.getScore(), date, text);
+			Score newScore = new Score(null, (User) session.getAttribute("user"), roundedScore, date, text);
 			scoreDao.create(newScore);
 				
 			} catch (IOException e) {

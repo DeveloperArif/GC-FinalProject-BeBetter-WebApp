@@ -15,7 +15,7 @@ public class Score {
 	private Long id;
 	@ManyToOne
 	private User user;
-	private Float score;
+	private int score;
 	private String date;
 	private String text;
 	
@@ -23,7 +23,7 @@ public class Score {
 		super();
 	}
 	
-	public Score(Long id, User user, Float score, String date, String text) {
+	public Score(Long id, User user, int score, String date, String text) {
 		this.id = id;
 		this.user = user;
 		this.score = score;
@@ -55,11 +55,11 @@ public class Score {
 		this.user = user;
 	}
 
-	public Float getScore() {
+	public int getScore() {
 		return score;
 	}
 
-	public void setScore(Float score) {
+	public void setScore(int score) {
 		this.score = score;
 	}
 

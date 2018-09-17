@@ -85,65 +85,69 @@
 	      </div>
 	      
 	      <div class="moods">
-          <c:forEach items ="${moodScore}" var = "days" end="5" >
-            <div class="day"><span class="hideScore">${days}</span>
-            	<div class="hoverinfo"><span>i</span>
-				    <p>${days}</p>
-				</div>
-            </div>
-		<script>
-          for(var i = 0; i <= 29; i++)
-          {
+          	<c:forEach items="${testing}" var="days" end="12" >
+	            <div class="day"><span class="hideScore">${days}</span>
+	            	<div class="hoverinfo"><span class="hideThis">i</span>
+					    <p>Mood Score: ${days}</p>
+					</div>
+	            </div>
+					<script>
+			          for(var i = 0; i <= 29; i++)
+			          {
+			
+			            var dayText = document.getElementsByClassName("day");
+			
+			            var score = document.getElementsByClassName("hideScore");
+			            var infoIcon = document.getElementsByClassName("hideThis");
 
-            var dayText = document.getElementsByClassName("day");
-
-            var score = document.getElementsByClassName("hideScore");
-
-            var colorThreshold = score[i].innerHTML;
-
-
-            function changeColor(val)
-            {
-              var color = "dodgerblue";
-
-              if (val < -0.5) 
-              {
-                color = "darkblue";
-              }
-              else if (-0.5 < val < 0.0)
-              {
-                color = "blue";
-              }
-              else if (val === 0.0)
-              {
-                color = "white";
-              }
-              else if (0.0 < val <= 0.5)
-              {
-                color = "lightblue";
-              }
-              else if (val < 0.5)
-              {
-                color = "aqua";
-              }
-              else if (val <= 1.0)
-              {
-                color = "aliceblue";
-              }
-
-              dayText[i].style.backgroundColor = color;
-
-              score[i].style.opacity = 0;		          
-            }
-
-            changeColor(colorThreshold);
-
-          } 
-
-        </script>
-          </c:forEach>
+			
+			            var colorThreshold = score[i].innerHTML;
+			
+			
+			            function changeColor(val)
+			            {
+			              var color = "dodgerblue";
+			
+			              if (val < -0.5) 
+			              {
+			                color = "darkblue";
+			              }
+			              else if (-0.5 < val < 0.0)
+			              {
+			                color = "blue";
+			              }
+			              else if (val === 0.0)
+			              {
+			                color = "white";
+			              }
+			              else if (0.0 < val <= 0.5)
+			              {
+			                color = "lightblue";
+			              }
+			              else if (val < 0.5)
+			              {
+			                color = "aqua";
+			              }
+			              else if (val <= 1.0)
+			              {
+			                color = "aliceblue";
+			              }
+			
+			              dayText[i].style.backgroundColor = color;
+			
+			              score[i].style.opacity = 0;
+			              infoIcon[i].style.opacity = 0;
+			            }
+			
+			            changeColor(colorThreshold);
+			
+			          } 
+			
+			        </script>
+	          </c:forEach>
 		  </div>
-        </div>
+	      
+        </div> <!-- End of Mood Tracker -->
 
         
 		<!-- End of body -->

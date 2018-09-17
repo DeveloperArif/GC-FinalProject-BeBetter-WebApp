@@ -83,7 +83,8 @@ public class BeBetterController {
 				"Sentiment: score = %s, magnitude = %s%n",
 				sentiment.getScore(), sentiment.getMagnitude());
 				mav.addObject("entry", sentiment.getScore());
-				// adds score to the sessions
+				// adds score and text to the sessions
+				session.setAttribute("text", entry);
 				session.setAttribute("score", sentiment.getScore());
 				System.out.println("Session" + session.getAttribute("score"));
 					
@@ -132,8 +133,8 @@ public class BeBetterController {
 		}
 		System.out.println(tasks);
 		
-		Affirmation affirmation = affirmationDao.findLast(user);
-		mav.addObject("affirmation", affirmation);
+		//Affirmation affirmation = affirmationDao.findLast(user);
+		//mav.addObject("affirmation", affirmation);
 		
 		mav.addObject("tasks", tasks);
 				
@@ -245,6 +246,7 @@ public class BeBetterController {
 	public ModelAndView submitResult(HttpSession session,
 			@RequestParam("newScore") Float newScore)
 	{
+		//updates score in session with new score
 		session.setAttribute("score", newScore);
 	
 		ModelAndView mav = new ModelAndView("redirect:/login-reg");
@@ -252,7 +254,9 @@ public class BeBetterController {
 		
 	}
 	
-	//getting score from session and adding it to the database, from result page
+	//after getting score from session and
+	//adding it to the database, from result page
+	//user MUST login/register
 	@RequestMapping("/login-reg")
 	public ModelAndView signInt() {
 		
@@ -283,8 +287,10 @@ public class BeBetterController {
 				//Create a score for this user
 				String date = (String) session.getAttribute("date");
 				Float score = (Float) session.getAttribute("score");
+				String text = (String) session.getAttribute("text");
+
 				
-				Score newScore = new Score(null, user, score, date);
+				Score newScore = new Score(null, user, score, date, text);
 				scoreDao.create(newScore);
 				
 				return new ModelAndView("redirect:/user-home");
@@ -347,8 +353,10 @@ public class BeBetterController {
 				//Create a score for this user
 				String date = (String) session.getAttribute("date");
 				Float score = (Float) session.getAttribute("score");
+				String text = (String) session.getAttribute("text");
+
 				
-				Score newScore = new Score(null, user, score, date);
+				Score newScore = new Score(null, user, score, date, text);
 				scoreDao.create(newScore);
 			}
 			
@@ -362,8 +370,10 @@ public class BeBetterController {
 			//Create a score for this user
 			String date = (String) session.getAttribute("date");
 			Float score = (Float) session.getAttribute("score");
+			String text = (String) session.getAttribute("text");
+
 			
-			Score newScore = new Score(null, user, score, date);
+			Score newScore = new Score(null, user, score, date, text);
 			scoreDao.create(newScore);
 		}
 		catch(Exception e) {
@@ -465,6 +475,7 @@ public class BeBetterController {
 		return new ModelAndView("redirect:/");
 	}
 	
+	//Detailed list of submitted entries 
 	@RequestMapping("/moodDetails")
 	public ModelAndView moodDetails(HttpSession session)
 	{
@@ -509,9 +520,67 @@ public class BeBetterController {
 	    
 		System.out.println(testing);
 	    mav.addObject("testing", testing);
+	    
+	    List<Score> moodList = new ArrayList<Score>();
+
+	    moodList.add(new Score(null, null, (float)-0.9, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (float)-.7, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (float)-.5, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (float)-.3, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (float)-.1, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (float)0.0, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (float).1, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (float).3, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (float).5, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (float).7, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (float).9, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (float)1.0, "2018/14/9", "Great! Ugh."));
+	    
+	    mav.addObject("moodList", moodList);
 
 
 		return mav;	
+	}
+	
+	//For the submission of a mood on the moodDetails page
+	@RequestMapping("/moodDetailsSubmit")
+	public ModelAndView moodSubmit(HttpSession session,
+			RedirectAttributes redir,
+			@RequestParam("entry") String entry) {
+		
+		ModelAndView mav =  new ModelAndView("/moodDetailsSubmit");
+		
+		//Grades new entry
+		// Instantiates a client
+		LanguageServiceClient language;
+		try {
+			language = LanguageServiceClient.create();
+				
+			// The text to analyze
+			String text = entry;
+				
+			Document doc = Document.newBuilder().setContent(text).setType(Type.PLAIN_TEXT).build();
+			// Detects the sentiment of the text
+			Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
+
+			System.out.printf("Text: \"%s\"%n", text);
+			System.out.printf(
+			"Sentiment: score = %s, magnitude = %s%n",
+			sentiment.getScore(), sentiment.getMagnitude());
+			mav.addObject("entry", sentiment.getScore());
+			
+			// grabs user information and creates a new score
+			String date = (String) session.getAttribute("date");
+			
+			Score newScore = new Score(null, (User) session.getAttribute("user"), sentiment.getScore(), date, text);
+			scoreDao.create(newScore);
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		return new ModelAndView("redirect:/moodDetails");
 	}
 	
 }

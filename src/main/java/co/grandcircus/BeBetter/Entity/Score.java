@@ -17,20 +17,27 @@ public class Score {
 	private User user;
 	private Float score;
 	private String date;
+	private String text;
 	
 	public Score() {
 		super();
 	}
 	
-	public Score(Long id, User user, Float score, String date) {
-		super();
+	public Score(Long id, User user, Float score, String date, String text) {
 		this.id = id;
 		this.user = user;
 		this.score = score;
 		this.date = date;
+		this.text = text;
 	}
 
+	public String getText() {
+		return text;
+	}
 
+	public void setText(String text) {
+		this.text = text;
+	}
 
 	public Long getId() {
 		return id;

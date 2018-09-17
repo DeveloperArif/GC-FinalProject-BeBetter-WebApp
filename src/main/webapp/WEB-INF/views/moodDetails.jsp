@@ -26,24 +26,36 @@
     <div class="listBody">
     <h1>Mood Details</h1>
 	 
+	 <!-- Begin "Add Mood" -->
+	 	<div class="form-group">
+			<div class="col-5"> 
+				<form action="/moodDetailsSubmit">
+				  <label for="comment">How are you feeling today?</label>
+				  <textarea name="entry" class="form-control" rows="3" id="comment"></textarea>
+				  <input type="submit" value="Submit">
+				 </form>
+ 		 	</div>
+		</div>
+	 <!-- End "Add Mood -->
 	 
+	 <!-- Begin Mood Tracker -->
 		<div class="tracker">
 	      <div class="head">
 	        <span>Mood Tracker</span>
 	      </div>
 	      
 	      <div class="moods">
-          	<c:forEach items="${testing}" var="days" end="12" >
-	            <div class="day"><span class="hideScore">${days}</span>
+          	<c:forEach items="${testing}" var="scores" end="12" >
+	            <div class="scores"><span class="hideScore">${scores}</span>
 	            	<div class="hoverinfo"><span class="hideThis">i</span>
-					    <p>Mood Score: ${days}</p>
+					    <p>Mood Score: ${scores}</p>
 					</div>
 	            </div>
 					<script>
 			          for(var i = 0; i <= 29; i++)
 			          {
 			
-			            var dayText = document.getElementsByClassName("day");
+			            var dayText = document.getElementsByClassName("scores");
 			
 			            var score = document.getElementsByClassName("hideScore");
 			            var infoIcon = document.getElementsByClassName("hideThis");
@@ -95,8 +107,72 @@
 	          </c:forEach>
 		  </div>
 	      
-        </div>
+        </div> <!-- End of Mood Tracker -->
 	 
+	 
+	 
+	 <!-- Begin Mood detailed list -->
+	 <h2>Previous Moods</h2>
+	 	 <div class="moodListContainer">
+          	<c:forEach items="${moodList}" var="scores" end="12" >
+	            <div class="scoreDetail"> 
+	            	<div class="scores"><span class="hideScore">${scores.score}</span></div>
+	            	<div><p>" ${scores.text} " on ${scores.date} </p></div>
+	            </div>
+	            <br>
+	            <script>
+			          for(var i = 0; i <= 29; i++)
+			          {
+			
+			            var moodText = document.getElementsByClassName("scores");
+			
+			            var score = document.getElementsByClassName("hideScore");
+
+			
+			            var colorThreshold = score[i].innerHTML;
+			
+			
+			            function changeColor(val)
+			            {
+			              var color = "dodgerblue";
+			
+			              if (val < -0.5) 
+			              {
+			                color = "#00095B";
+			              }
+			              else if (-0.5 < val < 0.0)
+			              {
+			                color = "#00098C";
+			              }
+			              else if (val === 0.0)
+			              {
+			                color = "#4B80FC";
+			              }
+			              else if (0.0 < val <= 0.5)
+			              {
+			                color = "#89F5FF";
+			              }
+			              else if (val < 0.5)
+			              {
+			                color = "#A0FFFD";
+			              }
+			              else if (val <= 1.0)
+			              {
+			                color = "#7db9e8";
+			              }
+			
+			              moodText[i].style.backgroundColor = color;
+			
+			            }
+			
+			            changeColor(colorThreshold);
+			
+			          } 
+			
+			        </script>
+	        </c:forEach>
+	 	</div>
+	 <!-- End Mood detailed list -->
 		
 	</div>
 	<!-- End of body -->

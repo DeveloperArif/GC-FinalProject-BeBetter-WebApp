@@ -39,7 +39,7 @@
     cursor: pointer; /* Cursor on hover */
 }
 
-.day{
+.scores{
   height: 55px;
   width: 55px;
   padding: 4px 4px 4px 4px;
@@ -123,9 +123,27 @@
   margin-left: 190px; /* Same as the width of the sidenav */
   font-size: 15px; /* Increased text to enable scrolling */
   padding: 0px 10px;
-  
   color: gray;
-}
+  
+  }
 .listBody p{
   text-align: left;
+}
+.moodListContainer{
+	
+}
+
+.scoreDetail{
+	display: flex;
+}
+.scoreDetail p{
+	padding-top: 15px;
+	padding-left: 10px;
+}
+.scoreDetail .hideScore{
+	position: absolute;
+	color: white;
+	margin: 10px 10px 0 0;
+    padding: 2px 10px
+	
 }

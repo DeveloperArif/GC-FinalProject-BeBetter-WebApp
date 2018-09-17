@@ -17,26 +17,26 @@
       <a href="/user-home">Home</a>
       <a href="/moodDetails">Add Mood</a>
       <a href="/journal">Journal</a>
-      <a href="/taskList">My Tasks</a>
+      <a href="/tasklist">My Tasks</a>
       <a href="/affirmation">My Affirmations</a>
-      <a href="/quotesList">My Quotes</a>
+      <a href="/quote-list">My Quotes</a>
       <a href="/logout">Logout</a>
     </div>
     
     <!-- Start of body -->
     <div class="listBody">
     <h1>User Home Page</h1>
-    <form action="/user-home/add-quote" method="post">
+    <form action="/user-home/add-quote">
 			<div>
-				<h3>${quotes.content}</h3>
-				<p> ${quotes.title}</p>
+				<h3><input id="quote" name="quote" value="${quotes.quote}"></h3>
+				<p><input  name="author" value="${quotes.author}"></p>
 			</div>
 		<button type="submit" class="btn btn-outline-success">Save Quote</button>
 	</form>	
 
 			
 			<h1>Daily Affirmation</h1>
-				<h2>${affirmation.affirmation }</h2>
+				<h2>${affirmation}</h2>
 			<div>
 			<form action="/user-home/add-affirmation" method="post">
 				<label for="affirmation">Enter: <input name="affirmation" required minlength="2"/> </label>

@@ -123,9 +123,15 @@
   margin-left: 190px; /* Same as the width of the sidenav */
   font-size: 15px; /* Increased text to enable scrolling */
   padding: 0px 10px;
-  
   color: gray;
 }
 .listBody p{
   text-align: left;
+}
+.quote {
+	background-color: transparent;
+    border: 0px solid;
+    height: 20px;
+    width: 160px;
+    color: #CCC;
 }

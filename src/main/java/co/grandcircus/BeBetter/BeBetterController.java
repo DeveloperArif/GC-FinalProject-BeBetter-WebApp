@@ -29,10 +29,12 @@ import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.Sentiment;
 
 import co.grandcircus.BeBetter.Entity.Affirmation;
+import co.grandcircus.BeBetter.Entity.Journal;
 import co.grandcircus.BeBetter.Entity.Quote;
 import co.grandcircus.BeBetter.Entity.Score;
 import co.grandcircus.BeBetter.Entity.Task;
 import co.grandcircus.BeBetter.dao.AffirmationDao;
+import co.grandcircus.BeBetter.dao.JournalDao;
 import co.grandcircus.BeBetter.dao.QuoteDao;
 import co.grandcircus.BeBetter.dao.ScoreDao;
 import co.grandcircus.BeBetter.dao.TaskDao;
@@ -53,6 +55,8 @@ public class BeBetterController {
 	QuoteDao quoteDao;
 	@Autowired
 	AffirmationDao affirmationDao;
+	@Autowired
+	JournalDao journalDao;
 	
 	@RequestMapping("/")
 	public ModelAndView index(HttpSession session)
@@ -234,6 +238,42 @@ public class BeBetterController {
 		affirmationDao.delete(id);
 		return new ModelAndView("redirect:/affirmation");
 	}
+	
+	//delete an Journal entry
+	@RequestMapping("/journalentry/{id}/delete")
+	public ModelAndView deleteJournalEntry(@PathVariable("id") Long id) {
+		journalDao.delete(id);
+		return new ModelAndView("redirect:/journal");
+	}
+	
+	//List all Journal entries
+	@RequestMapping ("/journal")
+	public ModelAndView addJournalEntry(HttpSession session, Journal journal,
+			@SessionAttribute(name="user") User user) {
+		ModelAndView mav = new ModelAndView("journal");
+
+		List<Journal> allJournalEntries = journalDao.findByUser(user);
+			
+		mav.addObject("alljournalentries",allJournalEntries);
+		return mav;
+		}
+			
+		//adding a journal entry to journal jsp
+	@RequestMapping ("/journal/journal-entry")
+	public ModelAndView addJouranlJsp(HttpSession session, Journal journal, 
+			@SessionAttribute(name="user") User user) {
+		ModelAndView mav = new ModelAndView("redirect:/journal");
+			
+		//gets user info from the sessions and adds to the affirmation
+		journal.setUser(user);
+		mav.addObject(journal);
+			
+		//then adds the affirmation (with userId) to the database
+		journalDao.create(journal);
+			
+		return mav;
+	}
+
 
 	//adding a task
 	@RequestMapping ("/user-home/add-task")

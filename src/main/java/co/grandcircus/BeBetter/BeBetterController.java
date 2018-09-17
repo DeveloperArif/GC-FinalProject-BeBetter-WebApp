@@ -12,7 +12,7 @@ import javax.persistence.NoResultException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,6 +53,8 @@ public class BeBetterController {
 	QuoteDao quoteDao;
 	@Autowired
 	AffirmationDao affirmationDao;
+	@Value("${quotes_enabled}")
+	String quotesEnabled;
 	
 	@RequestMapping("/")
 	public ModelAndView index(HttpSession session)
@@ -111,13 +113,19 @@ public class BeBetterController {
 			@SessionAttribute(name="date") String date) {
 		ModelAndView mav =  new ModelAndView("user-home");
 		
-		RestTemplate restTemplate = new RestTemplate();
+		Quote result = null;
 		
-		String url = "https://talaikis.com/api/quotes/random";
-		
-		Quote response  = restTemplate.getForObject(url, Quote.class);
-		
-		Quote result = response;
+		if ("true".equalsIgnoreCase(quotesEnabled)) {
+			RestTemplate restTemplate = new RestTemplate();
+			
+			String url = "https://talaikis.com/api/quotes/random";
+			
+			Quote response  = restTemplate.getForObject(url, Quote.class);
+			
+			result = response;
+		} else {
+			result = new Quote(null, "Quotes disabled.", "Be Better", null);
+		}
 		mav.addObject("quotes", result);
 		
 		System.out.println(result);
@@ -486,7 +494,7 @@ public class BeBetterController {
 	}
 	
 	@RequestMapping("/tasklist")
-	public ModelAndView showTaskList(HttpSession session,
+	public ModelAndView showTaskList(HttpSession session, Task task, 
 			@SessionAttribute(name="user") User user) {
 		ModelAndView mav = new ModelAndView("tasklist");
 		List<Task>tasks = taskDao.findByUser(user);
@@ -518,10 +526,10 @@ public class BeBetterController {
 		public ModelAndView addingTask(HttpSession session, Task task, 
 				@SessionAttribute(name="user") User user) {
 			ModelAndView mav = new ModelAndView("redirect:/tasklist");
-			
+			 
 			//gets user info from the sessions and adds to the task
 			task.setUser(user);
-			mav.addObject(task);
+			mav.addObject("task", task);
 			
 			//then adds the task (with userId) to the database
 			taskDao.create(task);

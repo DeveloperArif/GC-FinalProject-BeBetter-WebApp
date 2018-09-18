@@ -3,7 +3,6 @@ package co.grandcircus.BeBetter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -240,13 +239,10 @@ public class BeBetterController {
 	    			+ " For confidential support available 24/7 for everyone in the United States, call 1-800-273-8255.";
 	    	
 	    	
-	    	//String longMessage = "hot pickle";
 	    	mav.addObject("helpful_message", longMessage);
-	    	//System.out.println(longMessage);
-	    	System.out.println(session.getAttribute("show_message"));
 	    	mav.addObject("show_message", "help");
-
 	    }
+	    
 	    System.out.println("exit avg");
 
 		return mav;

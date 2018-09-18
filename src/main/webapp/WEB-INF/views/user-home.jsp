@@ -33,6 +33,7 @@
 				<p><input  name="author" value="${quotes.author}"></p>
 			</div>
 		<button type="submit" class="btn btn-outline-success">Save Quote</button>
+		<button type="redirect/user-home" class="btn btn-outline-success">Next</button>
 	</form>	
 
 			<h1>Day Average = ${dayavg}</h1>
@@ -46,6 +47,25 @@
 				</p>
 			</form>	
 			</div>
+			
+			<!-- Begin Mood Tracker -->
+		<div class="tracker">
+	      <div class="head">
+	        <span>Mood Tracker</span>
+	      </div>
+	      
+	       <div class="moods">
+          	<c:forEach items="${moods}" var="scoreVar" end="30" >
+				<!--<a href="#${scoreVar}">  -->
+	            	<div class="scores"><label class="hideScore">${scoreVar.score}</label>
+ 		            	<div class="hoverinfo"><span class="hideThis">iiiiiiiii</span> 
+						    <p>Mood Score: ${scoreVar.score}</p>
+						</div>
+	            	</div>
+            	<!--</a> -->	
+	      	</c:forEach>
+		  </div>
+        </div> <!-- End of Mood Tracker -->
 				
 		<h1>Task List</h1>	
 	<table>
@@ -80,28 +100,7 @@
 			</p>
 		</form>		
 		
-		  <!-- Begin Mood Tracker -->
-		<div class="tracker">
-	      <div class="head">
-	        <span>Mood Tracker</span>
-	      </div>
-	      
-	       <div class="moods">
-          	<c:forEach items="${moods}" var="scoreVar" end="30" >
-<!-- 	            <a href="#${scoreVar}">  -->
-				
-	            	<div class="scores"><label class="hideScore">${scoreVar.score}</label>
- 		            	<div class="hoverinfo"><span class="hideThis">iiiiiiiii</span> 
-						    <p>Mood Score: ${scoreVar.score}</p>
-						</div>
-	            	</div>
-            		
-<!-- 	            </a> -->
-						        	
-	      	</c:forEach>
-		  </div>
-	      
-        </div> <!-- End of Mood Tracker -->
+		  
         
         
     <p id="showMessage" style="color:black;">${show_message}</p>

@@ -669,37 +669,15 @@ public class BeBetterController {
 	{
 		ModelAndView mav = new ModelAndView("moodDetails");
 		
-		    
-		/*List<Score> moodTracker = scoreDao.findByUser((User)session.getAttribute("user"));
-		System.out.println(moodTracker);
-	    mav.addObject("moods", moodTracker);*/
-	       
 		List<Score> moodList = scoreDao.findAllMoods((User)session.getAttribute("user"));
 	    mav.addObject("moodList", moodList);
 	    
-	    
-	    //mav.addObject("moods", moodTracker);
-	    /*
-	    List<Score> moodList = new ArrayList<Score>();
-
-	    moodList.add(new Score(null, null, (int) 29, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 47, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 55, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 93, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 31, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 0, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 71, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 93, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 100, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 89, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 99, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 1, "2018/14/9", "Great! Ugh."));*/
-	    
-		List<Score> moodList2 = scoreDao.findByUser((User)session.getAttribute("user"));
+		/*List<Score> moodList2 = scoreDao.findByUser((User)session.getAttribute("user"));
 		List<String> scoreByDate = scoreDao.listByDate((User)session.getAttribute("user"));
-		mav.addObject("moodList", moodList2);
-	    scoreDao.findByUser(user);
-	    mav.addObject("dates", scoreByDate);
+		mav.addObject("moodList", moodList2);*/
+		
+	    //scoreDao.findByUser(user);
+	   // mav.addObject("dates", scoreByDate);
 
 
 		return mav;	

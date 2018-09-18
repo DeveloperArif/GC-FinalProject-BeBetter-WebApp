@@ -172,6 +172,8 @@ public class BeBetterController {
 	    List<String> dated = scoreDao.getAllDates((User) session.getAttribute("user"));
 	    System.out.println(dated);
 	    double avg0 = 0, avg1 = 0, avg2 = 0;
+	    mav.addObject("show_message", "no");
+
 	    //get scores from those dates
 	    if(dated.size() > 0)
 	    {
@@ -217,7 +219,6 @@ public class BeBetterController {
 	    //check if scores avg are above 80% or below 50%
 	    //return good or bad message
 	    
-	    mav.addObject("show_message", "no");
 	    if(avg0 > 80 && avg1 > 80 && avg2 > 80 )
 	    {
 	    	mav.addObject("good_message", "Hey, " + user.getName() + "! We see you've been having some "
@@ -241,7 +242,8 @@ public class BeBetterController {
 	    	
 	    	//String longMessage = "hot pickle";
 	    	mav.addObject("helpful_message", longMessage);
-	    	System.out.println(longMessage);
+	    	//System.out.println(longMessage);
+	    	System.out.println(session.getAttribute("show_message"));
 	    	mav.addObject("show_message", "help");
 
 	    }

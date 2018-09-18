@@ -25,6 +25,7 @@
     
     <!-- Start of body -->
     <div class="listBody">
+    
     <h1>User Home Page</h1>
     <form action="/user-home/add-quote">
 			<div>
@@ -101,7 +102,35 @@
 		  </div>
 	      
         </div> <!-- End of Mood Tracker -->
+        
+        
+    <p id="showMessage" style="color:white;">help</p>
+    <p id="goodMessage" style="color:white;">${good_message}</p>
+    <p id="helpfulMessage" style="color:white;">${helpful_message}</p>
+    
+    
+        
+        
 	 <script>
+			 window.onload = function(){
+			    	var gm = document.getElementById("goodMessage");
+			    	var hm = document.getElementById("helpfulMessage");
+			    	var m = document.getElementById("showMessage");
+		 	
+			    	if(m.innerHTML == "good")
+			   		{
+			   			alert(gm.innerHTML);
+			   		}
+			    	else if(m.innerHTML == "help")
+			   		{
+			   			alert(hm.innerHTML);
+			   		}
+			    	
+			    	m.style.display = "none";
+			    	gm.style.display = "none";
+			    	hm.style.display = "none";
+
+		 	}
 	          for(var i = 0; i <= 29; i++)
 	          {
 	
@@ -148,8 +177,10 @@
 	
 	          } 
 	
-			</script>
-	 
+			
+    	
+    </script>
+    
 
         
 		<!-- End of body -->

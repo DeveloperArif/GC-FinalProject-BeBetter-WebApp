@@ -28,8 +28,8 @@ public class User implements Serializable {
 	List<Task> tasks;
 	@OneToMany(mappedBy = "user")
 	List<Score> scores;
-	@OneToMany(mappedBy = "user")
-	List<Quote> quote;
+//	@OneToMany(mappedBy = "user")
+//	List<Quote> quote;
 	//@OneToMany(mappedBy = "user")
 	//List<Affirmation> affirmations;
 	

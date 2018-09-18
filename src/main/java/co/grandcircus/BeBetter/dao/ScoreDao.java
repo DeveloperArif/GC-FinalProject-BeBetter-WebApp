@@ -35,5 +35,21 @@ public class ScoreDao {
 		return em.createQuery("FROM Score WHERE user_user_id = :u", 
 				Score.class).setParameter("u", user).getResultList();
 	}
+	public List<Score> findAllMoods(User user){
+		//String sql = "SELECT * FROM items WHERE name = ?";
+		return em.createQuery("FROM Score WHERE user_user_id = :u ORDER BY id DESC", 
+				Score.class).setParameter("u", user).getResultList();
+	}
+	
+	public List<String> getAllDates(User user){
+		return em.createQuery("SELECT DISTINCT date FROM Score WHERE user_user_id = :u ORDER BY id DESC", String.class).setParameter("u", user).getResultList();
+	}
+	
+	
+	public List<Score> findByDate(String date, User user){
+		
+		return em.createQuery("FROM Score WHERE user_user_id = :u AND date = :d", 
+				Score.class).setParameter("u", user).setParameter("d", date).getResultList();
+	}
 	
 }

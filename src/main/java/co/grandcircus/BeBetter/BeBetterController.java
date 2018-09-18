@@ -136,7 +136,7 @@ public class BeBetterController {
 		System.out.println(result);
 		 
 		//mood tracker things
-		List<Score> scores = scoreDao.findByUser(user);
+		List<Score> scores = scoreDao.findAllMoods(user);
 		mav.addObject("moods", scores);
 		
 		List<Task> tasks = taskDao.findByUser(user);
@@ -161,6 +161,93 @@ public class BeBetterController {
 		String lastAff = affirmationDao.findLast(user);
 		System.out.println("lastAff Dao runs");
 		mav.addObject("affirmation", lastAff);
+		
+		
+		//User Mood Progress Messages
+
+	    //Pull scores form the last three dates 
+	    //if scores < 80%, send good message
+	    //if scores > 50%, send helpful message
+	    
+	    //get last three distinct dates
+	    List<String> dated = scoreDao.getAllDates((User) session.getAttribute("user"));
+	    System.out.println(dated);
+	    double avg0 = 0, avg1 = 0, avg2 = 0;
+	    //get scores from those dates
+	    if(dated.size() > 0)
+	    {
+	    	List<Score> day0 = scoreDao.findByDate(dated.get(0), (User) session.getAttribute("user"));
+	    	int sum = 0;
+	    	//avg score for date
+	    	for(Score item : day0)
+	    	{
+	    		sum += item.getScore();
+	    	}
+	    	avg0 = sum/day0.size();
+	    	sum = 0;
+	    	System.out.println(avg0);
+	    	if(dated.size() > 1)
+		    {
+		    	List<Score> day1 = scoreDao.findByDate(dated.get(1), (User) session.getAttribute("user"));
+		    	//avg score for date
+		    	for(Score item : day1)
+		    	{
+		    		sum += item.getScore();
+		    	}
+		    	avg1 = sum/day1.size();
+		    	sum = 0;
+		    	System.out.println(avg1);
+
+		    	if(dated.size() > 2)
+			    {
+			    	List<Score> day2 = scoreDao.findByDate(dated.get(2), (User) session.getAttribute("user"));
+			    	//avg score for date
+			    	for(Score item : day2)
+			    	{
+			    		sum += item.getScore();
+			    	}
+			    	avg2 = sum/day2.size();
+			    	sum = 0;
+			    	System.out.println(avg2);
+
+			    }
+		    }
+	    	
+	    }
+	    
+	    //check if scores avg are above 80% or below 50%
+	    //return good or bad message
+	    
+	    mav.addObject("show_message", "no");
+	    if(avg0 > 80 && avg1 > 80 && avg2 > 80 )
+	    {
+	    	mav.addObject("good_message", "Hey, " + user.getName() + "! We see you've been having some "
+	    			+ "pretty great days lately. Keep it up!!");
+		    mav.addObject("show_message", "good");
+
+	    }
+	    
+	    if(avg0 < 50 && avg1 < 50 && avg2 < 50 )
+	    {
+	    	String longMessage = "Hey, " + user.getName() + "! We see you've been having some "
+	    			+ "not so great days lately. Try activities you do on "
+	    			+ "your better days to increase your mood!"
+	    			+ "\n We at Be Better are not mental health care professionals."
+	    			+ " Speaking to someone, whether by going to a therapist or by attending a support group, can help you feel better and improve your mental health. "
+	    			+ " These resources can help you find a psychologist, psychiatrist, or support group near you: https://suicidepreventionlifeline.org/help-yourself/ "
+	    			+ "\n If you're in crisis, there are options available to help you cope. "
+	    			+ " You can also call the Suicide Lifeline at any time to speak to someone and get support."
+	    			+ " For confidential support available 24/7 for everyone in the United States, call 1-800-273-8255.";
+	    	
+	    	
+	    	//String longMessage = "hot pickle";
+	    	mav.addObject("helpful_message", longMessage);
+	    	System.out.println(longMessage);
+	    	mav.addObject("show_message", "help");
+
+	    }
+	    System.out.println("exit avg");
+
 		
 		return mav;
 	}
@@ -581,51 +668,15 @@ public class BeBetterController {
 	{
 		ModelAndView mav = new ModelAndView("moodDetails");
 		
-		//mood tracker tings
-		/*User user = new User(null, );
-		List<Score> scores = scoreDao.findByUser(user);
-		mav.addObject("moodScore", scores);*/
-		
-		/*List<Score> testing = new ArrayList<Score>();
-
-	    testing.add(new Score(null, null, (float)-0.9, "2018/14/9"));
-	    testing.add(new Score(null, null, (float)-.7, "2018/14/9"));
-	    testing.add(new Score(null, null, (float)-.5, "2018/14/9"));
-	    testing.add(new Score(null, null, (float)-.3, "2018/14/9"));
-	    testing.add(new Score(null, null, (float)-.1, "2018/14/9"));
-	    testing.add(new Score(null, null, (float)0.0, "2018/14/9"));
-	    testing.add(new Score(null, null, (float).1, "2018/14/9"));
-	    testing.add(new Score(null, null, (float).3, "2018/14/9"));
-	    testing.add(new Score(null, null, (float).5, "2018/14/9"));
-	    testing.add(new Score(null, null, (float).7, "2018/14/9"));
-	    testing.add(new Score(null, null, (float).9, "2018/14/9"));
-	    testing.add(new Score(null, null, (float)1.0, "2018/14/9"));*/
-	    
-		List<Score> moodTracker = scoreDao.findByUser((User)session.getAttribute("user"));
-	    
-	    
+		    
+		/*List<Score> moodTracker = scoreDao.findByUser((User)session.getAttribute("user"));
 		System.out.println(moodTracker);
-	    mav.addObject("moods", moodTracker);
-	    /*
-	    List<Score> moodList = new ArrayList<Score>();
-
-	    moodList.add(new Score(null, null, (int) 29, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 47, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 55, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 93, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 31, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 0, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 71, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 93, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 100, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 89, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 99, "2018/14/9", "Great! Ugh."));
-	    moodList.add(new Score(null, null, (int) 1, "2018/14/9", "Great! Ugh."));*/
-	    
-		List<Score> moodList = scoreDao.findByUser((User)session.getAttribute("user"));
-		
+	    mav.addObject("moods", moodTracker);*/
+	       
+		List<Score> moodList = scoreDao.findAllMoods((User)session.getAttribute("user"));
 	    mav.addObject("moodList", moodList);
-
+	    
+	    
 
 		return mav;	
 	}

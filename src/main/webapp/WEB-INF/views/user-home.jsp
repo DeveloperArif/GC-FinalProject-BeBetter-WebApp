@@ -34,7 +34,7 @@
 		<button type="submit" class="btn btn-outline-success">Save Quote</button>
 	</form>	
 
-			
+			<h1>Day Average = ${dayavg}</h1>
 			<h1>Daily Affirmation</h1>
 				<h2>${affirmation}</h2>
 			<div>

@@ -37,9 +37,28 @@
  		 	</div>
 		</div>
 	 <!-- End "Add Mood -->
-	
-	
+	 <!-- Begin drop down to find avg by date -->
 	 
+	 <form action="/avgdd" method="post">
+	
+	<p>
+	Choose a date to see your average score
+	</p>
+				<div class="col-auto my-1">
+			      <label class="mr-sm-2" for="inlineFormCustomSelect">Date</label>
+			      	<select id="date" name="date">
+			      		<option selected>Choose date</option>
+			      		<c:forEach items ="${dates}" var = "date">
+					        <option value="dates">${date}</option>
+						</c:forEach> 
+					</select>
+				</div>
+		
+		<button type="submit" >Submit</button>
+</form>
+	 
+	 <!-- End drop down to find avg by date -->
+	 	 
 	 <!-- Begin Mood detailed list -->
 	 <h2>Previous Moods</h2>
 	 	 <div class="moodListContainer">

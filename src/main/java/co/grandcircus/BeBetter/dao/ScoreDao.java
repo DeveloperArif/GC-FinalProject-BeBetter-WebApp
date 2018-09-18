@@ -40,19 +40,19 @@ public class ScoreDao {
 				Score.class).setParameter("u", user).getResultList();
 	}
 	
-public String findDayAvg(User user) {
-		
-		Date date = new Date();
-	    String strDateFormat = "yyyy-MM-dd";
-	    DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
-	    String formattedDate= dateFormat.format(date);
-	    
-		List<Score> avgScore = em.createQuery("SELECT AVG(score) FROM Score WHERE user_user_id = :u AND date = :d", 
-					Score.class).setParameter("u", user.getId()).setParameter("d", formattedDate).getResultList();
-		// the "?" question mark is the ternary operator as an if statement
-		// this will ask, if it's empty then return empty string and if not then show last affirmation
-		return (avgScore.isEmpty() ? "" : avgScore.toString());
-}
+//public String findDayAvg(User user) {
+//		
+//		Date date = new Date();
+//	    String strDateFormat = "yyyy-MM-dd";
+//	    DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+//	    String formattedDate= dateFormat.format(date);
+//	    
+//		List<Score> avgScore = em.createQuery("SELECT AVG(score) FROM Score WHERE user_user_id = :u AND date = :d", 
+//					Score.class).setParameter("u", user.getId()).setParameter("d", formattedDate).getResultList();
+//		// the "?" question mark is the ternary operator as an if statement
+//		// this will ask, if it's empty then return empty string and if not then show last affirmation
+//		return (avgScore.isEmpty() ? "" : avgScore.toString());
+//}
 
 public List<String> listByDate(User user) {
 

@@ -14,11 +14,10 @@
 	<div class="sidenav">
       <a href="/user-home">${user.name}</a>
       <a href="/user-home">Home</a>
-      <a href="/moodDetails">Add Mood</a>
       <a href="/journal">Journal</a>
-      <a href="/taskList">My Tasks</a>
-      <a href="/affirmationsList">My Affirmations</a>
-      <a href="/quotesList">My Quotes</a>
+      <a href="/tasklist">My Tasks</a>
+      <a href="/affirmation">My Affirmations</a>
+      <a href="/quote-list">My Quotes</a>
       <a href="/logout">Logout</a>
     </div>
     
@@ -37,9 +36,28 @@
  		 	</div>
 		</div>
 	 <!-- End "Add Mood -->
-	
-	
+	 <!-- Begin drop down to find avg by date -->
 	 
+	 <form action="/avgdd" method="post">
+	
+	<p>
+	Choose a date to see your average score
+	</p>
+				<div class="col-auto my-1">
+			      <label class="mr-sm-2" for="inlineFormCustomSelect">Date</label>
+			      	<select id="date" name="date">
+			      		<option selected>Choose date</option>
+			      		<c:forEach items ="${dates}" var = "date">
+					        <option value="dates">${date}</option>
+						</c:forEach> 
+					</select>
+				</div>
+		
+		<button type="submit" >Submit</button>
+</form>
+	 
+	 <!-- End drop down to find avg by date -->
+	 	 
 	 <!-- Begin Mood detailed list -->
 	 <h2>Previous Moods</h2>
 	 	 <div class="moodListContainer">

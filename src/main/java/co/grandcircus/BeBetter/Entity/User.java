@@ -1,5 +1,6 @@
 package co.grandcircus.BeBetter.Entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,8 +13,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private Long id;
@@ -25,8 +28,8 @@ public class User {
 	List<Task> tasks;
 	@OneToMany(mappedBy = "user")
 	List<Score> scores;
-	@OneToMany(mappedBy = "user")
-	List<Quote> quote;
+//	@OneToMany(mappedBy = "user")
+//	List<Quote> quote;
 	//@OneToMany(mappedBy = "user")
 	//List<Affirmation> affirmations;
 	
@@ -90,13 +93,13 @@ public class User {
 		this.tasks = tasks;
 	}
 	
-	public List<Quote> getQuote() {
-		return quote;
-	}
-
-	public void setQuotes(List<Quote> quote) {
-		this.quote = quote;
-	}
+//	public List<Quote> getQuote() {
+//		return quote;
+//	}
+//
+//	public void setQuotes(List<Quote> quote) {
+//		this.quote = quote;
+//	}
 
 	@Override
 	public String toString() {

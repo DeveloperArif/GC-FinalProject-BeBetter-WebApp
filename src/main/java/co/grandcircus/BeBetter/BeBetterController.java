@@ -161,8 +161,7 @@ public class BeBetterController {
 		String lastAff = affirmationDao.findLast(user);
 		System.out.println("lastAff Dao runs");
 		mav.addObject("affirmation", lastAff);
-		
-		
+				
 		//User Mood Progress Messages
 
 	    //Pull scores form the last three dates 
@@ -248,7 +247,6 @@ public class BeBetterController {
 	    }
 	    System.out.println("exit avg");
 
-		
 		return mav;
 	}
 	
@@ -629,26 +627,26 @@ public class BeBetterController {
 	
 	//updating task to complete
 		@RequestMapping ("/tasklist/{id}/complete-task")
-		public ModelAndView updatingTaskToComplete(HttpSession session, 
-				@PathVariable("id") Long id, 
-				@RequestParam("complete") Boolean complete) {
-			ModelAndView mav = new ModelAndView("redirect:/tasklist");
-			//sends update to database
-			String date = (String) session.getAttribute("date");
-			taskDao.complete(id, complete, date);
-			//adds completed date to the database
-			System.out.println("Date is " + date);
+	public ModelAndView updatingTaskToComplete(HttpSession session, 
+			@PathVariable("id") Long id, 
+			@RequestParam("complete") Boolean complete) {
+		ModelAndView mav = new ModelAndView("redirect:/tasklist");
+		//sends update to database
+		String date = (String) session.getAttribute("date");
+		taskDao.complete(id, complete, date);
+		//adds completed date to the database
+		System.out.println("Date is " + date);
 			return mav;
 }
 		//delete a task
-		@RequestMapping("/tasklist/{id}/delete")
-		public ModelAndView deletingTask(@PathVariable("id") Long id) {
-			taskDao.delete(id);
-			return new ModelAndView("redirect:/tasklist");
+	@RequestMapping("/tasklist/{id}/delete")
+	public ModelAndView deletingTask(@PathVariable("id") Long id) {
+		taskDao.delete(id);
+		return new ModelAndView("redirect:/tasklist");
 }
 		//adding a task
-		@RequestMapping ("/tasklist/add-task")
-		public ModelAndView addingTask(HttpSession session, Task task, 
+	@RequestMapping ("/tasklist/add-task")
+	public ModelAndView addingTask(HttpSession session, Task task, 
 				@SessionAttribute(name="user") User user) {
 			ModelAndView mav = new ModelAndView("redirect:/tasklist");
 			 
@@ -664,7 +662,8 @@ public class BeBetterController {
 		
 	//Detailed list of submitted entries 
 	@RequestMapping("/moodDetails")
-	public ModelAndView moodDetails(HttpSession session)
+	public ModelAndView moodDetails(HttpSession session, @SessionAttribute(name="user") User user,
+			@SessionAttribute(name="date") String date)
 	{
 		ModelAndView mav = new ModelAndView("moodDetails");
 		
@@ -677,6 +676,29 @@ public class BeBetterController {
 	    mav.addObject("moodList", moodList);
 	    
 	    
+	    //mav.addObject("moods", moodTracker);
+	    /*
+	    List<Score> moodList = new ArrayList<Score>();
+
+	    moodList.add(new Score(null, null, (int) 29, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 47, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 55, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 93, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 31, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 0, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 71, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 93, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 100, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 89, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 99, "2018/14/9", "Great! Ugh."));
+	    moodList.add(new Score(null, null, (int) 1, "2018/14/9", "Great! Ugh."));*/
+	    
+		List<Score> moodList2 = scoreDao.findByUser((User)session.getAttribute("user"));
+		List<String> scoreByDate = scoreDao.listByDate((User)session.getAttribute("user"));
+		mav.addObject("moodList", moodList2);
+	    scoreDao.findByUser(user);
+	    mav.addObject("dates", scoreByDate);
+
 
 		return mav;	
 	}
@@ -727,4 +749,5 @@ public class BeBetterController {
 		return new ModelAndView("redirect:/moodDetails");
 	}
 	
+
 }

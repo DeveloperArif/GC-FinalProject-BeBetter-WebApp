@@ -104,7 +104,7 @@
         </div> <!-- End of Mood Tracker -->
         
         
-    <p id="showMessage" style="color:white;">help</p>
+    <p id="showMessage" style="color:black;">${show_message}</p>
     <p id="goodMessage" style="color:white;">${good_message}</p>
     <p id="helpfulMessage" style="color:white;">${helpful_message}</p>
     

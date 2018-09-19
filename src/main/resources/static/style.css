@@ -120,10 +120,10 @@
   color: #f1f1f1;
 }
 .sidenav img{
+
   border-radius: 45%;
-  border: 2px solid white;
-  height: 150px;
-  width: 150px;
+  height: 200px;
+  width: 200px;
 }
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
@@ -186,4 +186,15 @@ color: gray;
     height: 20px;
     width: 160px;
     color: #CCC;
+}
+.container2 {
+margin-left: 250px; /* Same as the width of the sidenav */
+font-size: 10px; /* Increased text to enable scrolling */
+padding: 20px 10px;
+color: gray;
+}
+
+.team-name {
+
+margin-left: 10px; 
 }

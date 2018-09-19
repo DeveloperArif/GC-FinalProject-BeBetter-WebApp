@@ -19,6 +19,7 @@
       <a href="/journal">Journal</a>
       <a href="/tasklist">My Tasks</a>
       <a href="/affirmation">My Affirmations</a>
+      <a href="/quote-list">My Quotes</a>
       <a href="/logout">Logout</a>
     </div>
     

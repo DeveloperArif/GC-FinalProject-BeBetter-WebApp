@@ -183,10 +183,10 @@
   color: #f1f1f1;
 }
 .sidenav img{
+
   border-radius: 45%;
-  border: 2px solid white;
-  height: 150px;
-  width: 150px;
+  height: 200px;
+  width: 200px;
 }
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
@@ -326,6 +326,7 @@ h2 {
  	display: block;
  	text-align: center;
 }
+
 h3{
 	font-family: 'Merienda', cursive; 
 	font-size: 20px;
@@ -373,3 +374,16 @@ img {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+.container2 {
+	margin: 250px; /* Same as the width of the sidenav */
+	font-size: 10px; /* Increased text to enable scrolling */
+	padding: 20px 10px;
+	color: gray;
+}
+
+.team-name {
+
+margin-left: 10px; 
+}
+

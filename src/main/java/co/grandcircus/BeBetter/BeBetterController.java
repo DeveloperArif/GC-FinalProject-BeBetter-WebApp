@@ -694,4 +694,14 @@ public class BeBetterController {
 			}
 		return new ModelAndView("redirect:/moodDetails");
 	}
+
+	
+	@RequestMapping("/about-page")
+	public ModelAndView aboutPage()
+	{
+		ModelAndView mav = new ModelAndView("about-page");
+		
+		return mav;	
+	}
+	
 }

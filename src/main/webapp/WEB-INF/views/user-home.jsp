@@ -22,6 +22,7 @@
       <a href="/affirmation">My Affirmations</a>
       <a href="/quote-list">My Quotes</a>
       <a href="/logout">Logout</a>
+      <a href="/about-page">About</a>
     </div>
     
     <!-- Start of body -->

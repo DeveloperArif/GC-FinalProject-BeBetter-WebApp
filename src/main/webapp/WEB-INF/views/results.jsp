@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" href="/style.css">
 </head>
-<body class = "indexbody">
+<body class = "indexBody">
 
 	<div>
          <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal" data-backdrop="false">
@@ -19,29 +19,50 @@
 			<p class="message">${ message }</p>
       </div>
 
-	<p>Entry: ${entry}</p>
+<div class= "resultsBox">
+	<p>Hey! We're guessing you're feeling like a ${entry} out of 100 today. Is this correct?</p>
 	
 	<form action="/user-home/submit-result" method="post">
 		<p>Slide for new Score: </p>
 		
 		<div class="slidecontainer">
-	  		<input name="newScore"type="range" min="0" max="100" step="1" value="${entry}" class="slider" id="myRange">
+	  		<input name="newScore"type="range" min="0" max="100" step="1" value="${entry}" class="slider" id="myRange"><span class="range-slider-value">0</span>
 		</div>
 		<script> 
 			var slider = document.getElementById("myRange");
 			var output = document.getElementById("demo");
 			output.innerHTML = slider.value; // Display the default slider value
-		
+			value = $('.range-slider__value');
 			// Update the current slider value (each time you drag the slider handle)
 			slider.oninput = function() {
 			    output.innerHTML = this.value;
 			}
+			var rangeSlider = function(){
+				  var slider = $('.range-slider'),
+				      range = $('.range-slider__range'),
+				      value = $('.range-slider__value');
+				    
+				  slider.each(function(){
+
+				    value.each(function(){
+				      var value = $(this).prev().attr('value');
+				      $(this).html(value);
+				    });
+
+				    range.on('input', function(){
+				      $(this).next(value).html(this.value);
+				    });
+				  });
+				};
+
+				rangeSlider();
+			
 		</script>
 			<input type="submit">
 	
 	</form>
 	
-	
+</div>
 	
 	
 	

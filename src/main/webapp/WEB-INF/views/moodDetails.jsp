@@ -14,10 +14,11 @@
 	<div class="sidenav">
       <a href="/user-home">${user.name}</a>
       <a href="/user-home">Home</a>
+      <a href="/moodDetails">Add Mood</a>
       <a href="/journal">Journal</a>
-      <a href="/tasklist">My Tasks</a>
-      <a href="/affirmation">My Affirmations</a>
-      <a href="/quote-list">My Quotes</a>
+      <a href="/taskList">My Tasks</a>
+      <a href="/affirmationsList">My Affirmations</a>
+      <a href="/quotesList">My Quotes</a>
       <a href="/logout">Logout</a>
     </div>
     

@@ -9,8 +9,7 @@
 <link rel="stylesheet" href="/style.css">
 
 </head>
-<body class = "indexbody">
-	<h1> Welcome!! </h1>
+<body class = "indexBody">
 	
 	 <div class="buttons">
          <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal" data-backdrop="false">
@@ -27,7 +26,7 @@
 		<form action="/results">
 	  <label for="comment">How are you feeling today?</label>
 	  <textarea name="entry" class="form-control" rows="3" id="comment"></textarea>
-	  <input type="submit" value="Submit">
+	  <input id="indexSubmit" type="submit" value="Submit">
 	  </form>
   </div>
 </div>

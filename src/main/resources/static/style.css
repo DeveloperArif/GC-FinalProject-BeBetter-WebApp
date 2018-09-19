@@ -1,4 +1,62 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Bitter|Courgette|Fjalla+One|Merienda|Oswald');
+
+.range-slider-range {
+  -webkit-appearance: none;
+  width: calc(100% - (#{$range-label-width + 13px}));
+  height: $range-track-height;
+  border-radius: 5px;
+  background: $range-track-color;
+  outline: none;
+  padding: 0;
+  margin: 0;
+
+  // Range Handle
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: $range-handle-size;
+    height: $range-handle-size;
+    border-radius: 50%;
+    background: $range-handle-color;
+    cursor: pointer;
+    transition: background .15s ease-in-out;
+
+    &:hover {
+      background: $range-handle-color-hover;
+    }
+  }
+
+  &:active::-webkit-slider-thumb {
+    background: $range-handle-color-hover;
+  }
+
+  &::-moz-range-thumb {
+    width: $range-handle-size;
+    height: $range-handle-size;
+    border: 0;
+    border-radius: 50%;
+    background: $range-handle-color;
+    cursor: pointer;
+    transition: background .15s ease-in-out;
+
+    &:hover {
+      background: $range-handle-color-hover;
+    }
+  }
+
+  &:active::-moz-range-thumb {
+    background: $range-handle-color-hover;
+  }
+  
+  // Focus state
+  &:focus {
+    
+    &::-webkit-slider-thumb {
+      box-shadow: 0 0 0 3px $shade-0,
+                  0 0 0 6px $teal;
+    }
+  }
+}
 
 .slidecontainer {
     width: 100%; /* Width of the outside container */
@@ -8,11 +66,16 @@
 .slider {
     -webkit-appearance: none;  /* Override default CSS styles */
     appearance: none;
-    width: 100%; /* Full-width */
-    height: 25px; /* Specified height */
-    background: #d3d3d3; /* Grey background */
+    width: 50%; /* Full-width */
+    height: 30px; /* Specified height */
+    border-radius: 20px; 
+   background: linear-gradient(to right,
+    rgba(84, 51, 255), 
+    rgba(32, 189, 255),
+    rgba(165, 254, 203) );
+   /* gradient background */
     outline: none; /* Remove outline */
-    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    opacity: 1; /* Set transparency (for mouse-over effects on hover) */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
     transition: opacity .2s;
 }
@@ -28,7 +91,7 @@
     appearance: none;
     width: 25px; /* Set a specific slider handle width */
     height: 25px; /* Slider handle height */
-    background: #4CAF50; /* Green background */
+    background: yellow; /* Green background */
     cursor: pointer; /* Cursor on hover */
 }
 
@@ -129,26 +192,51 @@
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
-.indexbody {
+html, body { 
+	margin: 0; 
+	padding: 0;
+	width: 100%;
+height: 100%;
+
+
+ } 
+
+.indexBody {
 background: linear-gradient(#ffd194, #70e1f5);
 background-repeat: no-repeat;
-width: 100vw;
-height: 100vh;
+background-size: cover;
+
 }
 
 .hruBox {
- color: white;
- padding: 10px;
- width: 50%;
- margin-right: auto;
- margin-left: auto;
- border-radius: 15px 15px 15px 15px;
- margin-bottom: auto;
- margin-top: 20%;
- text-align: center;
+	font-family: 'Merienda', cursive; 
+	font-size: 50px;
+ 	color: white;
+	margin-left: 35%;
+ 	margin-top: 5%;
+ 	display: block;
+ 	text-align: center;
 }
-
+.resultsBox{
+	font-family: 'Merienda', cursive; 
+	font-size: 30px;
+ 	color: white;
+ 	display: block;
+ 	text-align: center;
+ 	width: 50%;
+ 	margin-left: 25%;
+ 	margin-top: 5%;
+ 	
+}
+#indexSubmit{
+	font-size: 25px;
+	width: 40%;
+	
+}
 .buttons {
+	
+}
+#myRange{
 	
 }
 

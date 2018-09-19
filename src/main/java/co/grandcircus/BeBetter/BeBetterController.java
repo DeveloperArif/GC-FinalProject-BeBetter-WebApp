@@ -89,7 +89,6 @@ public class BeBetterController {
 				System.out.printf(
 				"Sentiment: score = %s, magnitude = %s%n",
 				sentiment.getScore(), sentiment.getMagnitude());
-				mav.addObject("entry", sentiment.getScore());
 				
 				// adds score and text to the sessions
 				session.setAttribute("text", entry);
@@ -99,6 +98,8 @@ public class BeBetterController {
 				Double	NewRange = (double) (100 - 0);
 				Double	NewValue = (((sentiment.getScore() - (-1)) * NewRange) / OldRange) + 0;
 				int roundedScore = (int) Math.floor(NewValue);
+				
+				mav.addObject("entry", roundedScore);
 				
 				session.setAttribute("score", roundedScore);
 				} catch (IOException e) {

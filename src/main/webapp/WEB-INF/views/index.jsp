@@ -10,6 +10,10 @@
 
 </head>
 <body class = "indexBody">
+
+	  <div>
+      	 <img src="https://i.postimg.cc/9MfpGm6w/be_better.png" height="180" width="180"/>
+      </div>
 	
 	 <div class="buttons">
          <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal" data-backdrop="false">

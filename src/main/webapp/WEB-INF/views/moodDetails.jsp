@@ -12,14 +12,18 @@
 </head>
 <body>
 	<div class="sidenav">
+	  <div class="img">
+      	 <img src="https://i.postimg.cc/9MfpGm6w/be_better.png" height="180" width="180"/>
+      </div>
       <a href="/user-home">${user.name}</a>
       <a href="/user-home">Home</a>
       <a href="/moodDetails">Add Mood</a>
       <a href="/journal">Journal</a>
-      <a href="/taskList">My Tasks</a>
-      <a href="/affirmationsList">My Affirmations</a>
-      <a href="/quotesList">My Quotes</a>
+      <a href="/tasklist">My Tasks</a>
+      <a href="/affirmation">My Affirmations</a>
+      <a href="/quote-list">My Quotes</a>
       <a href="/logout">Logout</a>
+      <a href="/about-page">About</a>
     </div>
     
     <!-- Start of body -->

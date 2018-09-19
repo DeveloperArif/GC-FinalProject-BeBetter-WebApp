@@ -14,6 +14,9 @@
 	<body>
 		
 	<div class="sidenav">
+	  <div class="img">
+      	 <img src="https://i.postimg.cc/9MfpGm6w/be_better.png" height="180" width="180"/>
+      </div>
       <a href="/user-home">${user.name}</a>
       <a href="/user-home">Home</a>
       <a href="/moodDetails">Add Mood</a>
@@ -29,6 +32,7 @@
     <div class="listBody">
     
     
+
     <p>
     <div>
     
@@ -38,6 +42,9 @@
 	
   <div class="centered">
   
+
+    <div class="quotebox" style="word-wrap: break-word; width: 800px">
+
     <form action="/user-home/add-quote">
 			<div>
 				<h3><input class="quotebox" style="word-wrap: break-word; width: 800px"id="quote" name="quote" value="${quotes.quote}"></h3>

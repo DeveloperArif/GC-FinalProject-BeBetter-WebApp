@@ -3,7 +3,6 @@ package co.grandcircus.BeBetter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -90,7 +89,7 @@ public class BeBetterController {
 				System.out.printf(
 				"Sentiment: score = %s, magnitude = %s%n",
 				sentiment.getScore(), sentiment.getMagnitude());
-				mav.addObject("entry", sentiment.getScore());
+				
 				// adds score and text to the sessions
 				session.setAttribute("text", entry);
 				
@@ -100,13 +99,12 @@ public class BeBetterController {
 				Double	NewValue = (((sentiment.getScore() - (-1)) * NewRange) / OldRange) + 0;
 				int roundedScore = (int) Math.floor(NewValue);
 				
+				mav.addObject("entry", roundedScore);
+				
 				session.setAttribute("score", roundedScore);
-				//System.out.println("Session" + session.getAttribute("score"));
-				//System.out.println(roundedScore);	
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-		//mav.addObject("newScore", newScore);
 		return mav;
 	}	
 	
@@ -123,7 +121,7 @@ public class BeBetterController {
 		if ("true".equalsIgnoreCase(quotesEnabled)) {
 			RestTemplate restTemplate = new RestTemplate();
 			
-			String url = "https://talaikis.com/api/quotes/random";
+			String url = "https://talaikis.com/api/quotes/random/";
 			
 			Quote response  = restTemplate.getForObject(url, Quote.class);
 			
@@ -153,21 +151,12 @@ public class BeBetterController {
 			
 		mav.addObject("tasks", tasks);
 		System.out.println(tasks);
-		
-		//Affirmation affirmation = affirmationDao.findLast(user);
-		//mav.addObject("affirmation", affirmation);
 
 		// this runs the Dao to find the last affirmation written/ if there in not one it returns empty string
 		String lastAff = affirmationDao.findLast(user);
 		System.out.println("lastAff Dao runs");
 		mav.addObject("affirmation", lastAff);
-				
-		//User Mood Progress Messages
-
-	    //Pull scores form the last three dates 
-	    //if scores < 80%, send good message
-	    //if scores > 50%, send helpful message
-	    
+	
 	    //get last three distinct dates
 	    List<String> dated = scoreDao.getAllDates((User) session.getAttribute("user"));
 	    System.out.println(dated);
@@ -213,7 +202,6 @@ public class BeBetterController {
 
 			    }
 		    }
-	    	
 	    }
 	    
 	    //check if scores avg are above 80% or below 50%
@@ -240,12 +228,8 @@ public class BeBetterController {
 	    			+ " For confidential support available 24/7 for everyone in the United States, call 1-800-273-8255.";
 	    	
 	    	
-	    	//String longMessage = "hot pickle";
 	    	mav.addObject("helpful_message", longMessage);
-	    	//System.out.println(longMessage);
-	    	System.out.println(session.getAttribute("show_message"));
 	    	mav.addObject("show_message", "help");
-
 	    }
 	    System.out.println("exit avg");
 
@@ -306,7 +290,6 @@ public class BeBetterController {
 			return mav;
 		}
 		
-
 	//List all affirmations
 	@RequestMapping ("/affirmation")
 	public ModelAndView addTask(HttpSession session, Affirmation affirmation,
@@ -373,7 +356,6 @@ public class BeBetterController {
 			
 		//then adds the affirmation (with userId) to the database
 		journalDao.create(journal);
-			
 		return mav;
 	}
 
@@ -400,11 +382,11 @@ public class BeBetterController {
 			@PathVariable("id") Long id, 
 			@RequestParam("complete") Boolean complete) {
 		ModelAndView mav = new ModelAndView("redirect:/user-home");
-		System.out.println("hello");
+		
 		//sends update to database
 		String date = (String) session.getAttribute("date");
-		taskDao.complete(id, complete, date);
 		//adds completed date to the database
+		taskDao.complete(id, complete, date);
 		System.out.println("Date is " + date);
 		return mav;
 	}
@@ -429,7 +411,6 @@ public class BeBetterController {
 	
 		ModelAndView mav = new ModelAndView("redirect:/login-reg");
 		return mav;
-		
 	}
 	
 	//after getting score from session and
@@ -466,7 +447,6 @@ public class BeBetterController {
 				int score = (int) session.getAttribute("score");
 				String text = (String) session.getAttribute("text");
 
-				
 				Score newScore = new Score(null, user, score, date, text);
 				scoreDao.create(newScore);
 				
@@ -482,7 +462,6 @@ public class BeBetterController {
 		
 				mav.addObject("message", "Wrong email or password.");		
 				return mav = new ModelAndView("redirect:/login-reg");
-	
 			}
 		}
 		catch(NoResultException e)
@@ -495,7 +474,6 @@ public class BeBetterController {
 		}
 		
 		return new ModelAndView("redirect:/user-home");
-				
 	}
 	
 	//new reg with score
@@ -581,7 +559,6 @@ public class BeBetterController {
 				//Match!
 				session.setAttribute("user",  user);
 				return new ModelAndView("redirect:/user-home");
-	
 			}
 			else if(user != null && !password.equals(user.getPassword()))
 			{
@@ -590,12 +567,10 @@ public class BeBetterController {
 			else
 			{
 				//No match, return to index page
-				
 				ModelAndView mav = new ModelAndView("redirect:/");
 				mav.addObject("message", "Wrong email or password.");
 				
 				return mav;
-	
 			}
 		}
 		catch(NoResultException e)
@@ -606,13 +581,11 @@ public class BeBetterController {
 		{
 			redir.addFlashAttribute("message", "Error has occurred!");
 		}
-		
 		return new ModelAndView("redirect:/");
 	}
 
 	@RequestMapping("/logout")
 	public ModelAndView logout(HttpSession session, RedirectAttributes redir) {
-		
 		session.invalidate();
 		redir.addFlashAttribute("message", "Logged out.");
 		return new ModelAndView("redirect:/");
@@ -628,7 +601,7 @@ public class BeBetterController {
 	}
 	
 	//updating task to complete
-		@RequestMapping ("/tasklist/{id}/complete-task")
+	@RequestMapping ("/tasklist/{id}/complete-task")
 	public ModelAndView updatingTaskToComplete(HttpSession session, 
 			@PathVariable("id") Long id, 
 			@RequestParam("complete") Boolean complete) {
@@ -640,26 +613,29 @@ public class BeBetterController {
 		System.out.println("Date is " + date);
 			return mav;
 }
-		//delete a task
+	
+	//delete a task
 	@RequestMapping("/tasklist/{id}/delete")
 	public ModelAndView deletingTask(@PathVariable("id") Long id) {
 		taskDao.delete(id);
 		return new ModelAndView("redirect:/tasklist");
 }
-		//adding a task
+	
+	//adding a task
 	@RequestMapping ("/tasklist/add-task")
 	public ModelAndView addingTask(HttpSession session, Task task, 
 				@SessionAttribute(name="user") User user) {
-			ModelAndView mav = new ModelAndView("redirect:/tasklist");
+		
+		ModelAndView mav = new ModelAndView("redirect:/tasklist");
 			 
-			//gets user info from the sessions and adds to the task
-			task.setUser(user);
-			mav.addObject("task", task);
-			
-			//then adds the task (with userId) to the database
-			taskDao.create(task);
-			
-			return mav;
+		//gets user info from the sessions and adds to the task
+		task.setUser(user);
+		mav.addObject("task", task);
+		
+		//then adds the task (with userId) to the database
+		taskDao.create(task);
+		
+		return mav;
 		}
 		
 	//Detailed list of submitted entries 
@@ -671,15 +647,6 @@ public class BeBetterController {
 		
 		List<Score> moodList = scoreDao.findAllMoods((User)session.getAttribute("user"));
 	    mav.addObject("moodList", moodList);
-	    
-		/*List<Score> moodList2 = scoreDao.findByUser((User)session.getAttribute("user"));
-		List<String> scoreByDate = scoreDao.listByDate((User)session.getAttribute("user"));
-		mav.addObject("moodList", moodList2);*/
-		
-	    //scoreDao.findByUser(user);
-	   // mav.addObject("dates", scoreByDate);
-
-
 		return mav;	
 	}
 	
@@ -725,9 +692,9 @@ public class BeBetterController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 		return new ModelAndView("redirect:/moodDetails");
 	}
+
 	
 	@RequestMapping("/about-page")
 	public ModelAndView aboutPage()

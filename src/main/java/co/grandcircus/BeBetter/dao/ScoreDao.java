@@ -41,7 +41,7 @@ public class ScoreDao {
 	}
 	public List<Score> findAllMoods(User user){
 		//String sql = "SELECT * FROM items WHERE name = ?";
-		return em.createQuery("FROM Score WHERE user_user_id = :u ORDER BY id DESC", 
+		return em.createQuery("FROM Score WHERE user_user_id = :u ORDER BY score_id DESC", 
 				Score.class).setParameter("u", user).getResultList();
 	}
 	
@@ -63,11 +63,11 @@ public class ScoreDao {
 //	    DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
 //	    String formattedDate= dateFormat.format(date);
 //	    
-//		List<Score> avgScore = em.createQuery("SELECT AVG(score) FROM Score WHERE user_user_id = :u AND date = :d", 
-//					Score.class).setParameter("u", user.getId()).setParameter("d", formattedDate).getResultList();
+//		List<Score> avgScore = em.createQuery("SELECT AVG(score) FROM Score WHERE user_user_id = :u AND date = :d",
+//				Score.class).setParameter("u", user).setParameter("d", date).getResultList();
 //		// the "?" question mark is the ternary operator as an if statement
 //		// this will ask, if it's empty then return empty string and if not then show last affirmation
-//		return (avgScore.isEmpty() ? "" : avgScore.toString());
+//		return (avgScore.isEmpty() ? "" : (String) avgScore.toString());
 //}
 
 public List<String> listByDate(User user) {

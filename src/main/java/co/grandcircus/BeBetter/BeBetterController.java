@@ -120,7 +120,7 @@ public class BeBetterController {
 		if ("true".equalsIgnoreCase(quotesEnabled)) {
 			RestTemplate restTemplate = new RestTemplate();
 			
-			String url = "```````";
+			String url = "https://talaikis.com/api/quotes/random/";
 			
 			Quote response  = restTemplate.getForObject(url, Quote.class);
 			

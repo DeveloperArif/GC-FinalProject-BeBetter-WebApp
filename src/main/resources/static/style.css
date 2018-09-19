@@ -114,6 +114,7 @@
   height: 50%;
   display: flex;
   flex-wrap: wrap;
+  background-color:ded3ff;
 }
 .head{
   height: 10%;
@@ -122,7 +123,7 @@
 .tracker{
   width: 60%;
   height: 30%;
-  
+   
 }
 .container{
 	display:inline-block;
@@ -163,10 +164,9 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background: linear-gradient(
-    rgba(226, 255, 0, 0.49), 
-    rgba(255, 88, 0, 0.45)
-  );
+  background: linear-gradient(rgba(226,255,0,0.49),
+  rgba(255,88,0,0.45));
+  background-repeat: no-repeat;
   overflow-x: hidden;
   padding-top: 20px;
 }
@@ -197,7 +197,7 @@ html, body {
 	padding: 0;
 	width: 100%;
 height: 100%;
-
+background: fffce3;
 
  } 
 
@@ -274,7 +274,7 @@ color: gray;
     padding: 3px 3px;
     width: 100%;
     height: 95px;
-    color: #3fbca9;
+    color: #14635b;
 	word-break: break-all;
 	white-space: normal;
 }
@@ -286,17 +286,19 @@ color: gray;
     width: 100%;
     color: #b3e6de;
     word-wrap: break-word;
-    font-family: "Great Vibes", cursive;
+    font-family: 'Allura', cursive;
 	background-color: transparent;
-	text-align: left;
+	text-align: right;
 	padding: 5px 25px;
- 	font-size: 15px;
+ 	font-size: 32px;
 }
 .quotebox {
-	font-family: "Great Vibes", cursive;
+	font-family: 'Allura', cursive; 
 	text-align: left;
+	width: 100%;
 	padding: 5px 25px;
- 	font-size: 15px;
+ 	font-size: 35px;
+ 	padding-left: 50px;
  	word-break: break-all;
 	white-space: normal;
 	background-size: auto;
@@ -304,10 +306,70 @@ color: gray;
 	word-wrap: normal;
 	word-break: break-all;
 	white-space: normal;
-	display: block;
-	height: auto;
-	margin: 3px auto;
-	line-height: 1.4;
-	-webkit-line-clamp: 1;
-	-webkit-box-orient: vertical;
+	
 }
+h1 {
+	font-family: 'Merienda', cursive; 
+	font-size: 40px;
+ 	color: #70e1f5;
+ 	display: block;
+ 	text-align: center;
+}
+.home {
+	text-align: left;
+}
+h2 {
+	padding-top: 10px;
+	font-family: 'Allura', cursive; 
+	font-size: 45px;
+ 	color: #14635b;
+ 	display: block;
+ 	text-align: center;
+}
+h3{
+	font-family: 'Merienda', cursive; 
+	font-size: 20px;
+ 	color: #3cb5a3;
+ 	display: block;
+ 	text-align: left;	
+}
+
+h4{
+	font-family: 'Merienda', cursive; 
+	font-size: 20px;
+ 	color: #3cb5a3;
+ 	display: block;
+ 	text-align: center;
+	
+}
+h5 {
+	font-family: 'Merienda', cursive; 
+	font-size: 40px;
+ 	color: #70e1f5;
+ 	display: block;
+ 	text-align: left;
+}
+.body {
+	background: ffe2ba;
+}
+.btn-outline-success {
+	border-color: #3cb5a3;
+	font-family: 'Merienda', cursive;
+	text-color: color: #3cb5a3;
+}
+img { 
+    display: inline-block;
+}
+.containerhome {
+    position: relative;
+    text-align: center;
+    color: white;
+    width: 100%;
+    height: auto;
+    position: center;
+}
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);

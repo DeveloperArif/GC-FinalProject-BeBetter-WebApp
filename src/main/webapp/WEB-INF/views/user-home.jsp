@@ -6,9 +6,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" href="/style.css">
-<title>Insert title here</title>
+<title>user-home</title>
 </head>
 	<body>
 		
@@ -26,29 +27,43 @@
     <!-- Start of body -->
     <div class="listBody">
     
-    <h1>User Home Page</h1>
-    <div class="quotebox" style="word-wrap: break-word; width: 800px">
+    
+    <p>
+    <div>
+    
+    <div class="containerhome">
+    
+	<img src="https://i.postimg.cc/63w6XLg1/Untitled_design_5.png" alt="calm" style= "width:100%;">
+	
+  <div class="centered">
+  
     <form action="/user-home/add-quote">
 			<div>
-				<h3><input id="quote" name="quote" value="${quotes.quote}"></h3>
-				<p><input  id="quoteauthor" name="author" value="${quotes.author}"></p>
+				<h3><input class="quotebox" style="word-wrap: break-word; width: 800px"id="quote" name="quote" value="${quotes.quote}"></h3>
+				<br></b><br></b><br></b><br></b><br></b><br></b>
+			
+				<p><input  id="quoteauthor" name="author" value="~${quotes.author}"></p>
 			</div>
+	</div>
+	</p>
 		<button type="submit" class="btn btn-outline-success">Save Quote</button>
-		<button type="redirect/user-home" class="btn btn-outline-success">Next</button>
+		<button type="redirect/user-home" class="btn btn-outline-success">Next Quote</button>
 	</form>	
 	</div>
-
-			<h1>Day Average = ${dayavg}</h1>
+	<br></br>
+	</div>
+	
 			<h1>Daily Affirmation</h1>
-				<h2>${affirmation}</h2>
+				<h2>"${affirmation}"</h2>
 			<div>
 			<form action="/user-home/add-affirmation" method="post">
-				<label for="affirmation">Enter: <input name="affirmation" required minlength="2"/> </label>
-				<p>
-				<button type="submit" class="btn btn-outline-success">Add</button>
-				</p>
+				<h4><label for="affirmation">Record your affirmation here: <input name="affirmation" required minlength="2"/> </label>
+
+				<button type="submit" class="btn btn-outline-success">Add</button></h4>
+				
 			</form>	
 			</div>
+			<br></b><br></b>
 			
 			<!-- Begin Mood Tracker -->
 		<div class="tracker">
@@ -69,7 +84,8 @@
 		  </div>
         </div> <!-- End of Mood Tracker -->
 				
-		<h1>Task List</h1>	
+		<br></b><br></b>
+		<h5>Task List</h5>	
 	<table>
 	<thead>
 		<tr>
@@ -82,7 +98,7 @@
 			<td> 
 				<form action="/user-home/${ item.id }/complete-task" method="post">
 					<input name="complete" type="checkbox" value="true"> 
-					<button  type="submit" class="btn btn-outline-success">submit</button>
+					<button  type="submit" class="btn btn-outline-success">Completed</button>
 				</form>
 			</td>
 				<td>${item.dueDate}</td> 

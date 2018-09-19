@@ -129,14 +129,36 @@
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+.indexbody {
+background: linear-gradient(#ffd194, #70e1f5);
+background-repeat: no-repeat;
+width: 100vw;
+height: 100vh;
+}
+
+.hruBox {
+ color: white;
+ padding: 10px;
+ width: 50%;
+ margin-right: auto;
+ margin-left: auto;
+ border-radius: 15px 15px 15px 15px;
+ margin-bottom: auto;
+ margin-top: 20%;
+ text-align: center;
+}
+
+.buttons {
+	
+}
 
 .listBody{
-  margin-left: 190px; /* Same as the width of the sidenav */
-  font-size: 15px; /* Increased text to enable scrolling */
-  padding: 0px 10px;
-  color: gray;
-  
+margin-left: 190px; /* Same as the width of the sidenav */
+font-size: 15px; /* Increased text to enable scrolling */
+padding: 0px 10px;
+color: gray;
   }
+  
 .listBody p{
   text-align: left;
 }

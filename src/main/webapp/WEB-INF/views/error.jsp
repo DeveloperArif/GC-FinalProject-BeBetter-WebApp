@@ -11,6 +11,7 @@
 <<title>Home</title>
 </head>
 <body>
+
     <h1>Its time for us to "Do Better", Sorry something went wrong.</h1>
     <form action="/">
     	<p>

@@ -9,10 +9,10 @@
 <link rel="stylesheet" href="/style.css">
 
 </head>
-<body>
+<body class = "indexbody">
 	<h1> Welcome!! </h1>
 	
-	 <div>
+	 <div class="buttons">
          <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal" data-backdrop="false">
            Login
            </button> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal" data-backdrop="false">
@@ -21,7 +21,7 @@
 			<p class="message">${ message }</p>
       </div>
 	
-	
+<div class= "hruBox">	
 <div class="form-group">
 	<div class="col-5"> 
 		<form action="/results">
@@ -31,7 +31,7 @@
 	  </form>
   </div>
 </div>
-
+</div>
 
 		<!-- Login Modal -->
 			<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

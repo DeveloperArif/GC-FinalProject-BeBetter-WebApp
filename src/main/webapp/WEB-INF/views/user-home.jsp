@@ -41,9 +41,6 @@
 	<img src="https://i.postimg.cc/63w6XLg1/Untitled_design_5.png" alt="calm" style= "width:100%;">
 	
   <div class="centered">
-  
-
-    <div class="quotebox" style="word-wrap: break-word; width: 800px">
 
     <form action="/user-home/add-quote">
 			<div>

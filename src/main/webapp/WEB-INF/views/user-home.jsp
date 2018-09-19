@@ -27,14 +27,16 @@
     <div class="listBody">
     
     <h1>User Home Page</h1>
+    <div class="quotebox" style="word-wrap: break-word; width: 800px">
     <form action="/user-home/add-quote">
 			<div>
 				<h3><input id="quote" name="quote" value="${quotes.quote}"></h3>
-				<p><input  name="author" value="${quotes.author}"></p>
+				<p><input  id="quoteauthor" name="author" value="${quotes.author}"></p>
 			</div>
 		<button type="submit" class="btn btn-outline-success">Save Quote</button>
 		<button type="redirect/user-home" class="btn btn-outline-success">Next</button>
 	</form>	
+	</div>
 
 			<h1>Day Average = ${dayavg}</h1>
 			<h1>Daily Affirmation</h1>

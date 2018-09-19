@@ -180,10 +180,46 @@ color: gray;
 	margin: 10px 10px 0 0;
     padding: 2px 10px
 }
-.quote {
+#quote {
 	background-color: transparent;
-    border: 0px solid;
-    height: 20px;
-    width: 160px;
-    color: #CCC;
+    border: transparent;
+    padding: 3px 3px;
+    width: 100%;
+    height: 95px;
+    color: #3fbca9;
+	word-break: break-all;
+	white-space: normal;
+}
+#quoteauthor{
+    border: transparent;
+    text-align: center;
+    padding: 3px 3px;
+    height: 30px;
+    width: 100%;
+    color: #b3e6de;
+    word-wrap: break-word;
+    font-family: "Great Vibes", cursive;
+	background-color: transparent;
+	text-align: left;
+	padding: 5px 25px;
+ 	font-size: 15px;
+}
+.quotebox {
+	font-family: "Great Vibes", cursive;
+	text-align: left;
+	padding: 5px 25px;
+ 	font-size: 15px;
+ 	word-break: break-all;
+	white-space: normal;
+	background-size: auto;
+	table-layout: fixed;
+	word-wrap: normal;
+	word-break: break-all;
+	white-space: normal;
+	display: block;
+	height: auto;
+	margin: 3px auto;
+	line-height: 1.4;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
 }

@@ -24,10 +24,12 @@
 <div class="listBody">
 
 <h1>Your Journal Entries</h1>
-
-<table>
-
 	<body>
+<br></br>
+		<table class="table">
+		<tbody>
+			<thead>
+		<tr>
 	<%--this comes from controller --%>
 	<c:forEach items ="${alljournalentries}" var = "item" >
 		<tr>
@@ -40,17 +42,19 @@
 		</tr>
 	</c:forEach>
 </table>
+</tbody>
 		
 
  <div class="form-group">
 	<div class="col-5"> 
 		<form action="/journal/journal-entry" method="post">
 													<%--pojo name used in .java --%>
-	  	<label for="journalEntry">Journal Entry<textarea name="journalEntry" class="form-control" rows="3" id="comment"></textarea>
-		<input type="submit" value="Submit"></label>
+	  	<h4><label for="journalEntry">Journal Entry<textarea name="journalEntry" class="form-control" rows="5" id="comment"></textarea></h4>
+		<button type="submit" class="btn btn-primary">Submit</button>
 		
 	  	</form>
  </div>
+ </body>
   
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

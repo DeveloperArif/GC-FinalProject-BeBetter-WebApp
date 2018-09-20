@@ -11,56 +11,38 @@
 <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+	
 	<div class="sidenav">
       <a href="/user-home">${user.name}</a>
       <a href="/user-home">Home</a>
       <a href="/moodDetails">Add Mood</a>
       <a href="/journal">Journal</a>
-      <a href="/taskList">My Tasks</a>
-      <a href="/affirmationsList">My Affirmations</a>
-      <a href="/quotesList">My Quotes</a>
+      <a href="/tasklist">My Tasks</a>
+      <a href="/affirmation">My Affirmations</a>
+      <a href="/quote-list">My Quotes</a>
       <a href="/logout">Logout</a>
+      <a href="/about-page">About</a>
     </div>
     
     <!-- Start of body -->
     <div class="listBody">
+    <br></br>
     <h1>Mood Details</h1>
-	 
+	 <br></br><br></br>
 	 <!-- Begin "Add Mood" -->
 	 	<div class="form-group">
-			<div class="col-5"> 
+			<div class="col-5" align="center"> 
 				<form action="/moodDetailsSubmit">
-				  <label for="comment">How are you feeling today?</label>
-				  <textarea name="entry" class="form-control" rows="3" id="comment"></textarea>
-				  <input type="submit" value="Submit">
+				  <h1></h1><label for="comment">How are you feeling today?</label></h1>
+				  <textarea name="entry" class="form-control" rows="2" id="comment"></textarea>
+				  <button type="submit" class="btn btn-primary">Submit</button>
 				 </form>
  		 	</div>
 		</div>
 	 <!-- End "Add Mood -->
-	 <!-- Begin drop down to find avg by date -->
-	 
-	 <form action="/avgdd" method="post">
-	
-	<p>
-	Choose a date to see your average score
-	</p>
-				<div class="col-auto my-1">
-			      <label class="mr-sm-2" for="inlineFormCustomSelect">Date</label>
-			      	<select id="date" name="date">
-			      		<option selected>Choose date</option>
-			      		<c:forEach items ="${dates}" var = "date">
-					        <option value="dates">${date}</option>
-						</c:forEach> 
-					</select>
-				</div>
-		
-		<button type="submit" >Submit</button>
-</form>
-	 
-	 <!-- End drop down to find avg by date -->
-	 	 
+	 	 <br></br>
 	 <!-- Begin Mood detailed list -->
-	 <h2>Previous Moods</h2>
+	 <h5>Previous Moods</h5>
 	 	 <div class="moodListContainer">
           	<c:forEach items="${moodList}" var="scoreVar" end="30" >
 	            <div id="${scoreVar}" class="scoreDetail"> 
@@ -81,27 +63,27 @@
 
             function changeColor(val)
             {
-              var color = "red";
+              var color = "white";
 
               if (val <= 20) 
               {
-                color = "black";
+                color = "#444eff";
               }
               else if (20 < val && val <= 40)
               {
-                color = "blue";
+                color = "#4c67ff";
               }
               else if (40 < val && val <= 60)
               {
-                color = "green";
+                color = "#5e91ff";
               }
               else if (60 < val && val <= 80)
               {
-                color = "orange";
+                color = "#6db8ff";
               }
               else if (80 < val && val <= 100)
               {
-                color = "yellow";
+                color = "#7cdeff";
               }
               
               moodText[i].style.backgroundColor = color;

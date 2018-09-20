@@ -12,6 +12,7 @@
 <title>user-home</title>
 </head>
 	<body>
+	
 		
 	<div class="sidenav">
       <a href="/user-home">${user.name}</a>
@@ -34,21 +35,21 @@
     
     <div class="containerhome">
     
-	<img src="https://i.postimg.cc/63w6XLg1/Untitled_design_5.png" alt="calm" style= "width:100%;">
+	<img src="https://i.postimg.cc/BnbFGGb4/Untitled_design_8.png" alt="calm" style="width: 100vw; height: 350px;">
 	
   <div class="centered">
   
     <form action="/user-home/add-quote">
 			<div>
-				<h3><input class="quotebox" style="word-wrap: break-word; width: 800px"id="quote" name="quote" value="${quotes.quote}"></h3>
-				<br></b><br></b><br></b><br></b><br></b><br></b>
+				<h2><label class="quotebox" name="quote">${quotes.quote}</label></h2>
+				<br></b><br></b><br>
 			
 				<p><input  id="quoteauthor" name="author" value="~${quotes.author}"></p>
 			</div>
 	</div>
 	</p>
-		<button type="submit" class="btn btn-outline-success">Save Quote</button>
-		<button type="redirect/user-home" class="btn btn-outline-success">Next Quote</button>
+		<button type="submit" class="btn btn-success">Save Quote</button>
+		<button type="redirect/user-home" class="btn btn-success">Next Quote</button>
 	</form>	
 	</div>
 	<br></br>
@@ -60,11 +61,11 @@
 			<form action="/user-home/add-affirmation" method="post">
 				<h4><label for="affirmation">Record your affirmation here: <input name="affirmation" required minlength="2"/> </label>
 
-				<button type="submit" class="btn btn-outline-success">Add</button></h4>
+				<button type="submit" class="btn btn-success">Add</button></h4>
 				
 			</form>	
 			</div>
-			<br></b><br></b>
+			<br></b>
 			
 			<!-- Begin Mood Tracker -->
 		<div class="tracker">
@@ -86,11 +87,12 @@
         </div> <!-- End of Mood Tracker -->
 				
 		<br></b><br></b>
-		<h5>Task List</h5>	
-	<table>
-	<thead>
+		<table class="table">
+		<tbody>
+			<thead>
+		<h5>Task List</h5>
 		<tr>
-			<th>Completed</th> <th>Date</th> <th>Task</th> <th>Action</th>
+			<h4><th>Completed</th> <th>Date</th> <th>Task</th> <th>Action</th></h4>
 		</tr>
 	</thead>
 	<tbody>
@@ -99,25 +101,28 @@
 			<td> 
 				<form action="/user-home/${ item.id }/complete-task" method="post">
 					<input name="complete" type="checkbox" value="true"> 
-					<button  type="submit" class="btn btn-outline-success">Completed</button>
+					<button  type="submit" class="btn btn-success">Completed</button>
 				</form>
 			</td>
 				<td>${item.dueDate}</td> 
 				<td>${item.task} </td>
 			
 	    	<td><a href="/user-home/${ item.id }/delete" onclick="return confirm('Are you sure you want to delete this task?')">Delete</a></td>
-	   	 	<%-- <td><a href="/edit-item/${ item.id }/edit">Edit</a></td>--%>
 			</tr>
 		</c:forEach>
 	</table>
 		
 		<form action="/user-home/add-task" method="post">
-			<label for="task">Task: <input name="task" required minlength="2"/> </label>
+			<h4><label for="task">Add a new task: <input name="task" required minlength="2"/> </label>
 			<label for="dueDate">Due Date: <input name="dueDate" required minlength="2"/> </label>
+			<button type="submit" class="btn btn-success">Add</button></h4>
 			<p>
-			<button type="submit" class="btn btn-outline-success">Add Task</button>
+			
 			</p>
-		</form>		
+		</form>	
+		</tbody>
+		</table>
+		<br></b><br></b><br></b><br></b>	
 		
 		  
         
@@ -161,27 +166,27 @@
 	
 	            function changeColor(val)
 	            {
-	              var color = "red";
+	              var color = "white";
 	
 	              if (val <= 20) 
 	              {
-	                color = "black";
+	                color = "#444eff";
 	              }
 	              else if (20 < val && val <= 40)
 	              {
-	                color = "blue";
+	                color = "#4c67ff";
 	              }
 	              else if (40 < val && val <= 60)
 	              {
-	                color = "green";
+	                color = "#5e91ff";
 	              }
 	              else if (60 < val && val <= 80)
 	              {
-	                color = "orange";
+	                color = "#6db8ff";
 	              }
 	              else if (80 < val && val <= 100)
 	              {
-	                color = "yellow";
+	                color = "#7cdeff";
 	              }
 	              
 	

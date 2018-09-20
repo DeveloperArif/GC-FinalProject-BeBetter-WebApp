@@ -11,22 +11,22 @@
 </head>
 <body class = "indexBody">
 	
-	 <div class="buttons">
+	 <div class="buttons" style="float: right;">
          <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal" data-backdrop="false">
            Login
-           </button> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal" data-backdrop="false">
+           </button> <button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal" data-backdrop="false">
            Register
          </button></p>
 			<p class="message">${ message }</p>
       </div>
-	
+      <br></br><br></br><br></br><br></br>
+	<h6><label for="comment">How are you feeling today?</label></h6>
 <div class= "hruBox">	
 <div class="form-group">
 	<div class="col-5"> 
 		<form action="/results">
-	  <label for="comment">How are you feeling today?</label>
 	  <textarea name="entry" class="form-control" rows="3" id="comment"></textarea>
-	  <input id="indexSubmit" type="submit" value="Submit">
+	  <button type="submit" class="btn btn-primary">Submit</button>
 	  </form>
   </div>
 </div>
@@ -62,7 +62,7 @@
 							
 							
 							<div class="modal-footer">
-						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 						        <button type="submit" class="btn btn-primary">Log in</button>
 					     	</div>
 						</form>

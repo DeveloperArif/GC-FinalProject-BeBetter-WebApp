@@ -21,14 +21,19 @@
       <a href="/affirmation">My Affirmations</a>
       <a href="/quote-list">My Quotes</a>
       <a href="/logout">Logout</a>
+      <a href="/about-page">About</a>
     </div>
     
     <!-- Start of body -->
     <div class="listBody">
-    <h1>List of Quotes you've saved</h1>
+    <br></br>
+    <h1>Your favorite Quotes...</h1>
 		
-	<table>
-		<tbody>
+		<br></br><br></br>
+	<table class="table">
+	<tbody>
+		<thead>
+	<tr>
 		<c:forEach items ="${quoteResult}" var = "quote" >
 			<tr>
 				<td>${quote.quote}</td> 
@@ -38,6 +43,7 @@
 
 			</tr>
 		</c:forEach>
+		</tr></thead>
 		</tbody>
 	</table>
 	</div>

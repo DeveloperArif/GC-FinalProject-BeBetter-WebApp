@@ -69,7 +69,7 @@
     width: 50%; /* Full-width */
     height: 30px; /* Specified height */
     border-radius: 20px; 
-   background: linear-gradient(to right,
+   	background: linear-gradient(to right,
     rgba(84, 51, 255), 
     rgba(32, 189, 255),
     rgba(165, 254, 203) );
@@ -91,7 +91,7 @@
     appearance: none;
     width: 25px; /* Set a specific slider handle width */
     height: 25px; /* Slider handle height */
-    background: yellow; /* Green background */
+    background: aqua; /* Green background */
     cursor: pointer; /* Cursor on hover */
 }
 
@@ -114,15 +114,21 @@
   height: 50%;
   display: flex;
   flex-wrap: wrap;
-  background-color:ded3ff;
+  background-color:#ded3ff;
+  border-radius: 25px;
 }
 .head{
   height: 10%;
   border-bottom-style: double;
 }
 .tracker{
-  width: 60%;
-  height: 30%;
+       width: 60%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
    
 }
 .container{
@@ -164,8 +170,7 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background: linear-gradient(rgba(226,255,0,0.49),
-  rgba(255,88,0,0.45));
+  background: linear-gradient(to top, rgb(112, 225, 245), rgb(255, 209, 148));"
   background-repeat: no-repeat;
   overflow-x: hidden;
   padding-top: 20px;
@@ -174,6 +179,7 @@
 .sidenav a {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
+  font-family: 'Merienda', cursive;
   font-size: 18px;
   color: #818181;
   display: block;
@@ -183,7 +189,6 @@
   color: #f1f1f1;
 }
 .sidenav img{
-
   border-radius: 45%;
   height: 200px;
   width: 200px;
@@ -197,12 +202,12 @@ html, body {
 	padding: 0;
 	width: 100%;
 height: 100%;
-background: fffce3;
+background: #fffce3;
 
  } 
 
 .indexBody {
-background: linear-gradient(#ffd194, #70e1f5);
+background: linear-gradient(to top, rgb(112, 225, 245), rgb(255, 209, 148));"
 background-repeat: no-repeat;
 background-size: cover;
 
@@ -212,8 +217,7 @@ background-size: cover;
 	font-family: 'Merienda', cursive; 
 	font-size: 50px;
  	color: white;
-	margin-left: 35%;
- 	margin-top: 5%;
+ 	margin-top: 2%;
  	display: block;
  	text-align: center;
 }
@@ -231,11 +235,13 @@ background-size: cover;
 #indexSubmit{
 	font-size: 25px;
 	width: 40%;
+	border-color: #14635b;
+	background-color: #aaecff;
+	font-family: 'Merienda', cursive;
+	text-color: white;
 	
 }
-.buttons {
-	
-}
+
 #myRange{
 	
 }
@@ -271,6 +277,8 @@ color: gray;
 #quote {
 	background-color: transparent;
     border: transparent;
+    font-family: 'Allura', cursive; 
+    font-size: 40px;
     padding: 3px 3px;
     width: 100%;
     height: 95px;
@@ -293,25 +301,15 @@ color: gray;
  	font-size: 32px;
 }
 .quotebox {
-	font-family: 'Allura', cursive; 
-	text-align: left;
-	width: 100%;
-	padding: 5px 25px;
- 	font-size: 35px;
- 	padding-left: 50px;
- 	word-break: break-all;
-	white-space: normal;
+	text-align: center;
 	background-size: auto;
 	table-layout: fixed;
-	word-wrap: normal;
-	word-break: break-all;
-	white-space: normal;
-	
+	word-wrap: normal;	
 }
 h1 {
 	font-family: 'Merienda', cursive; 
 	font-size: 40px;
- 	color: #70e1f5;
+ 	color: #7cdeff;
  	display: block;
  	text-align: center;
 }
@@ -322,7 +320,7 @@ h2 {
 	padding-top: 10px;
 	font-family: 'Allura', cursive; 
 	font-size: 45px;
- 	color: #14635b;
+ 	color: #444eff;
  	display: block;
  	text-align: center;
 }
@@ -338,7 +336,7 @@ h3{
 h4{
 	font-family: 'Merienda', cursive; 
 	font-size: 20px;
- 	color: #3cb5a3;
+ 	color: #6db8ff;
  	display: block;
  	text-align: center;
 	
@@ -350,16 +348,55 @@ h5 {
  	display: block;
  	text-align: left;
 }
+h6 {
+	font-family: 'Merienda', cursive; 
+	font-size: 40px;
+ 	color: white;
+ 	display: block;
+ 	text-align: center;
+}
 .body {
 	background: ffe2ba;
 }
 .btn-outline-success {
-	border-color: #3cb5a3;
+	border-color: #70e1f5;
+	background-color: #aaecff;
 	font-family: 'Merienda', cursive;
-	text-color: color: #3cb5a3;
+	text-color: white;
+}
+.btn-primary {
+	margin-top: 5%;
+	border-color: #70e1f5;
+	background-color: #aaecff;
+	font-family: 'Merienda', cursive;
+	text-color: white;
+}
+.btn-outline-success:hover {
+    background-color: white; /* Green */
+    color: #ffd194;
+}
+.btn-primary:hover {
+    background-color: white; /* Green */
+    color: #ffd194;
+}
+.btn-success {
+	border-color: #70e1f5;
+	background-color: #aaecff;
+	font-family: 'Merienda', cursive;
+	text-color: white;
+}
+.btn-success:hover {
+    background-color: white; /* Green */
+    color: #ffd194;
+}
+.buttons {
+	margin-right: 5px;
+	margin-top; 5px;
 }
 img { 
     display: inline-block;
+    position: center;
+    
 }
 .containerhome {
     position: relative;
@@ -367,23 +404,60 @@ img {
     color: white;
     width: 100%;
     height: auto;
-    position: center;
+    
 }
 .centered {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
-.container2 {
-	margin: 250px; /* Same as the width of the sidenav */
-	font-size: 10px; /* Increased text to enable scrolling */
-	padding: 20px 10px;
-	color: gray;
 }
-
+.resulthead {
+	font-family: 'Merienda', cursive; 
+	font-size: 40px;
+ 	color: white;
+ 	display: block;
+ 	width: 80%;
+ 	text-align: center;
+ 	margin: 0 auto;
+}
 .team-name {
 
 margin-left: 10px; 
 }
 
+.container2 {
+	margin: 5% 0% 0% 19%; /* Same as the width of the sidenav */
+	font-size: 10px; /* Increased text to enable scrolling */
+	padding: 20px 10px;
+	color: gray;
+}
+.form-group {
+	font-family: 'Merienda', cursive; 
+	font-size: 32px;
+	color: #6db8ff;
+ 	display: flex;
+    justify-content: center;
+ 	width: 80%;
+ 	text-align: center;
+ 	margin: 0 auto;
+ 	
+}
+.about {
+	background-color: white;
+}
+
+.form-control {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s 

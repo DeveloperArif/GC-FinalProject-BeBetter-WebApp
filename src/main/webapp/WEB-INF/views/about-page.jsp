@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="/style.css">
 <title>Insert title here</title>
 </head>
-<body>
+<body class="about">
 
 	<div class="sidenav">
 	  <div class="img">
@@ -27,17 +27,14 @@
       <a href="/about-page">About</a>
     </div>
 
-<br>
-<br>
 <div class="listBody">
+<br></br><br></br>
  <center> <h1>Meet Our Team</h1></div> </center>
- <br>
- <br>
+ 
  
             <div class="container2">
                     <div class="row">
                         
- 
                         <div class="col-md-3 col-sm-3">
                             <div class="team-member">
                                 <div class="team-img">

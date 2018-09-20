@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<div class="sidenav">
+	<div class="sidenav">
       <a href="/user-home">${user.name}</a>
       <a href="/user-home">Home</a>
       <a href="/moodDetails">Add Mood</a>
@@ -21,43 +21,51 @@
       <a href="/affirmation">My Affirmations</a>
       <a href="/quote-list">My Quotes</a>
       <a href="/logout">Logout</a>
+      <a href="/about-page">About</a>
     </div>
     
  <div class="listBody">
 
+<br></br>
 <h1>Your tasks</h1>
+<br></br>
 
-<table>
-	<thead>
+		<table class="table">
+		<tbody>
+			<thead>
 		<tr>
-			<th>Completed  </th> <th>Date  </th> <th>Task  </th> <th>Action </th>
+			<h4><th>Completed</th> <th>Date</th> <th>Task</th> <th>Action</th></h4>
 		</tr>
 	</thead>
 	<tbody>
 		<c:forEach items ="${task}" var = "item" >
 			<tr>
 			<td> 
-				<form action="/tasklist/${ item.id }/complete-task" method="post">
+				<form action="/user-home/${ item.id }/complete-task" method="post">
 					<input name="complete" type="checkbox" value="true"> 
-					<button  type="submit" class="btn btn-outline-success">submit</button>
+					<button  type="submit" class="btn btn-success">Completed</button>
 				</form>
 			</td>
 				<td>${item.dueDate}</td> 
 				<td>${item.task} </td>
 			
-	    	<td><a href="/tasklist/${ item.id }/delete" onclick="return confirm('Are you sure you want to delete this task?')">Delete</a></td>
-	   	 	<%-- <td><a href="/edit-item/${ item.id }/edit">Edit</a></td>--%>
+	    	<td><a href="/user-home/${ item.id }/delete" onclick="return confirm('Are you sure you want to delete this task?')">Delete</a></td>
 			</tr>
 		</c:forEach>
 	</table>
 		
 		<form action="/tasklist/add-task" method="post">
-			<label for="task">Task: <input name="task" required minlength="2"/> </label>
+		<br></br>
+			<h4><label for="task">Add a new task: <input name="task" required minlength="2"/> </label>
 			<label for="dueDate">Due Date: <input name="dueDate" required minlength="2"/> </label>
+			<button type="submit" class="btn btn-success">Add</button></h4>
 			<p>
-			<button type="submit" class="btn btn-outline-success">Add Task</button>
+			
 			</p>
 		</form>	
+		</tbody>
+		</table>
+		
  </div>
 		
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

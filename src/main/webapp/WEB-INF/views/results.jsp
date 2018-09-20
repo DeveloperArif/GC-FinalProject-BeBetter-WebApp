@@ -4,29 +4,30 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Results</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" href="/style.css">
 </head>
 <body class = "indexBody">
 
-	<div>
+		<div class="buttons" style="float: right;">
          <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal" data-backdrop="false">
            Login
-           </button> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal" data-backdrop="false">
+           </button> <button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal" data-backdrop="false">
            Register
          </button></p>
 			<p class="message">${ message }</p>
-      </div>
-
+     	</div>
+	<br></br><br></br><br></br>
+	<div class="resulthead" style="width:50%">
+		<p>Based on your input we think you're feeling about ${entry} out of 100 today.</P>
+		<p> Do you agree?</p>
+	</div>
 <div class= "resultsBox">
-	<p>Hey! We're guessing you're feeling like a ${entry} out of 100 today. Is this correct?</p>
-	
 	<form action="/user-home/submit-result" method="post">
-		<p>Slide for new Score: </p>
-		
+		<p><h4>Slide for new Score: </p></h4>
 		<div class="slidecontainer">
-	  		<input name="newScore"type="range" min="0" max="100" step="1" value="${entry}" class="slider" id="myRange"><span class="range-slider-value">0</span>
+	  		<input name="newScore"type="range" min="0" max="100" step="1" value="${entry}" class="slider" id="myRange"><span class="range-slider-value"></span>
 		</div>
 		<script> 
 			var slider = document.getElementById("myRange");
@@ -58,7 +59,7 @@
 				rangeSlider();
 			
 		</script>
-			<input type="submit">
+			<button type="submit" class="btn btn-primary">Submit</button></h4>
 	
 	</form>
 	

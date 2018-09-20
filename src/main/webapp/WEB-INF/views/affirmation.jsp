@@ -25,28 +25,32 @@
 
 <div class="listBody">
     
-	<h1>Your Affirmations</h1>
-
-	<table>
-	
+    <br></br>
+    <h1>Your Affirmations</h1>
+<br></br>
+		<table class="table">
+		<tbody>
+			<thead>
+		<tr>
 		<c:forEach items ="${allAffirmations}" var = "item" >
 			<tr>
-			
 				<td>${item.affirmation} </td>
 			
 	    	<td><a href="/affirmation/${ item.id }/delete" onclick="return confirm('Are you sure you want to delete this affirmation?')">Delete</a></td>
 	   	 	<%-- <td><a href="/edit-item/${ item.id }/edit">Edit</a></td>--%>
 			</tr>
 		</c:forEach>
-	</table>
+	
 		
 		<form action="/affirmation/add-affirmation" method="post">
-			<label for="task">Enter Affirmation: <input name="affirmation" required minlength="2"/> </label>
-			
-			<p>
-			<button type="submit" class="btn btn-outline-success">Add</button>
+			<p><h3><label for="task">Enter Affirmation: <input name="affirmation" required minlength="2"/></h3> </label>
+			<button type="submit" class="btn btn-success">Add</button>
 			</p>
+			<br></br>
 		</form>
+		</tr></thead>
+		</tbody>
+		</table>
 		
 		</div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -283,8 +283,6 @@ color: gray;
     width: 100%;
     height: 95px;
     color: #14635b;
-	word-break: break-all;
-	white-space: normal;
 }
 #quoteauthor{
     border: transparent;

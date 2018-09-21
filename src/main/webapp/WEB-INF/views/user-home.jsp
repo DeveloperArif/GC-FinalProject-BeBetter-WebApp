@@ -45,7 +45,7 @@
 
     <form action="/user-home/add-quote">
 			<div>
-				<h2><label class="quotebox" name="quote">${quotes.quote}</label></h2>
+				<h2><input id="quote" name="quote" value="${quotes.quote}"></h2>
 				<br></b><br></b><br>
 			
 				<p><input  id="quoteauthor" name="author" value="~${quotes.author}"></p>
@@ -55,6 +55,7 @@
 		<button type="submit" class="btn btn-success">Save Quote</button>
 		<button type="redirect/user-home" class="btn btn-success">Next Quote</button>
 	</form>	
+	
 	</div>
 	<br></br>
 	</div>
@@ -107,7 +108,7 @@
 					<input name="complete" type="checkbox" value="true"> 
 					<button  type="submit" class="btn btn-success">Completed</button>
 				</form>
-			</td>
+			</td>			
 				<td>${item.dueDate}</td> 
 				<td>${item.task} </td>
 			
